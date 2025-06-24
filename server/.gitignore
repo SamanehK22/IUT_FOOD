@@ -12,6 +12,9 @@ Makefile*
 .qmake.cache
 .qmake.stash
 
+#ignore this
+.vscode/
+
 # Build directories
 debug/
 release/
