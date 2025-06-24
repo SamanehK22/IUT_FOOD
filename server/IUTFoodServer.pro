@@ -8,11 +8,15 @@ TEMPLATE = app
 SOURCES += \
     main.cpp \
     databasemanager.cpp \
-    logger.cpp
+    logger.cpp \
+    securityutils.cpp \
+    authsystem.cpp 
 
 HEADERS += \
     databasemanager.h \
-    logger.h
+    logger.h \
+    securityutils.h \
+    authsystem.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
