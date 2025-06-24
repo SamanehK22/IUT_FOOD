@@ -10,13 +10,17 @@ SOURCES += \
     databasemanager.cpp \
     logger.cpp \
     securityutils.cpp \
-    authsystem.cpp 
+    authsystem.cpp \
+    command.cpp \
+    invoker.cpp 
 
 HEADERS += \
     databasemanager.h \
     logger.h \
     securityutils.h \
-    authsystem.h
+    authsystem.h \
+    command.h \
+    invoker.h 
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
