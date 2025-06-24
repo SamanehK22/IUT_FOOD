@@ -12,7 +12,8 @@ SOURCES += \
     securityutils.cpp \
     authsystem.cpp \
     command.cpp \
-    invoker.cpp 
+    invoker.cpp \
+    ordercommand.cpp
 
 HEADERS += \
     databasemanager.h \
@@ -20,7 +21,8 @@ HEADERS += \
     securityutils.h \
     authsystem.h \
     command.h \
-    invoker.h 
+    invoker.h \
+    ordercommand.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
