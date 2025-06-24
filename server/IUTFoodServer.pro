@@ -16,7 +16,9 @@ SOURCES += \
     ordercommand.cpp \
     observer.cpp \
     orderstatusobserver.cpp \
-    orderstatus.cpp
+    orderstatus.cpp \
+    server.cpp \
+    websocketserver.cpp
 
 HEADERS += \
     databasemanager.h \
@@ -28,7 +30,9 @@ HEADERS += \
     ordercommand.h \
     observer.h \
     orderstatusobserver.h \
-    orderstatus.h
+    orderstatus.h \
+    server.h \
+    websocketserver.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
