@@ -12,8 +12,6 @@ Makefile*
 .qmake.cache
 .qmake.stash
 
-#ignore this
-.vscode/
 
 # Build directories
 debug/
@@ -55,7 +53,6 @@ CMakeLists.txt.user*
 *.user.*
 
 # IDE specific files
-.vscode/
 .idea/
 *.swp
 *.swo
