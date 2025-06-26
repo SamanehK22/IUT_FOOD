@@ -52,7 +52,6 @@ CMakeLists.txt.user*
 *.user.*
 
 # IDE specific files
-.vscode/
 .idea/
 *.swp
 *.swo
