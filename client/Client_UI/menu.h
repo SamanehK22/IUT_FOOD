@@ -2,6 +2,14 @@
 #define MENU_H
 
 #include <QWidget>
+#include <QLabel>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QScrollArea>
+#include <QPixmap>
+#include <QLineEdit>
+#include <QDoubleSpinBox>
 
 class Menu : public QWidget
 {
