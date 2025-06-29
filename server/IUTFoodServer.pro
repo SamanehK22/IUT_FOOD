@@ -7,32 +7,44 @@ TEMPLATE = app
 
 SOURCES += \
     main.cpp \
+    server.cpp \
     databasemanager.cpp \
-    logger.cpp \
-    securityutils.cpp \
     authsystem.cpp \
-    command.cpp \
     invoker.cpp \
+    command.cpp \
     ordercommand.cpp \
     observer.cpp \
-    orderstatusobserver.cpp \
     orderstatus.cpp \
-    server.cpp \
-    websocketserver.cpp
+    orderstatusobserver.cpp \
+    securityutils.cpp \
+    websocketserver.cpp \
+    adminmanager.cpp \
+    restaurantmanager.cpp \
+    logger.cpp \
+    customermanager.cpp \
+    restaurantownermanager.cpp \
+    ordermanager.cpp \
+    menumanager.cpp
 
 HEADERS += \
+    server.h \
     databasemanager.h \
-    logger.h \
-    securityutils.h \
     authsystem.h \
-    command.h \
     invoker.h \
+    command.h \
     ordercommand.h \
     observer.h \
-    orderstatusobserver.h \
     orderstatus.h \
-    server.h \
-    websocketserver.h
+    orderstatusobserver.h \
+    securityutils.h \
+    websocketserver.h \
+    adminmanager.h \
+    restaurantmanager.h \
+    logger.h \
+    customermanager.h \
+    restaurantownermanager.h \
+    ordermanager.h \
+    menumanager.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

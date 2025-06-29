@@ -23,8 +23,8 @@ public:
     static AuthSystem* getInstance();
     
     // Authentication methods
-    QString login(const QString& username, const QString& password);
-    bool registerUser(const QString& username, const QString& password, const QString& email, const QString& userType);
+    QString login(const QString& loginId, const QString& password);
+    bool registerUser(const QString& firstName, const QString& lastName, const QString& email, const QString& phone, const QString& password, const QString& userType);
     bool logout(const QString& token);
     
     // Session management

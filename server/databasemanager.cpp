@@ -5,6 +5,8 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QDateTime>
+#include <QJsonArray>
+#include <QJsonObject>
 
 DatabaseManager* DatabaseManager::instance = nullptr;
 
@@ -66,24 +68,28 @@ bool DatabaseManager::isConnected() const
     return connected;
 }
 
-bool DatabaseManager::createCustomer(const QString& name, const QString& lastName, const QString& email,
-                                   const QString& passwordHash, const QString& phone, const QString& address)
+bool DatabaseManager::createCustomer(const QString& firstName, const QString& lastName, const QString& username, const QString& email,
+                                   const QString& passwordHash, const QString& phone, const QString& address,
+                                   const QString& city, const QString& location)
 {
     Logger::getInstance()->debug(QString("Creating customer: %1 %2 (%3)")
-        .arg(name)
+        .arg(firstName)
         .arg(lastName)
         .arg(email), "DatabaseManager");
 
     QVariantMap params;
-    params[":name"] = name;
+    params[":firstName"] = firstName;
     params[":lastName"] = lastName;
+    params[":username"] = username;
     params[":email"] = email;
     params[":passwordHash"] = passwordHash;
     params[":phone"] = phone;
     params[":address"] = address;
+    params[":city"] = city;
+    params[":location"] = location;
 
-    QString query = "INSERT INTO customers (name, last_name, email, password_hash, phone, address) "
-                   "VALUES (:name, :lastName, :email, :passwordHash, :phone, :address)";
+    QString query = "INSERT INTO customers (first_name, last_name, username, email, password_hash, phone, address, city, location) "
+                   "VALUES (:firstName, :lastName, :username, :email, :passwordHash, :phone, :address, :city, :location)";
 
     bool success = executeQuery(query, params);
     if (success) {
@@ -153,7 +159,7 @@ QVariantMap DatabaseManager::getCustomerProfile(const QString& customerId)
     QVariantMap params;
     params[":id"] = customerId;
 
-    QString query = "SELECT name, last_name, email, phone, address FROM customers WHERE id = :id";
+    QString query = "SELECT name, last_name, email, phone, address, city, location FROM customers WHERE id = :id";
     QSqlQuery result = prepareQuery(query, params);
 
     QVariantMap profile;
@@ -163,28 +169,50 @@ QVariantMap DatabaseManager::getCustomerProfile(const QString& customerId)
         profile["email"] = result.value("email").toString();
         profile["phone"] = result.value("phone").toString();
         profile["address"] = result.value("address").toString();
+        profile["city"] = result.value("city").toString();
+        profile["location"] = result.value("location").toString();
     }
     return profile;
 }
 
-bool DatabaseManager::createRestaurantOwner(const QString& name, const QString& lastName, const QString& email,
-                                          const QString& passwordHash, const QString& phone, const QString& restaurantId)
+QVariantMap DatabaseManager::getCustomerByLoginId(const QString& loginId)
+{
+    QVariantMap params;
+    params[":loginId"] = loginId;
+    QString query = "SELECT * FROM customers WHERE email = :loginId OR phone = :loginId";
+    QSqlQuery result = prepareQuery(query, params);
+    QVariantMap user;
+    if (result.next()) {
+        QSqlRecord rec = result.record();
+        for (int i = 0; i < rec.count(); ++i) {
+            user[rec.fieldName(i)] = result.value(i);
+        }
+    }
+    return user;
+}
+
+bool DatabaseManager::createRestaurantOwner(const QString& firstName, const QString& lastName, const QString& username, const QString& email,
+                                          const QString& passwordHash, const QString& phone, const QString& restaurantId,
+                                          const QString& city, const QString& location)
 {
     Logger::getInstance()->debug(QString("Creating restaurant owner: %1 %2 (%3)")
-        .arg(name)
+        .arg(firstName)
         .arg(lastName)
         .arg(email), "DatabaseManager");
 
     QVariantMap params;
-    params[":name"] = name;
+    params[":firstName"] = firstName;
     params[":lastName"] = lastName;
+    params[":username"] = username;
     params[":email"] = email;
     params[":passwordHash"] = passwordHash;
     params[":phone"] = phone;
     params[":restaurantId"] = restaurantId;
+    params[":city"] = city;
+    params[":location"] = location;
 
-    QString query = "INSERT INTO restaurant_owners (name, last_name, email, password_hash, phone, restaurant_id) "
-                   "VALUES (:name, :lastName, :email, :passwordHash, :phone, :restaurantId)";
+    QString query = "INSERT INTO restaurant_owners (first_name, last_name, username, email, password_hash, phone, restaurant_id, city, location) "
+                   "VALUES (:firstName, :lastName, :username, :email, :passwordHash, :phone, :restaurantId, :city, :location)";
 
     bool success = executeQuery(query, params);
     if (success) {
@@ -254,7 +282,7 @@ QVariantMap DatabaseManager::getRestaurantOwnerProfile(const QString& ownerId)
     QVariantMap params;
     params[":id"] = ownerId;
 
-    QString query = "SELECT name, last_name, email, phone, restaurant_id FROM restaurant_owners WHERE id = :id";
+    QString query = "SELECT name, last_name, email, phone, restaurant_id, city, location FROM restaurant_owners WHERE id = :id";
     QSqlQuery result = prepareQuery(query, params);
 
     QVariantMap profile;
@@ -264,8 +292,26 @@ QVariantMap DatabaseManager::getRestaurantOwnerProfile(const QString& ownerId)
         profile["email"] = result.value("email").toString();
         profile["phone"] = result.value("phone").toString();
         profile["restaurantId"] = result.value("restaurant_id").toString();
+        profile["city"] = result.value("city").toString();
+        profile["location"] = result.value("location").toString();
     }
     return profile;
+}
+
+QVariantMap DatabaseManager::getRestaurantOwnerByLoginId(const QString& loginId)
+{
+    QVariantMap params;
+    params[":loginId"] = loginId;
+    QString query = "SELECT * FROM restaurant_owners WHERE email = :loginId OR phone = :loginId";
+    QSqlQuery result = prepareQuery(query, params);
+    QVariantMap user;
+    if (result.next()) {
+        QSqlRecord rec = result.record();
+        for (int i = 0; i < rec.count(); ++i) {
+            user[rec.fieldName(i)] = result.value(i);
+        }
+    }
+    return user;
 }
 
 QString DatabaseManager::getRestaurantIdByOwner(const QString& ownerId)
@@ -282,15 +328,16 @@ QString DatabaseManager::getRestaurantIdByOwner(const QString& ownerId)
     return QString();
 }
 
-bool DatabaseManager::createRestaurant(const QString& name, const QString& address, const QString& type)
+bool DatabaseManager::createRestaurant(const QString& name, const QString& address, const QString& type, const QString& imageUrl)
 {
     QVariantMap params;
     params[":name"] = name;
     params[":address"] = address;
     params[":type"] = type;
+    params[":imageUrl"] = imageUrl;
 
-    QString query = "INSERT INTO restaurants (name, address, type) "
-                   "VALUES (:name, :address, :type)";
+    QString query = "INSERT INTO restaurants (name, address, type, image_url) "
+                   "VALUES (:name, :address, :type, :imageUrl)";
 
     return executeQuery(query, params);
 }
@@ -330,16 +377,19 @@ bool DatabaseManager::createMenu(const QString& restaurantId)
     return executeQuery(query, params);
 }
 
-bool DatabaseManager::addMenuItem(const QString& menuId, const QString& name, const QString& description, double price)
+bool DatabaseManager::addMenuItem(const QString& menuId, const QString& name, const QString& description, double price, const QString& ingredients, const QString& category, const QString& imageUrl)
 {
     QVariantMap params;
     params[":menuId"] = menuId;
     params[":name"] = name;
     params[":description"] = description;
     params[":price"] = price;
+    params[":ingredients"] = ingredients;
+    params[":category"] = category;
+    params[":imageUrl"] = imageUrl;
 
-    QString query = "INSERT INTO menu_items (menu_id, name, description, price) "
-                   "VALUES (:menuId, :name, :description, :price)";
+    QString query = "INSERT INTO menu_items (menu_id, name, description, price, ingredients, category, image_url) "
+                   "VALUES (:menuId, :name, :description, :price, :ingredients, :category, :imageUrl)";
 
     return executeQuery(query, params);
 }
@@ -496,4 +546,185 @@ bool DatabaseManager::commitTransaction()
 bool DatabaseManager::rollbackTransaction()
 {
     return db.rollback();
+}
+
+QJsonArray DatabaseManager::getCustomerOrderHistory(const QString& customerId)
+{
+    QVariantMap params;
+    params[":customerId"] = customerId;
+
+    QString query = "SELECT o.*, r.name as restaurant_name FROM orders o "
+                   "JOIN restaurants r ON o.restaurant_id = r.id "
+                   "WHERE o.customer_id = :customerId "
+                   "ORDER BY o.created_at DESC";
+
+    QSqlQuery result = prepareQuery(query, params);
+    QJsonArray orders;
+
+    while (result.next()) {
+        QJsonObject order;
+        order["id"] = result.value("id").toString();
+        order["restaurant_id"] = result.value("restaurant_id").toString();
+        order["restaurant_name"] = result.value("restaurant_name").toString();
+        order["status"] = result.value("status").toString();
+        order["created_at"] = result.value("created_at").toString();
+        order["total_amount"] = result.value("total_amount").toDouble();
+        orders.append(order);
+    }
+
+    return orders;
+}
+
+QJsonArray DatabaseManager::getRestaurantsByOwner(const QString& ownerId)
+{
+    QVariantMap params;
+    params[":ownerId"] = ownerId;
+
+    QString query = "SELECT r.* FROM restaurants r "
+                   "JOIN restaurant_owners ro ON r.id = ro.restaurant_id "
+                   "WHERE ro.id = :ownerId";
+
+    QSqlQuery result = prepareQuery(query, params);
+    QJsonArray restaurants;
+
+    while (result.next()) {
+        QJsonObject restaurant;
+        restaurant["id"] = result.value("id").toString();
+        restaurant["name"] = result.value("name").toString();
+        restaurant["address"] = result.value("address").toString();
+        restaurant["type"] = result.value("type").toString();
+        restaurant["image_url"] = result.value("image_url").toString();
+        restaurants.append(restaurant);
+    }
+
+    return restaurants;
+}
+
+QJsonArray DatabaseManager::getAllRestaurants()
+{
+    QString query = "SELECT * FROM restaurants WHERE status = 'approved' ORDER BY name";
+
+    QSqlQuery result = prepareQuery(query, QVariantMap());
+    QJsonArray restaurants;
+
+    while (result.next()) {
+        QJsonObject restaurant;
+        restaurant["id"] = result.value("id").toString();
+        restaurant["name"] = result.value("name").toString();
+        restaurant["address"] = result.value("address").toString();
+        restaurant["type"] = result.value("type").toString();
+        restaurant["image_url"] = result.value("image_url").toString();
+        restaurant["status"] = result.value("status").toString();
+        restaurants.append(restaurant);
+    }
+
+    return restaurants;
+}
+
+QJsonArray DatabaseManager::getOrderHistory(const QString& userId, const QString& userType)
+{
+    QVariantMap params;
+    params[":userId"] = userId;
+
+    QString query;
+    if (userType == "customer") {
+        query = "SELECT o.*, r.name as restaurant_name FROM orders o "
+                "JOIN restaurants r ON o.restaurant_id = r.id "
+                "WHERE o.customer_id = :userId "
+                "ORDER BY o.created_at DESC";
+    } else if (userType == "restaurant_owner") {
+        query = "SELECT o.*, c.first_name, c.last_name FROM orders o "
+                "JOIN restaurants r ON o.restaurant_id = r.id "
+                "JOIN restaurant_owners ro ON r.id = ro.restaurant_id "
+                "JOIN customers c ON o.customer_id = c.id "
+                "WHERE ro.id = :userId "
+                "ORDER BY o.created_at DESC";
+    } else {
+        return QJsonArray();
+    }
+
+    QSqlQuery result = prepareQuery(query, params);
+    QJsonArray orders;
+
+    while (result.next()) {
+        QJsonObject order;
+        order["id"] = result.value("id").toString();
+        order["customer_id"] = result.value("customer_id").toString();
+        order["restaurant_id"] = result.value("restaurant_id").toString();
+        order["status"] = result.value("status").toString();
+        order["created_at"] = result.value("created_at").toString();
+        order["total_amount"] = result.value("total_amount").toDouble();
+        
+        if (userType == "customer") {
+            order["restaurant_name"] = result.value("restaurant_name").toString();
+        } else if (userType == "restaurant_owner") {
+            order["customer_name"] = result.value("first_name").toString() + " " + result.value("last_name").toString();
+        }
+        
+        orders.append(order);
+    }
+
+    return orders;
+}
+
+QJsonArray DatabaseManager::getMenuItems(const QString& restaurantId)
+{
+    QVariantMap params;
+    params[":restaurantId"] = restaurantId;
+
+    QString query = "SELECT mi.* FROM menu_items mi "
+                   "JOIN menus m ON mi.menu_id = m.id "
+                   "WHERE m.restaurant_id = :restaurantId "
+                   "ORDER BY mi.name";
+
+    QSqlQuery result = prepareQuery(query, params);
+    QJsonArray menuItems;
+
+    while (result.next()) {
+        QJsonObject item;
+        item["id"] = result.value("id").toString();
+        item["menu_id"] = result.value("menu_id").toString();
+        item["name"] = result.value("name").toString();
+        item["description"] = result.value("description").toString();
+        item["price"] = result.value("price").toDouble();
+        item["ingredients"] = result.value("ingredients").toString();
+        item["category"] = result.value("category").toString();
+        item["image_url"] = result.value("image_url").toString();
+        item["available"] = result.value("available").toBool();
+        menuItems.append(item);
+    }
+
+    return menuItems;
+}
+
+bool DatabaseManager::addOrderComment(const QString& orderId, const QString& customerId, const QString& comment)
+{
+    QVariantMap params;
+    params[":orderId"] = orderId;
+    params[":customerId"] = customerId;
+    params[":comment"] = comment;
+    params[":createdAt"] = QDateTime::currentDateTime();
+
+    QString query = "INSERT INTO order_feedback (order_id, customer_id, comment, created_at) "
+                   "VALUES (:orderId, :customerId, :comment, :createdAt)";
+    return executeQuery(query, params);
+}
+
+QJsonArray DatabaseManager::getOrderComments(const QString& orderId)
+{
+    QVariantMap params;
+    params[":orderId"] = orderId;
+    QString query = "SELECT * FROM order_feedback WHERE order_id = :orderId ORDER BY created_at DESC";
+    QSqlQuery result = prepareQuery(query, params);
+    QJsonArray comments;
+    while (result.next()) {
+        QJsonObject commentObj;
+        commentObj["id"] = result.value("id").toString();
+        commentObj["order_id"] = result.value("order_id").toString();
+        commentObj["customer_id"] = result.value("customer_id").toString();
+        commentObj["comment"] = result.value("comment").toString();
+        commentObj["created_at"] = result.value("created_at").toString();
+        comments.append(commentObj);
+    }
+    return comments;
 } 

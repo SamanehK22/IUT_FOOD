@@ -23,30 +23,33 @@ AuthSystem::~AuthSystem()
     activeSessions.clear();
 }
 
-QString AuthSystem::login(const QString& username, const QString& password)
+QString AuthSystem::login(const QString& loginId, const QString& password)
 {
     // Validate input
-    if (!validateUsername(username) || !validatePassword(password)) {
+    if (loginId.isEmpty() || password.isEmpty()) {
         return QString();
     }
 
-    // Get user from database
-    QString userId = dbManager->getCustomerId(username);
-    if (userId.isEmpty()) {
-        qDebug() << "User not found:" << username;
+    // Try customer first
+    QVariantMap user = dbManager->getCustomerByLoginId(loginId);
+    QString userType = "customer";
+    if (user.isEmpty()) {
+        user = dbManager->getRestaurantOwnerByLoginId(loginId);
+        userType = "restaurant_owner";
+    }
+    if (user.isEmpty()) {
+        qDebug() << "User not found:" << loginId;
         return QString();
     }
 
-    // Get stored password hash
-    QString storedHash = dbManager->getCustomerPasswordHash(userId);
+    QString storedHash = user["password_hash"].toString();
     if (storedHash.isEmpty()) {
-        qDebug() << "No password hash found for user:" << username;
+        qDebug() << "No password hash found for user:" << loginId;
         return QString();
     }
 
-    // Verify password
     if (!SecurityUtils::verifyPassword(password, storedHash)) {
-        qDebug() << "Invalid password for user:" << username;
+        qDebug() << "Invalid password for user:" << loginId;
         return QString();
     }
 
@@ -55,46 +58,34 @@ QString AuthSystem::login(const QString& username, const QString& password)
 
     // Create session
     Session session;
-    session.userId = userId;
-    
-    // Determine user type by checking if user exists as restaurant owner
-    QString ownerId = dbManager->getRestaurantOwnerId(username);
-    session.userType = ownerId.isEmpty() ? "customer" : "restaurant_owner";
-    
+    session.userId = user["id"].toString();
+    session.userType = userType;
     session.token = token;
     session.lastActivity = QDateTime::currentDateTime();
-    
-    // Store session
     activeSessions[token] = session;
 
-    qDebug() << "User logged in successfully:" << username;
+    qDebug() << "User logged in successfully:" << loginId;
     return token;
 }
 
-bool AuthSystem::registerUser(const QString& username, const QString& password, const QString& email, const QString& userType)
+bool AuthSystem::registerUser(const QString& firstName, const QString& lastName, const QString& email, const QString& phone, const QString& password, const QString& userType)
 {
-    // Validate input
-    if (!validateUsername(username) || !validatePassword(password) || !validateEmail(email)) {
+    if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty() || userType.isEmpty()) {
         return false;
     }
-
     // Hash the password
     QString hashedPassword = SecurityUtils::hashPassword(password);
-
+    QString username = firstName + " " + lastName;
     bool success = false;
     if (userType == "restaurant_owner") {
-        // Create restaurant owner
-        success = dbManager->createRestaurantOwner(username, "", email, hashedPassword, "", "");
+        success = dbManager->createRestaurantOwner(firstName, lastName, username, email, hashedPassword, phone, "", "", "");
     } else {
-        // Create customer
-        success = dbManager->createCustomer(username, "", email, hashedPassword, "", "");
+        success = dbManager->createCustomer(firstName, lastName, username, email, hashedPassword, phone, "", "", "");
     }
-
     if (!success) {
         qDebug() << "Failed to create user:" << username;
         return false;
     }
-
     qDebug() << "User registered successfully:" << username;
     return true;
 }
