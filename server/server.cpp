@@ -127,7 +127,10 @@ void Server::processRequest(QTcpSocket* client, const QJsonObject& request)
         QString phone = request["phone"].toString();
         QString password = request["password"].toString();
         QString userType = request["userType"].toString();
-        if (m_authSystem->registerUser(firstName, lastName, email, phone, password, userType)) {
+        QString restaurantName = request.contains("restaurantName") ? request["restaurantName"].toString() : "";
+        QString city = request.contains("city") ? request["city"].toString() : "";
+        QString location = request.contains("location") ? request["location"].toString() : "";
+        if (m_authSystem->registerUser(firstName, lastName, email, phone, password, userType, restaurantName, city, location)) {
             response["status"] = "success";
             response["message"] = "Registration successful";
         } else {

@@ -68,7 +68,7 @@ QString AuthSystem::login(const QString& loginId, const QString& password)
     return token;
 }
 
-bool AuthSystem::registerUser(const QString& firstName, const QString& lastName, const QString& email, const QString& phone, const QString& password, const QString& userType)
+bool AuthSystem::registerUser(const QString& firstName, const QString& lastName, const QString& email, const QString& phone, const QString& password, const QString& userType, const QString& restaurantName, const QString& city, const QString& location)
 {
     if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty() || userType.isEmpty()) {
         return false;
@@ -78,9 +78,26 @@ bool AuthSystem::registerUser(const QString& firstName, const QString& lastName,
     QString username = firstName + " " + lastName;
     bool success = false;
     if (userType == "restaurant_owner") {
-        success = dbManager->createRestaurantOwner(firstName, lastName, username, email, hashedPassword, phone, "", "", "");
+        // Create owner first (without restaurantId)
+        success = dbManager->createRestaurantOwner(firstName, lastName, username, email, hashedPassword, phone, city, location, "");
+        if (!success) return false;
+        // Get new owner ID
+        QString ownerId = dbManager->getRestaurantOwnerId(email);
+        // If restaurantName provided, create restaurant and link
+        if (!restaurantName.isEmpty() && !ownerId.isEmpty()) {
+            dbManager->createRestaurant(restaurantName, city, location, "");
+            // Get new restaurant ID
+            QJsonArray ownerRestaurants = dbManager->getRestaurantsByOwner(ownerId);
+            if (!ownerRestaurants.isEmpty()) {
+                QString restaurantId = ownerRestaurants.last().toObject()["id"].toString();
+                // Update owner with restaurantId
+                QVariantMap updates;
+                updates["restaurant_id"] = restaurantId;
+                dbManager->updateRestaurantOwner(ownerId, updates);
+            }
+        }
     } else {
-        success = dbManager->createCustomer(firstName, lastName, username, email, hashedPassword, phone, "", "", "");
+        success = dbManager->createCustomer(firstName, lastName, username, email, hashedPassword, phone, city, location, "");
     }
     if (!success) {
         qDebug() << "Failed to create user:" << username;

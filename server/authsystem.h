@@ -24,7 +24,7 @@ public:
     
     // Authentication methods
     QString login(const QString& loginId, const QString& password);
-    bool registerUser(const QString& firstName, const QString& lastName, const QString& email, const QString& phone, const QString& password, const QString& userType);
+    bool registerUser(const QString& firstName, const QString& lastName, const QString& email, const QString& phone, const QString& password, const QString& userType, const QString& restaurantName = "", const QString& city = "", const QString& location = "");
     bool logout(const QString& token);
     
     // Session management

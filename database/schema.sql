@@ -35,6 +35,8 @@ CREATE TABLE IF NOT EXISTS restaurants (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     address TEXT,
+    city TEXT,
+    location TEXT,
     type TEXT,
     image_url TEXT,
     owner_id INTEGER,
