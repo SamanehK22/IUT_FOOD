@@ -140,6 +140,7 @@ bool RestaurantManager::updateMenuItem(const QString& restaurantId, const QStrin
 
 bool RestaurantManager::deleteMenuItem(const QString& restaurantId, const QString& itemId)
 {
+    Q_UNUSED(restaurantId);
     QVariantMap params;
     params[":item_id"] = itemId;
 
@@ -539,6 +540,7 @@ QJsonArray RestaurantManager::getMenuItemsByPriceRange(const QString& restaurant
 
 QJsonArray RestaurantManager::getMenuItemsByDietaryRestrictions(const QString& restaurantId, const QStringList& restrictions)
 {
+    Q_UNUSED(restrictions);
     // Since the menu_items table doesn't have dietary_info column,
     // we'll return all menu items for the restaurant
     QVariantMap bindValues;

@@ -43,6 +43,12 @@ private:
     void handleOrderUpdate(const QJsonObject& message);
     void sendError(QWebSocket* client, const QString& error);
     void broadcastToAll(const QJsonObject& message);
+    // Order-based chat
+    void handleOrderChatMessage(const QJsonObject& message, QWebSocket* client);
+    void sendOrderChatMessage(const QString& orderId, const QString& fromUserId, const QString& toUserId, const QString& content);
+    // User-based chat
+    void handleUserChatMessage(const QJsonObject& message, QWebSocket* client);
+    void sendUserChatMessage(const QString& fromUserId, const QString& toUserId, const QString& content);
 };
 
 #endif // WEBSOCKETSERVER_H 

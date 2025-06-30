@@ -73,10 +73,36 @@ void WebSocketServer::handleTextMessage(const QString& message, QWebSocket* clie
         authenticateClient(client, token);
     }
     else if (type == "chat") {
+        // Legacy chat (user-based, not order-based)
         handleChatMessage(json);
+    }
+    else if (type == "order_chat") {
+        handleOrderChatMessage(json, client);
+    }
+    else if (type == "user_chat") {
+        handleUserChatMessage(json, client);
     }
     else if (type == "order_update") {
         handleOrderUpdate(json);
+    }
+    else if (type == "get_order_chat_history") {
+        // Fetch order-based chat history
+        QString orderId = json["orderId"].toString();
+        QJsonObject response;
+        response["type"] = "order_chat_history";
+        response["orderId"] = orderId;
+        response["messages"] = DatabaseManager::getInstance()->getChatHistory(orderId);
+        client->sendTextMessage(QJsonDocument(response).toJson());
+    }
+    else if (type == "get_user_chat_history") {
+        QString userA = json["userA"].toString();
+        QString userB = json["userB"].toString();
+        QJsonObject response;
+        response["type"] = "user_chat_history";
+        response["userA"] = userA;
+        response["userB"] = userB;
+        response["messages"] = DatabaseManager::getInstance()->getUserChatHistory(userA, userB);
+        client->sendTextMessage(QJsonDocument(response).toJson());
     }
     else {
         sendError(client, "Unknown message type");
@@ -221,5 +247,75 @@ void WebSocketServer::broadcastToRestaurant(const QString& restaurantId, const Q
         if (userType == "restaurant" && userId.startsWith(restaurantId)) {
             it.value()->sendTextMessage(QJsonDocument(message).toJson());
         }
+    }
+}
+
+void WebSocketServer::handleOrderChatMessage(const QJsonObject& message, QWebSocket* client)
+{
+    QString orderId = message["orderId"].toString();
+    QString fromUserId = message["fromUserId"].toString();
+    QString toUserId = message["toUserId"].toString();
+    QString content = message["content"].toString();
+    if (orderId.isEmpty() || fromUserId.isEmpty() || toUserId.isEmpty() || content.isEmpty()) {
+        sendError(client, "Missing fields in order chat message");
+        return;
+    }
+    // Store in DB
+    DatabaseManager::getInstance()->addChatMessage(orderId, fromUserId, toUserId, content);
+    // Deliver in real time
+    sendOrderChatMessage(orderId, fromUserId, toUserId, content);
+}
+
+void WebSocketServer::sendOrderChatMessage(const QString& orderId, const QString& fromUserId, const QString& toUserId, const QString& content)
+{
+    QJsonObject chatMessage;
+    chatMessage["type"] = "order_chat";
+    chatMessage["orderId"] = orderId;
+    chatMessage["fromUserId"] = fromUserId;
+    chatMessage["toUserId"] = toUserId;
+    chatMessage["content"] = content;
+    chatMessage["timestamp"] = QDateTime::currentDateTime().toString(Qt::ISODate);
+    if (m_clients.contains(toUserId)) {
+        m_clients[toUserId]->sendTextMessage(QJsonDocument(chatMessage).toJson());
+    }
+    // Optionally, send confirmation to sender
+    if (m_clients.contains(fromUserId)) {
+        QJsonObject confirmation = chatMessage;
+        confirmation["type"] = "order_chat_sent";
+        m_clients[fromUserId]->sendTextMessage(QJsonDocument(confirmation).toJson());
+    }
+}
+
+void WebSocketServer::handleUserChatMessage(const QJsonObject& message, QWebSocket* client)
+{
+    QString fromUserId = message["fromUserId"].toString();
+    QString toUserId = message["toUserId"].toString();
+    QString content = message["content"].toString();
+    if (fromUserId.isEmpty() || toUserId.isEmpty() || content.isEmpty()) {
+        sendError(client, "Missing fields in user chat message");
+        return;
+    }
+    // Store in DB
+    DatabaseManager::getInstance()->addUserChatMessage(fromUserId, toUserId, content);
+    // Deliver in real time
+    sendUserChatMessage(fromUserId, toUserId, content);
+}
+
+void WebSocketServer::sendUserChatMessage(const QString& fromUserId, const QString& toUserId, const QString& content)
+{
+    QJsonObject chatMessage;
+    chatMessage["type"] = "user_chat";
+    chatMessage["fromUserId"] = fromUserId;
+    chatMessage["toUserId"] = toUserId;
+    chatMessage["content"] = content;
+    chatMessage["timestamp"] = QDateTime::currentDateTime().toString(Qt::ISODate);
+    if (m_clients.contains(toUserId)) {
+        m_clients[toUserId]->sendTextMessage(QJsonDocument(chatMessage).toJson());
+    }
+    // Optionally, send confirmation to sender
+    if (m_clients.contains(fromUserId)) {
+        QJsonObject confirmation = chatMessage;
+        confirmation["type"] = "user_chat_sent";
+        m_clients[fromUserId]->sendTextMessage(QJsonDocument(confirmation).toJson());
     }
 } 

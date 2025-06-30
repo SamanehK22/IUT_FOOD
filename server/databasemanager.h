@@ -69,6 +69,14 @@ public:
     bool addOrderComment(const QString& orderId, const QString& customerId, const QString& comment);
     QJsonArray getOrderComments(const QString& orderId);
 
+    // Chat message storage and retrieval
+    bool addChatMessage(const QString& orderId, const QString& fromUserId, const QString& toUserId, const QString& content);
+    QJsonArray getChatHistory(const QString& orderId);
+
+    // User-based chat message storage and retrieval
+    bool addUserChatMessage(const QString& fromUserId, const QString& toUserId, const QString& content);
+    QJsonArray getUserChatHistory(const QString& userA, const QString& userB);
+
     // Query Execution
     bool executeQuery(const QString& query, const QVariantMap& params);
     QSqlQuery prepareQuery(const QString& query, const QVariantMap& params);

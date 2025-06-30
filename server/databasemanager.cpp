@@ -727,4 +727,73 @@ QJsonArray DatabaseManager::getOrderComments(const QString& orderId)
         comments.append(commentObj);
     }
     return comments;
+}
+
+bool DatabaseManager::addChatMessage(const QString& orderId, const QString& fromUserId, const QString& toUserId, const QString& content)
+{
+    QVariantMap params;
+    params[":orderId"] = orderId;
+    params[":fromUserId"] = fromUserId;
+    params[":toUserId"] = toUserId;
+    params[":content"] = content;
+    QString query = "INSERT INTO chat_messages (order_id, from_user_id, to_user_id, content) VALUES (:orderId, :fromUserId, :toUserId, :content)";
+    return executeQuery(query, params);
+}
+
+QJsonArray DatabaseManager::getChatHistory(const QString& orderId)
+{
+    QVariantMap params;
+    params[":orderId"] = orderId;
+    QString query = "SELECT id, order_id, from_user_id, to_user_id, content, timestamp, is_read FROM chat_messages WHERE order_id = :orderId ORDER BY timestamp ASC";
+    QSqlQuery result = prepareQuery(query, params);
+    QJsonArray messages;
+    while (result.next()) {
+        QJsonObject msg;
+        msg["id"] = result.value("id").toInt();
+        msg["orderId"] = result.value("order_id").toString();
+        msg["fromUserId"] = result.value("from_user_id").toString();
+        msg["toUserId"] = result.value("to_user_id").toString();
+        msg["content"] = result.value("content").toString();
+        msg["timestamp"] = result.value("timestamp").toString();
+        msg["isRead"] = result.value("is_read").toInt() != 0;
+        messages.append(msg);
+    }
+    return messages;
+}
+
+bool DatabaseManager::addUserChatMessage(const QString& fromUserId, const QString& toUserId, const QString& content)
+{
+    QVariantMap params;
+    params[":fromUserId"] = fromUserId;
+    params[":toUserId"] = toUserId;
+    params[":content"] = content;
+    QString query = "INSERT INTO user_chat_messages (from_user_id, to_user_id, content) VALUES (:fromUserId, :toUserId, :content)";
+    return executeQuery(query, params);
+}
+
+QJsonArray DatabaseManager::getUserChatHistory(const QString& userA, const QString& userB)
+{
+    QVariantMap params;
+    params[":userA"] = userA;
+    params[":userB"] = userB;
+    QString query = R"(
+        SELECT id, from_user_id, to_user_id, content, timestamp, is_read
+        FROM user_chat_messages
+        WHERE (from_user_id = :userA AND to_user_id = :userB)
+           OR (from_user_id = :userB AND to_user_id = :userA)
+        ORDER BY timestamp ASC
+    )";
+    QSqlQuery result = prepareQuery(query, params);
+    QJsonArray messages;
+    while (result.next()) {
+        QJsonObject msg;
+        msg["id"] = result.value("id").toInt();
+        msg["fromUserId"] = result.value("from_user_id").toString();
+        msg["toUserId"] = result.value("to_user_id").toString();
+        msg["content"] = result.value("content").toString();
+        msg["timestamp"] = result.value("timestamp").toString();
+        msg["isRead"] = result.value("is_read").toInt() != 0;
+        messages.append(msg);
+    }
+    return messages;
 } 
