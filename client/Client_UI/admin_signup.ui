@@ -30,25 +30,6 @@
     background-color: #EFE1C6;
 </string>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>40</y>
-     <width>121</width>
-     <height>91</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="pixmap">
-    <pixmap>../../Downloads/095e9f9e-aed3-4c3f-8c97-8004a9ed016a.png</pixmap>
-   </property>
-   <property name="scaledContents">
-    <bool>true</bool>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
@@ -149,8 +130,8 @@ QPushButton:pressed {
     <string>Coustomer</string>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../../Downloads/ChatGPT Image Jun 2, 2025, 11_30_52 PM(2).png</normaloff>../../Downloads/ChatGPT Image Jun 2, 2025, 11_30_52 PM(2).png</iconset>
+    <iconset resource="Source.qrc">
+     <normaloff>:/ImageFolder/iconCustomer.png</normaloff>:/ImageFolder/iconCustomer.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -227,8 +208,8 @@ QPushButton:pressed {
     <string>Restaurant</string>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../../Downloads/ChatGPT Image Jun 2, 2025, 11_30_52 PM(1).png</normaloff>../../Downloads/ChatGPT Image Jun 2, 2025, 11_30_52 PM(1).png</iconset>
+    <iconset resource="Source.qrc">
+     <normaloff>:/ImageFolder/iconRestaurant.png</normaloff>:/ImageFolder/iconRestaurant.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -366,40 +347,14 @@ QPushButton:focus {
     <string/>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../../Downloads/Icn1003833www.tiktarh.com_.png</normaloff>../../Downloads/Icn1003833www.tiktarh.com_.png</iconset>
+    <iconset resource="Source.qrc">
+     <normaloff>:/ImageFolder/Show.png</normaloff>:/ImageFolder/Show.png</iconset>
    </property>
    <property name="iconSize">
     <size>
      <width>25</width>
      <height>25</height>
     </size>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_4">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>130</y>
-     <width>171</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QLabel {
-    font-family: &quot;Segoe UI&quot;, &quot;Vazir&quot;, sans-serif;
-    font-size: 30px;
-    font-weight: bold;
-    color: #333333;
-    padding: 10px;
-    qproperty-alignment: AlignCenter;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
-	border: none;
-    background-color: transparent;
-}</string>
-   </property>
-   <property name="text">
-    <string>IUT Food</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton">
@@ -429,7 +384,78 @@ QPushButton:hover {
     <string>Forgot Password ?</string>
    </property>
   </widget>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>161</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="minimumSize">
+       <size>
+        <width>159</width>
+        <height>111</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>159</width>
+        <height>111</height>
+       </size>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Source.qrc">:/ImageFolder/IUTfood.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_4">
+      <property name="minimumSize">
+       <size>
+        <width>159</width>
+        <height>61</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>159</width>
+        <height>61</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+    font-family: &quot;Segoe UI&quot;, &quot;Vazir&quot;, sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    color: #333333;
+    padding: 10px;
+    qproperty-alignment: AlignCenter;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+	border: none;
+    background-color: transparent;
+}</string>
+      </property>
+      <property name="text">
+       <string>IUT Food</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="Source.qrc"/>
+ </resources>
  <connections/>
 </ui>

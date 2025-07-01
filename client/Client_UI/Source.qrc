@@ -1,0 +1,27 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ImageFolder/Lock2.png</file>
+        <file>ImageFolder/Lock1.png</file>
+        <file>ImageFolder/Back.png</file>
+        <file>ImageFolder/Lock3.png</file>
+        <file>ImageFolder/Set_password.png</file>
+        <file>ImageFolder/Profile.png</file>
+        <file>ImageFolder/Mardak.png</file>
+        <file>ImageFolder/iconRestaurant.png</file>
+        <file>ImageFolder/Signup (2).jpg</file>
+        <file>ImageFolder/IUTfood.png</file>
+        <file>ImageFolder/Show.png</file>
+        <file>ImageFolder/Burger.png</file>
+        <file>ImageFolder/iconCustomer.png</file>
+        <file>ImageFolder/AdminHome (1).jpg</file>
+        <file>ImageFolder/AdminHome (1).png</file>
+        <file>ImageFolder/AdminHome (2).png</file>
+        <file>ImageFolder/AdminHome (3).png</file>
+        <file>ImageFolder/AdminHome (4).png</file>
+        <file>ImageFolder/AdminHome.png</file>
+        <file>ImageFolder/ManageUsers.png</file>
+        <file>ImageFolder/MangeRestaurant.png</file>
+        <file>ImageFolder/AdminProfile.png</file>
+        <file>ImageFolder/OrderTrack.png</file>
+    </qresource>
+</RCC>

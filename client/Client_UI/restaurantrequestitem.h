@@ -4,9 +4,9 @@
 #include <QWidget>
 #include <QLabel>
 #include <QPushButton>
+#include <QFrame>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <QFrame>
 
 class RestaurantRequestItem : public QWidget
 {
@@ -22,6 +22,9 @@ private slots:
     void handleBlockClicked();
 
 private:
+    void setupStyle();
+    void switchToApprovedMode();
+
     QLabel *nameLabel;
     QLabel *ownerLabel;
     QLabel *typeLabel;
@@ -32,9 +35,6 @@ private:
     QPushButton *blockButton;
 
     QFrame *actionFrame;
-
-    void setupStyle();
-    void switchToApprovedMode();
 };
 
 #endif // RESTAURANTREQUESTITEM_H

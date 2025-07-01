@@ -18,6 +18,8 @@ public:
 private slots:
     void on_pushButton_clicked();
 
+    void on_back_pushButton_clicked();
+
 private:
     Ui::forgot_pass *ui;
 };

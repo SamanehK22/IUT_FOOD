@@ -17,30 +17,63 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     admin_signup.cpp \
+    adminsetpass.cpp \
+    cartitemwidget.cpp \
+    cartwindow.cpp \
+    customersetpass.cpp \
+    custompopup.cpp \
     fooditemwidget.cpp \
     forgot_pass.cpp \
-    homeCoustomer.cpp \
+    history.cpp \
+    homeadmin.cpp \
     main.cpp \
     menu.cpp \
+    orderhistoryitem.cpp \
+    profile.cpp \
+    profileadmin.cpp \
     reset_pass.cpp \
+    restaurantapprovalwindow.cpp \
+    restaurantitemwidget.cpp \
+    restaurantlistwindow.cpp \
+    restaurantrequestitem.cpp \
     signup_coustomer.cpp \
-    signup_restaurant.cpp
+    signup_restaurant.cpp \
+    useritemwidget.cpp \
+    usermanagementwindow.cpp
 
 HEADERS += \
     admin_signup.h \
+    adminsetpass.h \
+    cartitemwidget.h \
+    cartwindow.h \
+    customersetpass.h \
+    custompopup.h \
     fooditemwidget.h \
     forgot_pass.h \
-    homeCoustomer.h \
+    history.h \
+    homeadmin.h \
     menu.h \
+    orderhistoryitem.h \
+    profile.h \
+    profileadmin.h \
     reset_pass.h \
+    restaurantapprovalwindow.h \
+    restaurantitemwidget.h \
+    restaurantlistwindow.h \
+    restaurantrequestitem.h \
     signup_coustomer.h \
-    signup_restaurant.h
+    signup_restaurant.h \
+    useritemwidget.h \
+    usermanagementwindow.h
 
 FORMS += \
     admin_signup.ui \
+    adminsetpass.ui \
+    customersetpass.ui \
     forgot_pass.ui \
-    homeCoustomer.ui \
-    menu.ui \
+    homeadmin.ui \
+    profile.ui \
+    profileadmin.ui \
     reset_pass.ui \
     signup_coustomer.ui \
     signup_restaurant.ui
@@ -50,4 +83,5 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-RESOURCES +=
+RESOURCES += \
+    Source.qrc

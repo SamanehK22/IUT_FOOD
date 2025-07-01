@@ -9,7 +9,7 @@ RestaurantRequestItem::RestaurantRequestItem(QString name, QString owner, QStrin
 
     approveButton = new QPushButton("Approve");
     rejectButton = new QPushButton("Reject");
-    deleteButton = new QPushButton("🗑Delete");
+    deleteButton = new QPushButton("Delete");
     blockButton = new QPushButton("Block");
 
     actionFrame = new QFrame();

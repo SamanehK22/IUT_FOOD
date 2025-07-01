@@ -2,11 +2,10 @@
 #define RESTAURANTAPPROVALWINDOW_H
 
 #include <QWidget>
-#include <QScrollArea>
 #include <QVBoxLayout>
+#include <QScrollArea>
 #include <QLabel>
-#include <QStringList>
-#include "restaurantrequestitem.h"
+#include <QPushButton>
 
 class RestaurantApprovalWindow : public QWidget
 {
@@ -15,13 +14,17 @@ class RestaurantApprovalWindow : public QWidget
 public:
     explicit RestaurantApprovalWindow(QWidget *parent = nullptr);
 
+private slots:
+    void onBackClicked();
+
 private:
-    QVBoxLayout *requestsLayout;
+    void setupUI();
+    void loadRequests();
+
     QScrollArea *scrollArea;
     QWidget *scrollWidget;
-
-    void setupUI();
-    void loadRequests(); // simulate loading
+    QVBoxLayout *requestsLayout;
+    QPushButton *backButton;
 };
 
 #endif // RESTAURANTAPPROVALWINDOW_H

@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "signup_coustomer.h"
 #include "signup_restaurant.h"
+#include "restaurantlistwindow.h"
 
 namespace Ui {
 class Admin_Signup;
@@ -23,6 +24,8 @@ private slots:
     void on_Restaurant_Button_clicked();
 
     void on_pushButton_clicked();
+
+    void on_Login_Button_clicked();
 
 private:
     Ui::Admin_Signup *ui;

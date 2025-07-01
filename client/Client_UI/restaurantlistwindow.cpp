@@ -1,4 +1,7 @@
 #include "restaurantlistwindow.h"
+#include "cartwindow.h"
+#include "history.h"
+#include "menu.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -7,6 +10,8 @@
 #include <QFont>
 #include <QLineEdit>
 #include <QComboBox>
+#include "admin_signup.h"
+#include "profile.h"
 
 RestaurantListWindow::RestaurantListWindow(QWidget *parent)
     : QWidget(parent)
@@ -18,14 +23,10 @@ RestaurantListWindow::RestaurantListWindow(QWidget *parent)
 
     // دکمه‌های بالایی
     QHBoxLayout *topButtonLayout = new QHBoxLayout();
-    topButtonLayout->setContentsMargins(10, 0, 10, 0);
-    topButtonLayout->setSpacing(0);
-
     QPushButton *backButton = new QPushButton("◀️");
-    backButton->setObjectName("back_pushButton");
     backButton->setFixedSize(40, 32);
     backButton->setStyleSheet(R"(
-        QPushButton#back_pushButton {
+        QPushButton {
             background-color: #FFF3E0;
             color: #FF5722;
             font: bold 10pt "Segoe UI";
@@ -33,7 +34,7 @@ RestaurantListWindow::RestaurantListWindow(QWidget *parent)
             border-radius: 12px;
             padding: 6px 12px;
         }
-        QPushButton#back_pushButton:hover {
+        QPushButton:hover {
             background-color: #FFE0B2;
             color: #E64A19;
             border: 2px solid #FFA726;
@@ -43,47 +44,110 @@ RestaurantListWindow::RestaurantListWindow(QWidget *parent)
     topButtonLayout->addStretch();
 
     QStringList buttonNames = {"Shopping Cart", "Order History", "Order Status", "Support", "Profile"};
-
-    for (int i = 0; i < buttonNames.size(); ++i) {
-        QPushButton *btn = new QPushButton(buttonNames[i]);
+    for (const QString &name : buttonNames) {
+        QPushButton *btn = new QPushButton(name);
         btn->setFixedHeight(32);
-        btn->setMinimumWidth(80);
-        btn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
         btn->setStyleSheet(R"(
-           QPushButton {
-               background-color: #CBB89D;
-               color: #4B3621;
-               border: 2px solid #A1887F;
-               border-radius: 10px;
-               padding: 6px 12px;
-               font: bold 14px "Segoe UI";
-           }
-           QPushButton:hover {
-               background-color: #EAD8BD;
-           }
+            QPushButton {
+                background-color: #CBB89D;
+                color: #4B3621;
+                border: 2px solid #A1887F;
+                border-radius: 10px;
+                padding: 6px 12px;
+                font: bold 14px "Segoe UI";
+            }
+            QPushButton:hover {
+                background-color: #EAD8BD;
+            }
         )");
-
         topButtonLayout->addWidget(btn);
-        if (i < buttonNames.size() - 1)
-            topButtonLayout->addStretch();
+        topButtonLayout->addStretch();
     }
 
-    topButtonLayout->addStretch();
     mainLayout->addLayout(topButtonLayout);
 
-    // عنوان
+    // اتصال دکمه Shopping Cart
+    for(int i = 0; i < topButtonLayout->count(); i++) {
+        if(QPushButton *btn = qobject_cast<QPushButton*>(topButtonLayout->itemAt(i)->widget())) {
+            if(btn->text() == "Shopping Cart") {
+                connect(btn, &QPushButton::clicked, this, [this](){
+                    this->close();
+                    CartWindow *cart = new CartWindow();
+                    cart->show();
+                });
+                break;
+            }
+        }
+    }
+
+    // اتصال دکمه Order History
+    for(int i = 0; i < topButtonLayout->count(); i++) {
+        if(QPushButton *btn = qobject_cast<QPushButton*>(topButtonLayout->itemAt(i)->widget())) {
+            if(btn->text() == "Order History") {
+                connect(btn, &QPushButton::clicked, this, [this](){
+                    this->close();
+                    History *historyItem = new History();
+                    historyItem->addSampleOrders();
+                    historyItem->show();
+                });
+                break;
+            }
+        }
+    }
+
+    // اتصال دکمه Order Status
+    for(int i = 0; i < topButtonLayout->count(); i++) {
+        if(QPushButton *btn = qobject_cast<QPushButton*>(topButtonLayout->itemAt(i)->widget())) {
+            if(btn->text() == "Order Status") {
+                connect(btn, &QPushButton::clicked, this, [this](){
+                    this->close();
+                    // OrderStatusWindow *statusWindow = new OrderStatusWindow();
+                    // statusWindow->show();
+                    QMessageBox::information(this, "Order Status", "Order status feature will be implemented here");
+                });
+                break;
+            }
+        }
+    }
+
+    // اتصال دکمه Support
+    for(int i = 0; i < topButtonLayout->count(); i++) {
+        if(QPushButton *btn = qobject_cast<QPushButton*>(topButtonLayout->itemAt(i)->widget())) {
+            if(btn->text() == "Support") {
+                connect(btn, &QPushButton::clicked, this, [this](){
+                    this->close();
+                    // SupportWindow *supportWindow = new SupportWindow();
+                    // supportWindow->show();
+                    QMessageBox::information(this, "Support", "Support feature will be implemented here");
+                });
+                break;
+            }
+        }
+    }
+
+    // اتصال دکمه Profile
+    for(int i = 0; i < topButtonLayout->count(); i++) {
+        if(QPushButton *btn = qobject_cast<QPushButton*>(topButtonLayout->itemAt(i)->widget())) {
+            if(btn->text() == "Profile") {
+                connect(btn, &QPushButton::clicked, this, [this](){
+                    this->close();
+                    Profile *profileWindow = new Profile();
+                    profileWindow->show();
+                });
+                break;
+            }
+        }
+    }
+
     QLabel *title = new QLabel("Restaurant List");
-    title->setStyleSheet("font-size: 30px; font-weight: bold; color: #4B3621; font-family: 'Segoe UI'; margin-bottom: 10px;");
     title->setAlignment(Qt::AlignCenter);
+    title->setStyleSheet("font-size: 30px; font-weight: bold; color: #4B3621; font-family: 'Segoe UI';");
     mainLayout->addWidget(title);
 
     // فیلترها
     QHBoxLayout *filterLayout = new QHBoxLayout();
-    filterLayout->setContentsMargins(10, 0, 10, 0);
-    filterLayout->setSpacing(30);
 
     QVBoxLayout *leftFilterLayout = new QVBoxLayout();
-    leftFilterLayout->setSpacing(4);
     QLabel *cityLabel = new QLabel("Filter by City:");
     cityLabel->setStyleSheet("font: bold 15px 'Segoe UI'; color: #4B3621;");
     cityFilterCombo = new QComboBox();
@@ -107,11 +171,10 @@ RestaurantListWindow::RestaurantListWindow(QWidget *parent)
     filterLayout->addStretch();
 
     QVBoxLayout *rightFilterLayout = new QVBoxLayout();
-    rightFilterLayout->setSpacing(4);
     QLabel *typeLabel = new QLabel("Filter by Type:");
     typeLabel->setStyleSheet("font: bold 15px 'Segoe UI'; color: #4B3621;");
     typeFilterCombo = new QComboBox();
-    typeFilterCombo->addItems({"All", "Fast Food", "Vegeterian", "Iranian", "Sea Food"});
+    typeFilterCombo->addItems({"All", "Fast Food", "Vegeterian", "Iranian", "Sea Food", "Italian"});
     typeFilterCombo->setStyleSheet(R"(
         QComboBox {
             background-color: #F1E3C4;
@@ -125,7 +188,6 @@ RestaurantListWindow::RestaurantListWindow(QWidget *parent)
     rightFilterLayout->addWidget(typeLabel);
     rightFilterLayout->addWidget(typeFilterCombo);
     filterLayout->addLayout(rightFilterLayout);
-
     mainLayout->addLayout(filterLayout);
 
     // جستجو
@@ -143,74 +205,125 @@ RestaurantListWindow::RestaurantListWindow(QWidget *parent)
     )");
     mainLayout->addWidget(searchBox);
 
-    // ناحیه لیست رستوران‌ها
+    // Scroll Area
     QScrollArea *scrollArea = new QScrollArea();
     scrollArea->setWidgetResizable(true);
     scrollArea->setStyleSheet("background-color: transparent; border: none; margin: 0 10px;");
-
     QWidget *container = new QWidget();
     listLayout = new QVBoxLayout(container);
     listLayout->setSpacing(12);
-    listLayout->setContentsMargins(0, 0, 10, 10);
-
     scrollArea->setWidget(container);
     mainLayout->addWidget(scrollArea);
 
-    // داده نمونه
-    addRestaurant("Italiano Restaurant", "123 Roma St, Tehran", 4.5, "Italian");
-    addRestaurant("Burger House", "456 Burger Ave, Esfahan", 4.0, "Fast Food");
-    addRestaurant("Sushi World", "789 Tokyo St, Mazandaran", 4.7, "Sea Food");
-    addRestaurant("Traditional Food", "321 Persian St, Yazd", 4.8, "Iranian");
-    addRestaurant("Vegeterian Cafe", "654 Green St, Gilan", 4.3, "Vegeterian");
-    addRestaurant("Sea Food House", "987 Ocean St, Hormozgan", 4.6, "Sea Food");
+    // داده‌های اولیه
+    addRestaurant("Italiano Restaurant", "123 Roma St, Tehran", 4.5, "Italian", "Tehran");
+    addRestaurant("Burger House", "456 Burger Ave, Esfahan", 4.0, "Fast Food", "Esfahan");
+    addRestaurant("Sushi World", "789 Tokyo St, Mazandaran", 4.7, "Sea Food", "Mazandaran");
+    addRestaurant("Traditional Food", "321 Persian St, Yazd", 4.8, "Iranian", "Yazd");
+    addRestaurant("Vegeterian Cafe", "654 Green St, Gilan", 4.3, "Vegeterian", "Gilan");
+    addRestaurant("Sea Food House", "987 Ocean St, Hormozgan", 4.6, "Sea Food", "Hormozgan");
+
+    // اتصال فیلترها و جستجو
+    connect(cityFilterCombo, &QComboBox::currentTextChanged, this, &RestaurantListWindow::updateRestaurantList);
+    connect(typeFilterCombo, &QComboBox::currentTextChanged, this, &RestaurantListWindow::updateRestaurantList);
+    connect(searchBox, &QLineEdit::textChanged, this, &RestaurantListWindow::updateRestaurantList);
+    connect(backButton, &QPushButton::clicked, this, &RestaurantListWindow::onBackButtonClicked);
 }
 
-void RestaurantListWindow::addRestaurant(const QString &name, const QString &address, double rating, const QString &type)
+void RestaurantListWindow::addRestaurant(const QString &name, const QString &address, double rating, const QString &type, const QString &city)
 {
-    QWidget *card = new QWidget();
-    card->setStyleSheet(R"(
-        background-color: #F7E9D3;
-        border-radius: 16px;
-        padding: 12px;
-        margin: 0 5px;
-    )");
+    allRestaurants.append({name, address, rating, type, city});
+    updateRestaurantList();
+}
 
-    QHBoxLayout *mainCardLayout = new QHBoxLayout(card);
-    mainCardLayout->setSpacing(15);
+void RestaurantListWindow::updateRestaurantList()
+{
+    QLayoutItem *item;
+    while ((item = listLayout->takeAt(0))) {
+        delete item->widget();
+        delete item;
+    }
 
-    QLabel *imageLabel = new QLabel("Image");
-    imageLabel->setFixedSize(90, 90);
-    imageLabel->setStyleSheet(R"(
-        background-color: #EFE1C6;
-        border-radius: 12px;
-        border: 1px solid #D9CBB6;
-        color: #8D775E;
-        font: 12px 'Segoe UI';
-    )");
-    imageLabel->setAlignment(Qt::AlignCenter);
+    QString searchText = searchBox->text().trimmed().toLower();
+    QString selectedCity = cityFilterCombo->currentText();
+    QString selectedType = typeFilterCombo->currentText();
 
-    QVBoxLayout *infoLayout = new QVBoxLayout();
-    infoLayout->setSpacing(4);
+    for (const Restaurant &r : allRestaurants) {
+        if ((selectedCity == "All" || r.city == selectedCity) &&
+            (selectedType == "All" || r.type == selectedType) &&
+            (searchText.isEmpty() || r.name.toLower().contains(searchText)))
+        {
+            QWidget *card = new QWidget();
+            card->setStyleSheet(R"(
+                background-color: #F7E9D3;
+                border-radius: 16px;
+                padding: 12px;
+            )");
 
-    QLabel *nameLabel = new QLabel(name);
-    nameLabel->setStyleSheet("font-weight: bold; font-size: 15px; font-family: 'Segoe UI'; color: #4B3621;");
+            QHBoxLayout *mainCardLayout = new QHBoxLayout(card);
+            mainCardLayout->setSpacing(15);
 
-    QLabel *addressLabel = new QLabel("Address: " + address);
-    addressLabel->setStyleSheet("font-size: 13px; color: #5C4B3B; font-family: 'Segoe UI';");
+            QLabel *imageLabel = new QLabel("Image");
+            imageLabel->setFixedSize(90, 90);
+            imageLabel->setStyleSheet(R"(
+                background-color: #EFE1C6;
+                border-radius: 12px;
+                border: 1px solid #D9CBB6;
+                color: #8D775E;
+                font: 12px 'Segoe UI';
+            )");
+            imageLabel->setAlignment(Qt::AlignCenter);
 
-    QLabel *ratingLabel = new QLabel(QString("Rating: %1 / 5").arg(rating));
-    ratingLabel->setStyleSheet("font-size: 13px; color: #8B5E3C; font-family: 'Segoe UI';");
+            QVBoxLayout *infoLayout = new QVBoxLayout();
+            QLabel *nameLabel = new QLabel(r.name);
+            nameLabel->setStyleSheet("font-weight: bold; font-size: 15px; color: #4B3621; font-family: 'Segoe UI';");
+            QLabel *addressLabel = new QLabel("Address: " + r.address);
+            addressLabel->setStyleSheet("font-size: 13px; color: #5C4B3B;");
+            QLabel *ratingLabel = new QLabel(QString("Rating: %1 / 5").arg(r.rating));
+            ratingLabel->setStyleSheet("font-size: 13px; color: #8B5E3C;");
+            QLabel *typeLabel = new QLabel("Type: " + r.type);
+            typeLabel->setStyleSheet("font-size: 13px; color: #6B4F32;");
+            infoLayout->addWidget(nameLabel);
+            infoLayout->addWidget(addressLabel);
+            infoLayout->addWidget(ratingLabel);
+            infoLayout->addWidget(typeLabel);
 
-    QLabel *typeLabel = new QLabel("Type: " + type);
-    typeLabel->setStyleSheet("font-size: 13px; color: #6B4F32; font-family: 'Segoe UI';");
+            QPushButton *menuButton = new QPushButton("Menu");
+            menuButton->setFixedSize(80, 32);
+            menuButton->setStyleSheet(R"(
+                QPushButton {
+                    background-color: #D7B899;
+                    color: #4B3621;
+                    border-radius: 10px;
+                    border: 2px solid #BCA38E;
+                    font: bold 13px "Segoe UI";
+                    padding: 4px 10px;
+                }
+                QPushButton:hover {
+                    background-color: #E8D3B5;
+                }
+            )");
 
-    infoLayout->addWidget(nameLabel);
-    infoLayout->addWidget(addressLabel);
-    infoLayout->addWidget(ratingLabel);
-    infoLayout->addWidget(typeLabel);
+            connect(menuButton, &QPushButton::clicked, this, [this, r]() {
+                this->close();
+                Menu *menuWindow = new Menu();
+                menuWindow->setWindowTitle(r.name + " - Menu");
+                menuWindow->show();
+            });
 
-    mainCardLayout->addWidget(imageLabel);
-    mainCardLayout->addLayout(infoLayout);
+            mainCardLayout->addWidget(imageLabel);
+            mainCardLayout->addLayout(infoLayout);
+            mainCardLayout->addStretch();
+            mainCardLayout->addWidget(menuButton);
 
-    listLayout->addWidget(card);
+            listLayout->addWidget(card);
+        }
+    }
+}
+
+void RestaurantListWindow::onBackButtonClicked()
+{
+    this->close();
+    Admin_Signup *loginWindow = new Admin_Signup();
+    loginWindow->show();
 }

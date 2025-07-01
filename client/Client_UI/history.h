@@ -14,6 +14,7 @@ class History : public QWidget
 public:
     explicit History(QWidget *parent = nullptr);
     void addOrder(const QString &restaurantName, const QStringList &items, double totalPrice);
+    void addSampleOrders();  // ✅ تابع جدید برای سفارش‌های نمونه
     void filterOrders(const QString &text);
 
 private:

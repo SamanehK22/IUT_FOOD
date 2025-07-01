@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>551</width>
-    <height>624</height>
+    <width>650</width>
+    <height>730</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,26 +16,53 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>-80</x>
-     <y>-5</y>
-     <width>641</width>
-     <height>791</height>
+     <x>-10</x>
+     <y>-10</y>
+     <width>681</width>
+     <height>761</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>../../Downloads/ChatGPT Image Jun 28, 2025, 08_08_59 PM.png</pixmap>
+    <pixmap resource="Source.qrc">:/ImageFolder/Profile.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="Profile_label">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>40</y>
+     <width>341</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    background-color: #CBB89D;
+    color: #4B3621;
+    border: 2px solid #A1887F;
+    border-radius: 20px;
+    padding: 6px 60px;
+    font: bold 20px &quot;Segoe UI&quot;;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Personal Information</string>
    </property>
   </widget>
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>110</y>
-     <width>391</width>
-     <height>471</height>
+     <x>90</x>
+     <y>150</y>
+     <width>471</width>
+     <height>541</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -50,12 +77,12 @@
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QLineEdit" name="firstname_lineEdit">
+   <widget class="QLineEdit" name="firstname_lineEdit_3">
     <property name="geometry">
      <rect>
       <x>150</x>
       <y>200</y>
-      <width>91</width>
+      <width>121</width>
       <height>41</height>
      </rect>
     </property>
@@ -79,7 +106,7 @@ QLineEdit:focus {
      <string>Name</string>
     </property>
    </widget>
-   <widget class="QLabel" name="Fullname_label">
+   <widget class="QLabel" name="Fullname_label_3">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -105,7 +132,7 @@ QLineEdit:focus {
      <string>Full Name</string>
     </property>
    </widget>
-   <widget class="QLabel" name="EmailAdress_label">
+   <widget class="QLabel" name="EmailAdress_label_3">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -131,12 +158,12 @@ QLineEdit:focus {
      <string>Email Address</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lastname_lineEdit">
+   <widget class="QLineEdit" name="lastname_lineEdit_3">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>280</x>
       <y>200</y>
-      <width>131</width>
+      <width>171</width>
       <height>41</height>
      </rect>
     </property>
@@ -160,12 +187,12 @@ QLineEdit:focus {
      <string>LastName</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="Email_lineEdit">
+   <widget class="QLineEdit" name="Email_lineEdit_3">
     <property name="geometry">
      <rect>
       <x>150</x>
       <y>270</y>
-      <width>231</width>
+      <width>301</width>
       <height>41</height>
      </rect>
     </property>
@@ -189,7 +216,7 @@ QLineEdit:focus {
      <string>EmailAddress@gmail.com</string>
     </property>
    </widget>
-   <widget class="QLabel" name="PhoneNumber_label">
+   <widget class="QLabel" name="PhoneNumber_label_3">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -215,12 +242,12 @@ QLineEdit:focus {
      <string>Phone Number</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="Phone_lineEdit">
+   <widget class="QLineEdit" name="Phone_lineEdit_3">
     <property name="geometry">
      <rect>
       <x>150</x>
       <y>340</y>
-      <width>231</width>
+      <width>301</width>
       <height>41</height>
      </rect>
     </property>
@@ -244,46 +271,37 @@ QLineEdit:focus {
      <string>Phone Number</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="changepassword_pushButton">
+   <widget class="QPushButton" name="changepassword_pushButton_3">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>410</y>
-      <width>161</width>
-      <height>41</height>
+      <x>140</x>
+      <y>430</y>
+      <width>191</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    background-color: #fb923c;        /* نارنجی گرم */
-    color: white;                     /* متن سفید */
-    border: 2px solid #f97316;        /* نارنجی پررنگ‌تر */
-    border-radius: 12px;              /* گوشه‌های گرد */
-    padding: 6px 16px;                /* فضای داخلی */
-    font-size: 14px;
-    font-weight: 600;
-    font-family: 'Segoe UI';
-}
-
-QPushButton:hover {
-    background-color: #f97316;        /* تیره‌تر موقع هاور */
-    border-color: #ea580c;
-}
-
-QPushButton:pressed {
-    background-color: #c2410c;        /* حالت کلیک‌شده */
-    border-color: #9a3412;
-}
+                background-color: #CBB89D;
+                color: #4B3621;
+                border: 2px solid #A1887F;
+                border-radius: 10px;
+                padding: 6px 12px;
+                font: bold 14px &quot;Segoe UI&quot;;
+            }
+            QPushButton:hover {
+                background-color: #EAD8BD;
+            }
 </string>
     </property>
     <property name="text">
      <string>Change Password</string>
     </property>
    </widget>
-   <widget class="QLabel" name="image_profile_label">
+   <widget class="QLabel" name="image_profile_label_3">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>160</x>
       <y>10</y>
       <width>151</width>
       <height>141</height>
@@ -302,16 +320,16 @@ QPushButton:pressed {
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../../Downloads/IMG_20250628_204822_724.png</pixmap>
+     <pixmap resource="Source.qrc">:/ImageFolder/Mardak.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="username_label">
+   <widget class="QLabel" name="username_label_3">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>180</x>
       <y>160</y>
       <width>111</width>
       <height>21</height>
@@ -334,34 +352,44 @@ QPushButton:pressed {
     </property>
    </widget>
   </widget>
-  <widget class="QLabel" name="Profile_label">
+  <widget class="QPushButton" name="back_pushButton">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>20</y>
-     <width>271</width>
-     <height>61</height>
+     <x>0</x>
+     <y>0</y>
+     <width>41</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QLabel {
-    font-size: 22px;
-    font-weight: bold;
-    color: #ffffff;
-    background-color: #F39C12;
-    padding: 10px 20px;
+    <string notr="true">QPushButton#back_pushButton {
+    background-color: #FFF3E0;               /* کرم روشن */
+    color: #FF5722;                          /* متن نارنجی */
+    font: bold 10pt &quot;Segoe UI&quot;;
+    border: 2px solid #FFB74D;
     border-radius: 12px;
-    letter-spacing: 1px;
-    font-family: &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, sans-serif;
-    border: 1px solid #e67e22;
+    padding: 6px 12px;
+    icon-size: 18px 18px;                   /* اندازه آیکون */
+}
+
+QPushButton#back_pushButton:hover {
+    background-color: #FFE0B2;               /* روشن‌تر هنگام هاور */
+    color: #E64A19;                          /* متن تیره‌تر */
+    border: 2px solid #FFA726;
 }
 </string>
    </property>
    <property name="text">
-    <string>Personal Information</string>
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="Source.qrc">
+     <normaloff>:/ImageFolder/Back.png</normaloff>:/ImageFolder/Back.png</iconset>
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="Source.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -15,6 +15,11 @@ public:
     explicit signup_coustomer(QWidget *parent = nullptr);
     ~signup_coustomer();
 
+private slots:
+    void on_Signup_pushButton_clicked();
+
+    void on_back_pushButton_clicked();
+
 private:
     Ui::signup_coustomer *ui;
 };

@@ -31,76 +31,6 @@
 }
 </string>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>-140</x>
-     <y>-380</y>
-     <width>511</width>
-     <height>891</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(212, 212, 159);
-
-</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="pixmap">
-    <pixmap>../../Downloads/IMG_20250605_031230_896.webp</pixmap>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>180</y>
-     <width>151</width>
-     <height>111</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">	border: none;
-    background-color: transparent;</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="pixmap">
-    <pixmap>../../Downloads/095e9f9e-aed3-4c3f-8c97-8004a9ed016a.png</pixmap>
-   </property>
-   <property name="scaledContents">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_4">
-   <property name="geometry">
-    <rect>
-     <x>100</x>
-     <y>290</y>
-     <width>171</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QLabel {
-    font-family: &quot;Segoe UI&quot;, &quot;Vazir&quot;, sans-serif;
-    font-size: 30px;
-    font-weight: bold;
-    color: #333333;
-    padding: 10px;
-    qproperty-alignment: AlignCenter;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
-	border: none;
-    background-color: transparent;
-}</string>
-   </property>
-   <property name="text">
-    <string>IUT Food</string>
-   </property>
-  </widget>
   <widget class="QLineEdit" name="Password_lineEdit">
    <property name="geometry">
     <rect>
@@ -645,7 +575,63 @@ QLineEdit:focus {
     <string>Last Name</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>-10</x>
+     <y>0</y>
+     <width>401</width>
+     <height>491</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="Source.qrc">:/ImageFolder/Signup (2).jpg</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="back_pushButton">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>41</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton#back_pushButton {
+    background-color: #FFF3E0;               /* کرم روشن */
+    color: #FF5722;                          /* متن نارنجی */
+    font: bold 10pt &quot;Segoe UI&quot;;
+    border: 2px solid #FFB74D;
+    border-radius: 12px;
+    padding: 6px 12px;
+    icon-size: 18px 18px;                   /* اندازه آیکون */
+}
+
+QPushButton#back_pushButton:hover {
+    background-color: #FFE0B2;               /* روشن‌تر هنگام هاور */
+    color: #E64A19;                          /* متن تیره‌تر */
+    border: 2px solid #FFA726;
+}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="Source.qrc">
+     <normaloff>:/ImageFolder/Back.png</normaloff>:/ImageFolder/Back.png</iconset>
+   </property>
+  </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="Source.qrc"/>
+ </resources>
  <connections/>
 </ui>

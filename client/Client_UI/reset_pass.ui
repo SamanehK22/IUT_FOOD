@@ -28,22 +28,6 @@
   <property name="styleSheet">
    <string notr="true">   background-color: #EFE1C6;</string>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>-330</x>
-     <y>-30</y>
-     <width>741</width>
-     <height>511</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="pixmap">
-    <pixmap>../../Downloads/IMG_20250618_004306_389.webp</pixmap>
-   </property>
-  </widget>
   <widget class="QLabel" name="Login_signup_label">
    <property name="geometry">
     <rect>
@@ -205,7 +189,63 @@ QPushButton:hover {
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Keep it secret. Keep it safe.&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Set a strong password to keep &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;your account safe&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>-10</x>
+     <y>-10</y>
+     <width>421</width>
+     <height>661</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="Source.qrc">:/ImageFolder/Set_password.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="back_pushButton">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>41</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton#back_pushButton {
+    background-color: #FFF3E0;               /* کرم روشن */
+    color: #FF5722;                          /* متن نارنجی */
+    font: bold 10pt &quot;Segoe UI&quot;;
+    border: 2px solid #FFB74D;
+    border-radius: 12px;
+    padding: 6px 12px;
+    icon-size: 18px 18px;                   /* اندازه آیکون */
+}
+
+QPushButton#back_pushButton:hover {
+    background-color: #FFE0B2;               /* روشن‌تر هنگام هاور */
+    color: #E64A19;                          /* متن تیره‌تر */
+    border: 2px solid #FFA726;
+}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="Source.qrc">
+     <normaloff>:/ImageFolder/Back.png</normaloff>:/ImageFolder/Back.png</iconset>
+   </property>
+  </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="Source.qrc"/>
+ </resources>
  <connections/>
 </ui>
