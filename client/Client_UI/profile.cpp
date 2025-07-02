@@ -4,6 +4,7 @@
 #include "reset_pass.h"
 #include "customersetpass.h"
 
+
 Profile::Profile(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Profile)
@@ -42,5 +43,12 @@ void Profile::on_changepassword_pushButton_3_clicked()
 {
     customersetpass* setPassWindow = new customersetpass;
     setPassWindow->show();
+    this->close();
+}
+
+void Profile::on_backCoustomer_pushButton_clicked()
+{
+    RestaurantListWindow* restaurantWindow = new RestaurantListWindow();
+    restaurantWindow->show();
     this->close();
 }

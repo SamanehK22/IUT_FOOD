@@ -23,5 +23,9 @@
         <file>ImageFolder/MangeRestaurant.png</file>
         <file>ImageFolder/AdminProfile.png</file>
         <file>ImageFolder/OrderTrack.png</file>
+        <file>ImageFolder/restaurantownerHome.png</file>
+        <file>ImageFolder/ChangeOrderStatus.png</file>
+        <file>ImageFolder/RecievedOrders.png</file>
+        <file>ImageFolder/Menu.png</file>
     </qresource>
 </RCC>

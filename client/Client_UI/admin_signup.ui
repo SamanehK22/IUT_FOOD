@@ -453,6 +453,32 @@ QPushButton:hover {
     </item>
    </layout>
   </widget>
+  <widget class="QPushButton" name="mina">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>190</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PushButton</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="mahtab">
+   <property name="geometry">
+    <rect>
+     <x>610</x>
+     <y>330</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PushButton</string>
+   </property>
+  </widget>
  </widget>
  <resources>
   <include location="Source.qrc"/>
