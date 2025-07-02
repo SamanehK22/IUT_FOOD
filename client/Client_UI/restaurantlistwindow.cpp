@@ -2,6 +2,7 @@
 #include "cartwindow.h"
 #include "history.h"
 #include "menu.h"
+#include "orderstatuswidget.h" // اضافه کردن این خط
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -95,15 +96,14 @@ RestaurantListWindow::RestaurantListWindow(QWidget *parent)
         }
     }
 
-    // اتصال دکمه Order Status
+    // اتصال دکمه Order Status - تغییرات اصلی اینجا اعمال شده
     for(int i = 0; i < topButtonLayout->count(); i++) {
         if(QPushButton *btn = qobject_cast<QPushButton*>(topButtonLayout->itemAt(i)->widget())) {
             if(btn->text() == "Order Status") {
                 connect(btn, &QPushButton::clicked, this, [this](){
                     this->close();
-                    // OrderStatusWindow *statusWindow = new OrderStatusWindow();
-                    // statusWindow->show();
-                    QMessageBox::information(this, "Order Status", "Order status feature will be implemented here");
+                    OrderStatusWidget *statusWindow = new OrderStatusWidget();
+                    statusWindow->show();
                 });
                 break;
             }
@@ -116,8 +116,6 @@ RestaurantListWindow::RestaurantListWindow(QWidget *parent)
             if(btn->text() == "Support") {
                 connect(btn, &QPushButton::clicked, this, [this](){
                     this->close();
-                    // SupportWindow *supportWindow = new SupportWindow();
-                    // supportWindow->show();
                     QMessageBox::information(this, "Support", "Support feature will be implemented here");
                 });
                 break;
@@ -139,6 +137,7 @@ RestaurantListWindow::RestaurantListWindow(QWidget *parent)
         }
     }
 
+    // بقیه کدهای مربوط به لیست رستوران‌ها
     QLabel *title = new QLabel("Restaurant List");
     title->setAlignment(Qt::AlignCenter);
     title->setStyleSheet("font-size: 30px; font-weight: bold; color: #4B3621; font-family: 'Segoe UI';");
@@ -230,6 +229,8 @@ RestaurantListWindow::RestaurantListWindow(QWidget *parent)
     connect(backButton, &QPushButton::clicked, this, &RestaurantListWindow::onBackButtonClicked);
 }
 
+// متدهای دیگر کلاس RestaurantListWindow بدون تغییر باقی می‌مانند
+// ...
 void RestaurantListWindow::addRestaurant(const QString &name, const QString &address, double rating, const QString &type, const QString &city)
 {
     allRestaurants.append({name, address, rating, type, city});
@@ -264,7 +265,7 @@ void RestaurantListWindow::updateRestaurantList()
             mainCardLayout->setSpacing(15);
 
             QLabel *imageLabel = new QLabel("Image");
-            imageLabel->setFixedSize(90, 90);
+            imageLabel->setFixedSize(100, 100);
             imageLabel->setStyleSheet(R"(
                 background-color: #EFE1C6;
                 border-radius: 12px;

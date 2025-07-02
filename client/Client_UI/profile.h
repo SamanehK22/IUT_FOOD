@@ -23,6 +23,8 @@ private slots:
 
     void on_changepassword_pushButton_3_clicked();
 
+    void on_backCoustomer_pushButton_clicked();
+
 private:
     Ui::Profile *ui;
 };

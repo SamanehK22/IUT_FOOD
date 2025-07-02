@@ -28,3 +28,8 @@ void profileadmin::on_changepassword_pushButton_8_clicked()
     setPassWindow->show();                              // نمایش پنجره جدید
     this->close();                                      // بستن پنجره فعلی
 }
+
+void profileadmin::on_changepassword_pushButton_9_clicked()
+{
+
+}

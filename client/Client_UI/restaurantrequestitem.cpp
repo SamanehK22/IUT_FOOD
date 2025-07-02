@@ -22,6 +22,7 @@ RestaurantRequestItem::RestaurantRequestItem(QString name, QString owner, QStrin
     mainLayout->addWidget(nameLabel);
     mainLayout->addWidget(ownerLabel);
     mainLayout->addWidget(typeLabel);
+    mainLayout->addSpacing(10);
     mainLayout->addWidget(approveButton);
     mainLayout->addWidget(rejectButton);
     mainLayout->addWidget(actionFrame);
@@ -38,34 +39,54 @@ void RestaurantRequestItem::setupStyle()
 {
     this->setStyleSheet(R"(
         QWidget {
-            background-color: #FAEEDB;
-            border: 2px solid #d6c4aa;
-            border-radius: 20px;
-            padding: 20px;
+            background-color: #EFE1C6;
+            border: 2px solid #D2B48C;
+            border-radius: 18px;
+            padding: 18px;
         }
+
         QLabel {
-            font-family: Segoe UI;
+            font-family: 'Segoe UI';
             font-size: 16px;
-            color: #4E342E;
+            color: #3E2723;
         }
+
         QPushButton {
-            font-family: Segoe UI;
+            font-family: 'Segoe UI';
+            font-size: 14px;
             font-weight: bold;
             padding: 8px 20px;
             border-radius: 15px;
             color: white;
+            border: none;
         }
+
         QPushButton#approve {
             background-color: #4CAF50;
         }
+        QPushButton#approve:hover {
+            background-color: #43A047;
+        }
+
         QPushButton#reject {
             background-color: #F44336;
         }
-        QPushButton#delete {
-            background-color: #e53935;
+        QPushButton#reject:hover {
+            background-color: #D32F2F;
         }
+
+        QPushButton#delete {
+            background-color: #D32F2F;
+        }
+        QPushButton#delete:hover {
+            background-color: #B71C1C;
+        }
+
         QPushButton#block {
-            background-color: #ff9800;
+            background-color: #FB8C00;
+        }
+        QPushButton#block:hover {
+            background-color: #EF6C00;
         }
     )");
 
@@ -94,10 +115,10 @@ void RestaurantRequestItem::handleBlockClicked()
 {
     if (blockButton->text() == "Block") {
         blockButton->setText("Unblock");
-        blockButton->setStyleSheet("background-color: #9e9e9e; color: white; border-radius: 15px; padding: 8px 20px;");
+        blockButton->setStyleSheet("background-color: #9E9E9E; color: white; border-radius: 15px; padding: 8px 20px;");
     } else {
         blockButton->setText("Block");
-        blockButton->setStyleSheet("background-color: #ff9800; color: white; border-radius: 15px; padding: 8px 20px;");
+        blockButton->setStyleSheet("background-color: #FB8C00; color: white; border-radius: 15px; padding: 8px 20px;");
     }
 }
 

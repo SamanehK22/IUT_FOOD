@@ -32,7 +32,7 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="Profile_label">
+  <widget class="QLabel" name="ProfileCoustomer_label">
    <property name="geometry">
     <rect>
      <x>150</x>
@@ -77,7 +77,7 @@
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QLineEdit" name="firstname_lineEdit_3">
+   <widget class="QLineEdit" name="firstnameCoustomer_lineEdit">
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -106,7 +106,7 @@ QLineEdit:focus {
      <string>Name</string>
     </property>
    </widget>
-   <widget class="QLabel" name="Fullname_label_3">
+   <widget class="QLabel" name="FullnameCoustomer_label">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -132,7 +132,7 @@ QLineEdit:focus {
      <string>Full Name</string>
     </property>
    </widget>
-   <widget class="QLabel" name="EmailAdress_label_3">
+   <widget class="QLabel" name="EmailAdressCoustomer_label">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -158,7 +158,7 @@ QLineEdit:focus {
      <string>Email Address</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lastname_lineEdit_3">
+   <widget class="QLineEdit" name="lastnameCoustomer_lineEdit">
     <property name="geometry">
      <rect>
       <x>280</x>
@@ -187,7 +187,7 @@ QLineEdit:focus {
      <string>LastName</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="Email_lineEdit_3">
+   <widget class="QLineEdit" name="EmailCoustomer_lineEdit">
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -216,7 +216,7 @@ QLineEdit:focus {
      <string>EmailAddress@gmail.com</string>
     </property>
    </widget>
-   <widget class="QLabel" name="PhoneNumber_label_3">
+   <widget class="QLabel" name="PhoneNumberCoustomer_label">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -242,7 +242,7 @@ QLineEdit:focus {
      <string>Phone Number</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="Phone_lineEdit_3">
+   <widget class="QLineEdit" name="PhoneCoustomer_lineEdit">
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -271,7 +271,7 @@ QLineEdit:focus {
      <string>Phone Number</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="changepassword_pushButton_3">
+   <widget class="QPushButton" name="changepasswordCoustomer_pushButton">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -298,7 +298,7 @@ QLineEdit:focus {
      <string>Change Password</string>
     </property>
    </widget>
-   <widget class="QLabel" name="image_profile_label_3">
+   <widget class="QLabel" name="image_profileCoustomer_label">
     <property name="geometry">
      <rect>
       <x>160</x>
@@ -326,7 +326,7 @@ QLineEdit:focus {
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="username_label_3">
+   <widget class="QLabel" name="usernameCoustomer_label">
     <property name="geometry">
      <rect>
       <x>180</x>
@@ -352,7 +352,7 @@ QLineEdit:focus {
     </property>
    </widget>
   </widget>
-  <widget class="QPushButton" name="back_pushButton">
+  <widget class="QPushButton" name="backCoustomer_pushButton">
    <property name="geometry">
     <rect>
      <x>0</x>

@@ -26,15 +26,23 @@ SOURCES += \
     forgot_pass.cpp \
     history.cpp \
     homeadmin.cpp \
+    homerestaurantowner.cpp \
     main.cpp \
+    managemenuwindow.cpp \
     menu.cpp \
+    menuitemmanagerwidget.cpp \
     orderhistoryitem.cpp \
+    orderitemwidget.cpp \
+    orderstatuswidget.cpp \
     profile.cpp \
     profileadmin.cpp \
+    profilerestaurantowner.cpp \
+    receivedorderswindow.cpp \
     reset_pass.cpp \
     restaurantapprovalwindow.cpp \
     restaurantitemwidget.cpp \
     restaurantlistwindow.cpp \
+    restaurantownersetpass.cpp \
     restaurantrequestitem.cpp \
     signup_coustomer.cpp \
     signup_restaurant.cpp \
@@ -52,14 +60,22 @@ HEADERS += \
     forgot_pass.h \
     history.h \
     homeadmin.h \
+    homerestaurantowner.h \
+    managemenuwindow.h \
     menu.h \
+    menuitemmanagerwidget.h \
     orderhistoryitem.h \
+    orderitemwidget.h \
+    orderstatuswidget.h \
     profile.h \
     profileadmin.h \
+    profilerestaurantowner.h \
+    receivedorderswindow.h \
     reset_pass.h \
     restaurantapprovalwindow.h \
     restaurantitemwidget.h \
     restaurantlistwindow.h \
+    restaurantownersetpass.h \
     restaurantrequestitem.h \
     signup_coustomer.h \
     signup_restaurant.h \
@@ -72,9 +88,12 @@ FORMS += \
     customersetpass.ui \
     forgot_pass.ui \
     homeadmin.ui \
+    homerestaurantowner.ui \
     profile.ui \
     profileadmin.ui \
+    profilerestaurantowner.ui \
     reset_pass.ui \
+    restaurantownersetpass.ui \
     signup_coustomer.ui \
     signup_restaurant.ui
 

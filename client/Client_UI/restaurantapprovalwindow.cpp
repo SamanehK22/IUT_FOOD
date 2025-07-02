@@ -21,21 +21,22 @@ void RestaurantApprovalWindow::onBackClicked()
 void RestaurantApprovalWindow::setupUI()
 {
     this->setFixedSize(650, 730);
+
     backButton = new QPushButton("◀️", this);
     backButton->setFixedSize(40, 32);
     backButton->setStyleSheet(R"(
         QPushButton {
-            background-color: #FFF3E0;
-            color: #FF5722;
+            background-color: #FAF3E0;
+            color: #5E412F;
             font: bold 10pt "Segoe UI";
-            border: 2px solid #FFB74D;
+            border: 2px solid #D2B48C;
             border-radius: 12px;
             padding: 6px 12px;
         }
         QPushButton:hover {
-            background-color: #FFE0B2;
-            color: #E64A19;
-            border: 2px solid #FFA726;
+            background-color: #EFE1C6;
+            color: #4B3621;
+            border: 2px solid #C49E6C;
         }
     )");
 
@@ -47,24 +48,24 @@ void RestaurantApprovalWindow::setupUI()
     scrollArea->setWidgetResizable(true);
     scrollArea->setStyleSheet(R"(
         QScrollArea {
-            background-color: #F5EBDD; /* نود روشن */
+            background-color: #EFE1C6;
             border: none;
         }
 
         QScrollBar:vertical {
-            background: #F5EBDD; /* زمینه کرم روشن */
+            background: #EFE1C6;
             width: 10px;
             margin: 0px;
         }
 
         QScrollBar::handle:vertical {
-            background: #B97C4C; /* قهوه‌ای گرم */
+            background: #5E412F;
             min-height: 20px;
             border-radius: 4px;
         }
 
         QScrollBar::handle:vertical:hover {
-            background: #A66A3A; /* قهوه‌ای تیره‌تر در هاور */
+            background: #4B3621;
         }
 
         QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
@@ -77,15 +78,13 @@ void RestaurantApprovalWindow::setupUI()
         }
     )");
 
-
     scrollWidget = new QWidget();
-    scrollWidget->setStyleSheet("background-color: #F5F5DC;");
+    scrollWidget->setStyleSheet("background-color: #FAF3E0;");
     requestsLayout = new QVBoxLayout(scrollWidget);
     requestsLayout->setSpacing(15);
     scrollWidget->setLayout(requestsLayout);
     scrollArea->setWidget(scrollWidget);
 
-    // Create a horizontal layout for title and button
     QHBoxLayout *headerLayout = new QHBoxLayout();
     headerLayout->addWidget(backButton);
     headerLayout->addWidget(title);
@@ -98,9 +97,10 @@ void RestaurantApprovalWindow::setupUI()
 
     this->setStyleSheet(R"(
         QWidget {
-            background-color: #F5F5DC;
+            background-color: #EFE1C6;
         }
     )");
+
     this->setMinimumSize(450, 600);
 }
 

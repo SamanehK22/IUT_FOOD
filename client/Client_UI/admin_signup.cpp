@@ -2,6 +2,9 @@
 #include "ui_admin_signup.h"
 #include "forgot_pass.h"
 #include "history.h"
+#include "managemenuwindow.h"
+#include "receivedorderswindow.h"
+
 
 
 
@@ -48,4 +51,37 @@ void Admin_Signup::on_Login_Button_clicked()
 
     // بستن پنجره فعلی (login/signup)
     this->close();
+}
+
+
+
+
+
+void Admin_Signup::on_pushButton_2_clicked()
+{
+}
+
+void Admin_Signup::on_pushButton_3_clicked()
+{
+}
+
+
+void Admin_Signup::on_mina_clicked()
+{
+    ManageMenuWindow *manageMenuWindow = new ManageMenuWindow();
+
+      // نمایش پنجره جدید
+      manageMenuWindow->show();
+
+      // بستن پنجره فعلی
+      this->close();
+}
+
+void Admin_Signup::on_mahtab_clicked()
+{
+    ReceivedOrdersWindow* ordersWindow = new ReceivedOrdersWindow();
+    ordersWindow->setAttribute(Qt::WA_DeleteOnClose); // وقتی بسته شد حذف شود
+    ordersWindow->setWindowTitle("Received Orders");
+    ordersWindow->resize(500, 600);
+    ordersWindow->show();
 }

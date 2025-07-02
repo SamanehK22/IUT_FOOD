@@ -2,6 +2,7 @@
 #include "ui_signup_restaurant.h"
 #include "restaurantapprovalwindow.h"
 #include "admin_signup.h"
+#include "homerestaurantowner.h"
 
 
 signup_restaurant::signup_restaurant(QWidget *parent) :
@@ -22,12 +23,14 @@ void signup_restaurant::on_Signup_pushButton_clicked()
     QMessageBox::information(this, "Signup Successful",
         "Signup completed successfully. Please wait for admin approval to log in.");
 
-    // باز کردن پنجره‌ی تایید رستوران‌ها
-    RestaurantApprovalWindow *approvalWindow = new RestaurantApprovalWindow();
-    approvalWindow->setAttribute(Qt::WA_DeleteOnClose); // تا حافظه آزاد شه بعد از بستن
-    approvalWindow->show();
-}
+    // باز کردن صفحه‌ی اصلی رستوران‌دار
+    homerestaurantowner *homeWindow = new homerestaurantowner();
+    homeWindow->setAttribute(Qt::WA_DeleteOnClose); // آزادسازی حافظه پس از بستن
+    homeWindow->show();
 
+    // بستن فرم فعلی
+    this->close();
+}
 
 void signup_restaurant::on_back_pushButton_clicked()
 {
