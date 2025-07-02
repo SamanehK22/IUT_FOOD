@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Reset_Pass</class>
+ <widget class="QWidget" name="Reset_Pass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>794</width>
+    <height>474</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>794</width>
+    <height>474</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>794</width>
+    <height>474</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">   background-color: #EFE1C6;</string>
+  </property>
+  <widget class="QLabel" name="Login_signup_label">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>30</y>
+     <width>311</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    font-family: &quot;Segoe UI&quot;, &quot;Vazir&quot;, sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    color: #333333;
+    padding: 10px;
+    qproperty-alignment: AlignCenter;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+	border: none;
+    background-color: transparent;
+}</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;Set Password&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="Password_lineEdit_4">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>110</y>
+     <width>351</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit {
+    background-color: #f3f4f6;   /* خاکستری خیلی روشن */
+    border: 1px solid #d1d5db;   /* خط باریک خاکستری */
+    border-radius: 10px;         /* گوشه‌های منحنی */
+    padding: 6px 12px;           /* فضای داخلی برای متن */
+    font-size: 13px;
+}
+QLineEdit:focus {
+    border: 1px solid #fb923c;  /* نارنجی خوشرنگ هنگام فوکوس */
+    background-color: #fff;     /* سفید شدن پس‌زمینه */
+}</string>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
+   <property name="placeholderText">
+    <string>New Password</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="Password_lineEdit_5">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>180</y>
+     <width>351</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit {
+    background-color: #f3f4f6;   /* خاکستری خیلی روشن */
+    border: 1px solid #d1d5db;   /* خط باریک خاکستری */
+    border-radius: 10px;         /* گوشه‌های منحنی */
+    padding: 6px 12px;           /* فضای داخلی برای متن */
+    font-size: 13px;
+}
+QLineEdit:focus {
+    border: 1px solid #fb923c;  /* نارنجی خوشرنگ هنگام فوکوس */
+    background-color: #fff;     /* سفید شدن پس‌زمینه */
+}</string>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
+   <property name="placeholderText">
+    <string>Confirm Password</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>250</y>
+     <width>191</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::RightToLeft</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    background-color: #d97706;    /* نارنجی خاکی */
+    color: white;                 /* رنگ متن */
+    border: none;                 /* حذف کادر پیش‌فرض */
+    border-radius: 12px;          /* گوشه‌های منحنی */
+    padding: 8px 20px;            /* فضای داخلی دکمه */
+    font-weight: bold;            /* ضخیم شدن فونت */
+    font-size: 14px;
+}
+
+QPushButton:hover {
+    background-color: #f59e0b;    /* رنگ روشن‌تر موقع hover */
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Done</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>480</x>
+     <y>390</y>
+     <width>55</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="Login_signup_label_2">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>300</y>
+     <width>341</width>
+     <height>191</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    font-family: &quot;Segoe UI&quot;, &quot;Vazir&quot;, sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    color: #333333;
+    padding: 10px;
+    qproperty-alignment: AlignCenter;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+	border: none;
+    background-color: transparent;
+}</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Keep it secret. Keep it safe.&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Set a strong password to keep &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;your account safe&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>-10</x>
+     <y>-10</y>
+     <width>421</width>
+     <height>661</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="Source.qrc">:/ImageFolder/Set_password.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="back_pushButton">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>41</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton#back_pushButton {
+    background-color: #FFF3E0;               /* کرم روشن */
+    color: #FF5722;                          /* متن نارنجی */
+    font: bold 10pt &quot;Segoe UI&quot;;
+    border: 2px solid #FFB74D;
+    border-radius: 12px;
+    padding: 6px 12px;
+    icon-size: 18px 18px;                   /* اندازه آیکون */
+}
+
+QPushButton#back_pushButton:hover {
+    background-color: #FFE0B2;               /* روشن‌تر هنگام هاور */
+    color: #E64A19;                          /* متن تیره‌تر */
+    border: 2px solid #FFA726;
+}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="Source.qrc">
+     <normaloff>:/ImageFolder/Back.png</normaloff>:/ImageFolder/Back.png</iconset>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="Source.qrc"/>
+ </resources>
+ <connections/>
+</ui>

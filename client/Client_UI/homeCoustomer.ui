@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Home</class>
+ <widget class="QWidget" name="Home">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>747</width>
+    <height>757</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>-10</x>
+     <y>-10</y>
+     <width>761</width>
+     <height>791</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>../../Downloads/ChatGPT Image Jun 25, 2025, 01_41_44 PM.png</pixmap>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="City_comboBox">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>210</y>
+     <width>124</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QComboBox {
+    background-color: #f7e9e3;          /* نود لطیف */
+    border: 2px solid #deb6ab;          /* رزگلد */
+    border-radius: 8px;
+    padding: 6px 12px;
+    color: #4b3b40;
+    font-family: &quot;Vazir&quot;, &quot;Segoe UI&quot;, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+QComboBox:hover {
+    border: 2px solid #d19a91;
+    background-color: #f2d4c9;
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 30px;
+    border-left: 1px solid #deb6ab;
+    background-color: #deb6ab;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+QComboBox::down-arrow {
+    image: url(:/icons/down_arrow.png); /* آیکن دلخواه: اختیاری */
+    width: 14px;
+    height: 14px;
+}
+
+QComboBox QAbstractItemView {
+    background-color: #fdf2ef;
+    border: 1px solid #deb6ab;
+    selection-background-color: #e4bfb3;
+    selection-color: white;
+}</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>Tehran</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Esfahan</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Ardebil</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Alborz</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Khorasan Razavi</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Semnan</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Fars</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Qazvin</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Qom</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Kordestan</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Kermanshah</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Gilan</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Mazandaran</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Hormozgan</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Hamedan</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Yazd</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="Food_label">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>160</y>
+     <width>131</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    background-color: transparent;
+    color: #4b3b40;
+    font-family: &quot;B Nazanin&quot;, &quot;Vazir&quot;, &quot;Segoe UI&quot;, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 6px 8px;
+    /* بدون بوردر */
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Food Type</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>210</y>
+     <width>161</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QComboBox {
+    background-color: #f7e9e3;          /* نود لطیف */
+    border: 2px solid #deb6ab;          /* رزگلد */
+    border-radius: 8px;
+    padding: 6px 12px;
+    color: #4b3b40;
+    font-family: &quot;Vazir&quot;, &quot;Segoe UI&quot;, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+QComboBox:hover {
+    border: 2px solid #d19a91;
+    background-color: #f2d4c9;
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 30px;
+    border-left: 1px solid #deb6ab;
+    background-color: #deb6ab;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+QComboBox::down-arrow {
+    image: url(:/icons/down_arrow.png); /* آیکن دلخواه: اختیاری */
+    width: 14px;
+    height: 14px;
+}
+
+QComboBox QAbstractItemView {
+    background-color: #fdf2ef;
+    border: 1px solid #deb6ab;
+    selection-background-color: #e4bfb3;
+    selection-color: white;
+}</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>Fast Food</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Iranian Food</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Sea Food</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Vegetarian Food</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="Location_label">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>160</y>
+     <width>161</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    background-color: transparent;
+    color: #4b3b40;
+    font-family: &quot;B Nazanin&quot;, &quot;Vazir&quot;, &quot;Segoe UI&quot;, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 6px 8px;
+    /* بدون بوردر */
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Location Filter</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidget">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>320</y>
+     <width>641</width>
+     <height>381</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QListWidget {
+    background-color: #f7e9e3;
+    border: 2px solid #deb6ab;
+    border-radius: 12px;
+    padding: 6px;
+    color: #4b3b40;
+    font-family: &quot;B Nazanin&quot;, &quot;Vazir&quot;, &quot;Segoe UI&quot;, sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+QListWidget::item {
+    background-color: transparent;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 4px;
+    transition: all 0.3s ease;
+}
+
+QListWidget::item:hover {
+    background-color: #f2d4c9;
+    color: #3a2b2e;
+}
+
+QListWidget::item:selected {
+    background-color: #e4bfb3;
+    color: white;
+    font-weight: 900;
+    border: 1px solid #d19a91;
+}
+
+/* --- Scrollbar عمودی --- */
+QScrollBar:vertical {
+    background: #f7e9e3;
+    width: 12px;
+    margin: 2px;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:vertical {
+    background: #d8a29d;
+    min-height: 20px;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #c98682;
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+QScrollBar::add-page:vertical, 
+QScrollBar::sub-page:vertical {
+    background: none;
+}
+</string>
+   </property>
+   <property name="viewMode">
+    <enum>QListView::ListMode</enum>
+   </property>
+   <item>
+    <property name="text">
+     <string>Iranian Food - Shahzad</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Iranian Food - Shab Neshin</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Iranian Food - Azam</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Fast Food - Tachar</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Fast Food - Sara</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Sea Food - Fish &amp; Chips</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Sea Food - Khan Gostar</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Vegetarian Food - Mado</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Vegetarian Food - Zima</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>30</y>
+     <width>251</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    background-color: transparent;
+    font-family: &quot;B Nazanin&quot;, &quot;Vazir&quot;, &quot;Segoe UI&quot;, sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    padding: 8px 14px;
+    color: qlineargradient(
+        x1:0, y1:0, x2:1, y2:0,
+        stop:0 #deb6ab,
+        stop:1 #4b3b40
+    );
+    border-radius: 10px;
+    text-shadow: 2px 2px 5px rgba(222, 182, 171, 0.5);
+    /* بدون transition و هاور */
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Main Page</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>130</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cart</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>70</y>
+     <width>131</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Personal information</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>130</y>
+     <width>111</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Order History</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>profileadmin</class>
+ <widget class="QWidget" name="profileadmin">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>681</width>
+    <height>761</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>681</width>
+    <height>761</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>681</width>
+    <height>761</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>-10</x>
+     <y>-20</y>
+     <width>701</width>
+     <height>781</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="Source.qrc">:/ImageFolder/Profile.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>160</y>
+     <width>471</width>
+     <height>541</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QFrame {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+}</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLineEdit" name="firstname_lineEdit_8">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>200</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit {
+    background-color: #f3f4f6;       /* خاکستری خیلی روشن */
+    border: 2px solid #a1887f;       /* قهوه‌ای ملایم */
+    border-radius: 10px;             /* گوشه‌های منحنی */
+    padding: 6px 12px;               /* فضای داخلی برای متن */
+    font-size: 13px;
+    color: #3e2723;                  /* متن قهوه‌ای تیره برای هماهنگی */
+}
+
+QLineEdit:focus {
+    border: 2px solid #6d4c41;       /* قهوه‌ای تیره‌تر هنگام فوکوس */
+    background-color: #ffffff;       /* سفید شدن پس‌زمینه */
+}
+</string>
+    </property>
+    <property name="placeholderText">
+     <string>Name</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Fullname_label_8">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>200</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+    color: #4e342e;               /* قهوه‌ای تیره برای متن */
+    font-size: 14px;              /* اندازه مناسب متن */
+    font-weight: 500;             /* کمی بولد برای تأکید */
+    font-family: 'Segoe UI';      /* فونت مدرن و هماهنگ */
+    background-color: transparent;/* پس‌زمینه شفاف برای هماهنگی */
+    padding: 4px 8px;             /* فاصله داخلی ملایم */
+    border-left: 3px solid #a1887f; /* خط باریک قهوه‌ای در چپ برای زیبایی */
+    border-radius: 4px;           /* کمی انحنا */
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Full Name</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="EmailAdress_label_8">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>270</y>
+      <width>111</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+    color: #4e342e;               /* قهوه‌ای تیره برای متن */
+    font-size: 14px;              /* اندازه مناسب متن */
+    font-weight: 500;             /* کمی بولد برای تأکید */
+    font-family: 'Segoe UI';      /* فونت مدرن و هماهنگ */
+    background-color: transparent;/* پس‌زمینه شفاف برای هماهنگی */
+    padding: 4px 8px;             /* فاصله داخلی ملایم */
+    border-left: 3px solid #a1887f; /* خط باریک قهوه‌ای در چپ برای زیبایی */
+    border-radius: 4px;           /* کمی انحنا */
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Email Address</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lastname_lineEdit_8">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>200</y>
+      <width>171</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit {
+    background-color: #f3f4f6;       /* خاکستری خیلی روشن */
+    border: 2px solid #a1887f;       /* قهوه‌ای ملایم */
+    border-radius: 10px;             /* گوشه‌های منحنی */
+    padding: 6px 12px;               /* فضای داخلی برای متن */
+    font-size: 13px;
+    color: #3e2723;                  /* متن قهوه‌ای تیره برای هماهنگی */
+}
+
+QLineEdit:focus {
+    border: 2px solid #6d4c41;       /* قهوه‌ای تیره‌تر هنگام فوکوس */
+    background-color: #ffffff;       /* سفید شدن پس‌زمینه */
+}
+</string>
+    </property>
+    <property name="placeholderText">
+     <string>LastName</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Email_lineEdit_8">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>270</y>
+      <width>301</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit {
+    background-color: #f3f4f6;       /* خاکستری خیلی روشن */
+    border: 2px solid #a1887f;       /* قهوه‌ای ملایم */
+    border-radius: 10px;             /* گوشه‌های منحنی */
+    padding: 6px 12px;               /* فضای داخلی برای متن */
+    font-size: 13px;
+    color: #3e2723;                  /* متن قهوه‌ای تیره برای هماهنگی */
+}
+
+QLineEdit:focus {
+    border: 2px solid #6d4c41;       /* قهوه‌ای تیره‌تر هنگام فوکوس */
+    background-color: #ffffff;       /* سفید شدن پس‌زمینه */
+}
+</string>
+    </property>
+    <property name="placeholderText">
+     <string>EmailAddress@gmail.com</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="PhoneNumber_label_8">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>340</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+    color: #4e342e;               /* قهوه‌ای تیره برای متن */
+    font-size: 14px;              /* اندازه مناسب متن */
+    font-weight: 500;             /* کمی بولد برای تأکید */
+    font-family: 'Segoe UI';      /* فونت مدرن و هماهنگ */
+    background-color: transparent;/* پس‌زمینه شفاف برای هماهنگی */
+    padding: 4px 8px;             /* فاصله داخلی ملایم */
+    border-left: 3px solid #a1887f; /* خط باریک قهوه‌ای در چپ برای زیبایی */
+    border-radius: 4px;           /* کمی انحنا */
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Phone Number</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Phone_lineEdit_8">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>340</y>
+      <width>301</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit {
+    background-color: #f3f4f6;       /* خاکستری خیلی روشن */
+    border: 2px solid #a1887f;       /* قهوه‌ای ملایم */
+    border-radius: 10px;             /* گوشه‌های منحنی */
+    padding: 6px 12px;               /* فضای داخلی برای متن */
+    font-size: 13px;
+    color: #3e2723;                  /* متن قهوه‌ای تیره برای هماهنگی */
+}
+
+QLineEdit:focus {
+    border: 2px solid #6d4c41;       /* قهوه‌ای تیره‌تر هنگام فوکوس */
+    background-color: #ffffff;       /* سفید شدن پس‌زمینه */
+}
+</string>
+    </property>
+    <property name="placeholderText">
+     <string>Phone Number</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="changepassword_pushButton_8">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>430</y>
+      <width>191</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+                background-color: #CBB89D;
+                color: #4B3621;
+                border: 2px solid #A1887F;
+                border-radius: 10px;
+                padding: 6px 12px;
+                font: bold 14px &quot;Segoe UI&quot;;
+            }
+            QPushButton:hover {
+                background-color: #EAD8BD;
+            }
+</string>
+    </property>
+    <property name="text">
+     <string>Change Password</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="image_profile_label_8">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>10</y>
+      <width>151</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+    background-color: white;             /* پس‌زمینه سفید */
+    border: 2px solid #fb923c;           /* کادر نارنجی */
+    border-radius: 50px;                 /* گوشه‌ها گرد */
+    padding: 5px;                        /* فاصله بین عکس و کادر */
+}
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="Source.qrc">:/ImageFolder/Mardak.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="username_label_8">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>160</y>
+      <width>111</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+    border: none;
+    font-weight: bold;
+    font-size: 16px;  /* یا مثلاً 18px برای بزرگ‌تر */
+    color: #333333;   /* رنگ دلخواه - می‌تونی سفید، مشکی یا خاکستری ملایم انتخاب کنی */
+}
+</string>
+    </property>
+    <property name="text">
+     <string>@Username</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLabel" name="Profile_label">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>50</y>
+     <width>341</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    background-color: #CBB89D;
+    color: #4B3621;
+    border: 2px solid #A1887F;
+    border-radius: 20px;
+    padding: 6px 60px;
+    font: bold 20px &quot;Segoe UI&quot;;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Personal Information</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="back_pushButton">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>41</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton#back_pushButton {
+    background-color: #FFF3E0;               /* کرم روشن */
+    color: #FF5722;                          /* متن نارنجی */
+    font: bold 10pt &quot;Segoe UI&quot;;
+    border: 2px solid #FFB74D;
+    border-radius: 12px;
+    padding: 6px 12px;
+    icon-size: 18px 18px;                   /* اندازه آیکون */
+}
+
+QPushButton#back_pushButton:hover {
+    background-color: #FFE0B2;               /* روشن‌تر هنگام هاور */
+    color: #E64A19;                          /* متن تیره‌تر */
+    border: 2px solid #FFA726;
+}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="Source.qrc">
+     <normaloff>:/ImageFolder/Back.png</normaloff>:/ImageFolder/Back.png</iconset>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="Source.qrc"/>
+ </resources>
+ <connections/>
+</ui>
