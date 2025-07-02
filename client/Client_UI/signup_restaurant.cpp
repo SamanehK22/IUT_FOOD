@@ -22,11 +22,15 @@ void signup_restaurant::on_Signup_pushButton_clicked()
     // نمایش پیام موفقیت‌آمیز بودن ثبت‌نام
     QMessageBox::information(this, "Signup Successful",
         "Signup completed successfully. Please wait for admin approval to log in.");
+<<<<<<< HEAD
 
     // باز کردن صفحه‌ی اصلی رستوران‌دار
     homerestaurantowner *homeWindow = new homerestaurantowner();
     homeWindow->setAttribute(Qt::WA_DeleteOnClose); // آزادسازی حافظه پس از بستن
     homeWindow->show();
+=======
+}
+>>>>>>> 86fecec34e62335f33139d0cd026c6a352ae5751
 
     // بستن فرم فعلی
     this->close();
