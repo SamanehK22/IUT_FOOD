@@ -34,9 +34,9 @@ void homerestaurantowner::on_backRestaurantOwner_pushButton_clicked()
 
 void homerestaurantowner::on_RestaurantOwner_ReceivedOrders_pushButton_clicked()
 {
-    ReceivedOrdersWindow* receivedOrdersWindow = new ReceivedOrdersWindow(this); // parent برای مدیریت حافظه
-    receivedOrdersWindow->show();
     this->close();
+    ReceivedOrdersWindow *receivedOrdersWindow = new ReceivedOrdersWindow;
+    receivedOrdersWindow->show();
 }
 
 void homerestaurantowner::on_RestaurantOwner_MangeMenu_pushButton_clicked()
