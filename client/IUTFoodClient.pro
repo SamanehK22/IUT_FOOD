@@ -4,15 +4,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
 
-# You can make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
 TARGET = IUTFoodClient
 TEMPLATE = app
 
 SOURCES += \
-    src/main.cpp \
     src/models/user.cpp \
     src/models/restaurant.cpp \
     src/models/menuitem.cpp \
@@ -26,7 +21,31 @@ SOURCES += \
     src/network/authmanager.cpp \
     src/network/restaurantmanager.cpp \
     src/network/ordermanager.cpp \
-    src/network/chatmanager.cpp
+    src/network/chatmanager.cpp \
+    Client_UI/admin_signup.cpp \
+    Client_UI/adminsetpass.cpp \
+    Client_UI/cartitemwidget.cpp \
+    Client_UI/cartwindow.cpp \
+    Client_UI/customersetpass.cpp \
+    Client_UI/custompopup.cpp \
+    Client_UI/fooditemwidget.cpp \
+    Client_UI/forgot_pass.cpp \
+    Client_UI/history.cpp \
+    Client_UI/homeadmin.cpp \
+    Client_UI/main.cpp \
+    Client_UI/menu.cpp \
+    Client_UI/orderhistoryitem.cpp \
+    Client_UI/profile.cpp \
+    Client_UI/profileadmin.cpp \
+    Client_UI/reset_pass.cpp \
+    Client_UI/restaurantapprovalwindow.cpp \
+    Client_UI/restaurantitemwidget.cpp \
+    Client_UI/restaurantlistwindow.cpp \
+    Client_UI/restaurantrequestitem.cpp \
+    Client_UI/signup_coustomer.cpp \
+    Client_UI/signup_restaurant.cpp \
+    Client_UI/useritemwidget.cpp \
+    Client_UI/usermanagementwindow.cpp
 
 HEADERS += \
     src/models/user.h \
@@ -42,15 +61,48 @@ HEADERS += \
     src/network/authmanager.h \
     src/network/restaurantmanager.h \
     src/network/ordermanager.h \
-    src/network/chatmanager.h
+    src/network/chatmanager.h \
+    Client_UI/admin_signup.h \
+    Client_UI/adminsetpass.h \
+    Client_UI/cartitemwidget.h \
+    Client_UI/cartwindow.h \
+    Client_UI/customersetpass.h \
+    Client_UI/custompopup.h \
+    Client_UI/fooditemwidget.h \
+    Client_UI/forgot_pass.h \
+    Client_UI/history.h \
+    Client_UI/homeadmin.h \
+    Client_UI/menu.h \
+    Client_UI/orderhistoryitem.h \
+    Client_UI/profile.h \
+    Client_UI/profileadmin.h \
+    Client_UI/reset_pass.h \
+    Client_UI/restaurantapprovalwindow.h \
+    Client_UI/restaurantitemwidget.h \
+    Client_UI/restaurantlistwindow.h \
+    Client_UI/restaurantrequestitem.h \
+    Client_UI/signup_coustomer.h \
+    Client_UI/signup_restaurant.h \
+    Client_UI/useritemwidget.h \
+    Client_UI/usermanagementwindow.h
 
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+FORMS += \
+    Client_UI/admin_signup.ui \
+    Client_UI/adminsetpass.ui \
+    Client_UI/customersetpass.ui \
+    Client_UI/forgot_pass.ui \
+    Client_UI/homeadmin.ui \
+    Client_UI/profile.ui \
+    Client_UI/profileadmin.ui \
+    Client_UI/reset_pass.ui \
+    Client_UI/signup_coustomer.ui \
+    Client_UI/signup_restaurant.ui
 
-# Include paths
-INCLUDEPATH += src/
+
+RESOURCES += Client_UI/Source.qrc
+
+INCLUDEPATH += src \
+    Client_UI
 
 # Compiler flags
 QMAKE_CXXFLAGS += -Wall -Wextra
@@ -62,4 +114,4 @@ win32 {
 
 unix {
     LIBS += -lssl -lcrypto
-} 
+}

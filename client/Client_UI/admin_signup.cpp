@@ -2,6 +2,11 @@
 #include "ui_admin_signup.h"
 #include "forgot_pass.h"
 #include "history.h"
+#include "homeadmin.h"
+#include "restaurantlistwindow.h"
+#include "../src/network/authmanager.h"
+#include "../src/models/user.h"
+#include <QDebug>
 
 
 
@@ -40,12 +45,31 @@ void Admin_Signup::on_pushButton_clicked()
 
 void Admin_Signup::on_Login_Button_clicked()
 {
-    // ایجاد و نمایش پنجره جدید
-    RestaurantListWindow *restaurantList = new RestaurantListWindow();
-    restaurantList->setAttribute(Qt::WA_DeleteOnClose);
-    restaurantList->resize(700, 600);
-    restaurantList->show();
-
-    // بستن پنجره فعلی (login/signup)
-    this->close();
+    QString loginId = ui->Email_lineEdit->text().trimmed();
+    QString password = ui->Password_lineEdit->text().trimmed();
+    AuthManager* auth = AuthManager::getInstance();
+    connect(auth, &AuthManager::loginSuccess, this, [this]() {
+        qDebug() << "[Login] Success lambda triggered";
+        User* user = AuthManager::getInstance()->currentUser();
+        if (!user) return;
+        QString type = user->userType();
+        QMessageBox::information(this, "Login Successful", "You have logged in successfully.");
+        if (type == "admin") {
+            HomeAdmin* adminHome = new HomeAdmin();
+            adminHome->show();
+        } else if (type == "customer") {
+            RestaurantListWindow* restaurantList = new RestaurantListWindow();
+            restaurantList->setAttribute(Qt::WA_DeleteOnClose);
+            restaurantList->resize(700, 600);
+            restaurantList->show();
+        } else if (type == "restaurant_owner") {
+            // TODO: Show restaurant owner window when UI is ready
+        }
+        this->close();
+    });
+    connect(auth, &AuthManager::loginFailed, this, [this](const QString& error) {
+        qDebug() << "[Login] Failure lambda triggered: " << error;
+        QMessageBox::critical(this, "Login Failed", error);
+    });
+    auth->login(loginId, password);
 }

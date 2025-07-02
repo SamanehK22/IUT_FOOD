@@ -25,13 +25,15 @@ public:
 
     // Customer Management
     bool createCustomer(const QString& firstName, const QString& lastName, const QString& username, const QString& email, 
-                       const QString& passwordHash, const QString& phone, const QString& address, const QString& city, const QString& location);
+                       const QString& passwordHash, const QString& phone, const QString& city, const QString& location);
     bool updateCustomer(const QString& customerId, const QVariantMap& updates);
     bool deleteCustomer(const QString& customerId);
     QString getCustomerId(const QString& email);
     QString getCustomerPasswordHash(const QString& customerId);
     QVariantMap getCustomerProfile(const QString& customerId);
     QVariantMap getCustomerByLoginId(const QString& loginId);
+    bool customerEmailExists(const QString& email);
+    bool customerPhoneExists(const QString& phone);
 
     // Restaurant Owner Management
     bool createRestaurantOwner(const QString& firstName, const QString& lastName, const QString& username, const QString& email,
@@ -43,6 +45,8 @@ public:
     QVariantMap getRestaurantOwnerProfile(const QString& ownerId);
     QString getRestaurantIdByOwner(const QString& ownerId);
     QVariantMap getRestaurantOwnerByLoginId(const QString& loginId);
+    bool ownerEmailExists(const QString& email);
+    bool ownerPhoneExists(const QString& phone);
 
     // Restaurant Management
     bool createRestaurant(const QString& name, const QString& address, const QString& type, const QString& imageUrl = "");
@@ -86,6 +90,10 @@ public:
     bool beginTransaction();
     bool commitTransaction();
     bool rollbackTransaction();
+
+    void debugPrintAllCustomerPhones();
+
+    void debugRawQuerySimSim();
 
 private:
     explicit DatabaseManager(QObject *parent = nullptr);

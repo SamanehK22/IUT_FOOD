@@ -5,6 +5,9 @@
 #include "ordermanager.h"
 #include "menumanager.h"
 #include "orderstatus.h"
+#include <QJsonObject>
+#include <QJsonArray>
+ 
 
 Server* Server::instance = nullptr;
 

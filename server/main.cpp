@@ -9,10 +9,16 @@ int main(int argc, char *argv[])
 
     // Initialize database connection
     DatabaseManager* dbManager = DatabaseManager::getInstance();
-    if (!dbManager->connect("", "C:/Users/Virus-Co/IUT_FOOD/database/database.sqlite", "", "")) {  // SQLite connection parameters
+    if (!dbManager->connect("", "C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite", "", "")) {  // SQLite connection parameters
         qDebug() << "Failed to connect to database. Exiting...";
         return 1;
     }
+
+    // Print all customer phones for debugging
+    dbManager->debugPrintAllCustomerPhones();
+
+    // Raw query for username = 'sim sim'
+    dbManager->debugRawQuerySimSim();
 
     // Start server
     Server* server = Server::getInstance();

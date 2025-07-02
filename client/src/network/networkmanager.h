@@ -62,6 +62,9 @@ public:
     void sendUserChatMessage(const QString& toUserId, const QString& content);
     void getUserChatHistory(const QString& userA, const QString& userB);
 
+    void requestPasswordReset(const QString &firstName, const QString &lastName, const QString &email, const QString &phone);
+    void changePassword(const QString &email, const QString &newPassword);
+
 signals:
     void connected();
     void disconnected();
@@ -92,6 +95,8 @@ signals:
     void orderChatHistoryReceived(const QString& orderId, const QJsonArray& messages);
     void userChatMessageReceived(const QString& fromUserId, const QString& toUserId, const QString& content, const QString& timestamp);
     void userChatHistoryReceived(const QString& userA, const QString& userB, const QJsonArray& messages);
+    void passwordResetRequested(bool success, const QString &error);
+    void passwordChanged(bool success, const QString &error);
 
 private:
     explicit NetworkManager(QObject *parent = nullptr);

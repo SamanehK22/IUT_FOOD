@@ -110,11 +110,9 @@ void NetworkManager::registerUser(const QString &firstName, const QString &lastN
     request["phone"] = phone;
     request["password"] = password;
     request["userType"] = userType;
-    if (userType == "restaurant_owner") {
-        if (!restaurantName.isEmpty()) request["restaurantName"] = restaurantName;
-        if (!city.isEmpty()) request["city"] = city;
-        if (!location.isEmpty()) request["location"] = location;
-    }
+    if (!city.isEmpty()) request["city"] = city;
+    if (!location.isEmpty()) request["location"] = location;
+    if (userType == "restaurant_owner" && !restaurantName.isEmpty()) request["restaurantName"] = restaurantName;
     sendTcpRequest(request);
 }
 

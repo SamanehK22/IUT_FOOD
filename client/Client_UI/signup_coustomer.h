@@ -2,6 +2,8 @@
 #define SIGNUP_COUSTOMER_H
 
 #include <QWidget>
+#include <QMessageBox>
+#include "../src/network/authmanager.h"
 
 namespace Ui {
 class signup_coustomer;
@@ -17,11 +19,13 @@ public:
 
 private slots:
     void on_Signup_pushButton_clicked();
-
     void on_back_pushButton_clicked();
+    void onRegisterSuccess();
+    void onRegisterFailed(const QString &error);
 
 private:
     Ui::signup_coustomer *ui;
+    void setupConnections();
 };
 
 #endif // SIGNUP_COUSTOMER_H

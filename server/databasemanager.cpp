@@ -69,8 +69,7 @@ bool DatabaseManager::isConnected() const
 }
 
 bool DatabaseManager::createCustomer(const QString& firstName, const QString& lastName, const QString& username, const QString& email,
-                                   const QString& passwordHash, const QString& phone, const QString& address,
-                                   const QString& city, const QString& location)
+                                   const QString& passwordHash, const QString& phone, const QString& city, const QString& location)
 {
     Logger::getInstance()->debug(QString("Creating customer: %1 %2 (%3)")
         .arg(firstName)
@@ -78,15 +77,15 @@ bool DatabaseManager::createCustomer(const QString& firstName, const QString& la
         .arg(email), "DatabaseManager");
 
     QVariantMap params;
-    params[":firstName"] = firstName;
-    params[":lastName"] = lastName;
-    params[":username"] = username;
-    params[":email"] = email;
-    params[":passwordHash"] = passwordHash;
-    params[":phone"] = phone;
-    params[":address"] = address;
-    params[":city"] = city;
-    params[":location"] = location;
+    params["firstName"] = firstName;
+    params["lastName"] = lastName;
+    params["username"] = username;
+    params["email"] = email;
+    params["passwordHash"] = passwordHash;
+    params["phone"] = phone;
+    params["address"] = location;
+    params["city"] = city;
+    params["location"] = location;
 
     QString query = "INSERT INTO customers (first_name, last_name, username, email, password_hash, phone, address, city, location) "
                    "VALUES (:firstName, :lastName, :username, :email, :passwordHash, :phone, :address, :city, :location)";
@@ -104,11 +103,11 @@ bool DatabaseManager::updateCustomer(const QString& customerId, const QVariantMa
 {
     QStringList setClauses;
     QVariantMap params;
-    params[":id"] = customerId;
+    params["id"] = customerId;
 
     for (auto it = updates.begin(); it != updates.end(); ++it) {
         setClauses << QString("%1 = :%2").arg(it.key()).arg(it.key());
-        params[":" + it.key()] = it.value();
+        params[it.key()] = it.value();
     }
 
     QString query = QString("UPDATE customers SET %1 WHERE id = :id")
@@ -120,7 +119,7 @@ bool DatabaseManager::updateCustomer(const QString& customerId, const QVariantMa
 bool DatabaseManager::deleteCustomer(const QString& customerId)
 {
     QVariantMap params;
-    params[":id"] = customerId;
+    params["id"] = customerId;
 
     QString query = "DELETE FROM customers WHERE id = :id";
     return executeQuery(query, params);
@@ -129,7 +128,7 @@ bool DatabaseManager::deleteCustomer(const QString& customerId)
 QString DatabaseManager::getCustomerId(const QString& email)
 {
     QVariantMap params;
-    params[":email"] = email;
+    params["email"] = email;
 
     QString query = "SELECT id FROM customers WHERE email = :email";
     QSqlQuery result = prepareQuery(query, params);
@@ -143,7 +142,7 @@ QString DatabaseManager::getCustomerId(const QString& email)
 QString DatabaseManager::getCustomerPasswordHash(const QString& customerId)
 {
     QVariantMap params;
-    params[":id"] = customerId;
+    params["id"] = customerId;
 
     QString query = "SELECT password_hash FROM customers WHERE id = :id";
     QSqlQuery result = prepareQuery(query, params);
@@ -157,7 +156,7 @@ QString DatabaseManager::getCustomerPasswordHash(const QString& customerId)
 QVariantMap DatabaseManager::getCustomerProfile(const QString& customerId)
 {
     QVariantMap params;
-    params[":id"] = customerId;
+    params["id"] = customerId;
 
     QString query = "SELECT name, last_name, email, phone, address, city, location FROM customers WHERE id = :id";
     QSqlQuery result = prepareQuery(query, params);
@@ -177,16 +176,25 @@ QVariantMap DatabaseManager::getCustomerProfile(const QString& customerId)
 
 QVariantMap DatabaseManager::getCustomerByLoginId(const QString& loginId)
 {
+    qDebug() << "[getCustomerByLoginId] loginId:" << loginId;
     QVariantMap params;
-    params[":loginId"] = loginId;
-    QString query = "SELECT * FROM customers WHERE email = :loginId OR phone = :loginId";
+    params["loginId"] = loginId;
+    QString query = "SELECT * FROM customers WHERE email = :loginId OR CAST(phone AS TEXT) = :loginId OR username = :loginId";
     QSqlQuery result = prepareQuery(query, params);
+    qDebug() << "Query Prepared:" << result.lastQuery();
+    qDebug() << "loginId param bound to:" << loginId;
+    if (!result.exec()) {
+        qDebug() << "Query exec failed:" << result.lastError().text();
+    }
     QVariantMap user;
     if (result.next()) {
         QSqlRecord rec = result.record();
         for (int i = 0; i < rec.count(); ++i) {
             user[rec.fieldName(i)] = result.value(i);
         }
+        qDebug() << "[getCustomerByLoginId] Found user:" << user;
+    } else {
+        qDebug() << "[getCustomerByLoginId] No user found for:" << loginId;
     }
     return user;
 }
@@ -201,15 +209,15 @@ bool DatabaseManager::createRestaurantOwner(const QString& firstName, const QStr
         .arg(email), "DatabaseManager");
 
     QVariantMap params;
-    params[":firstName"] = firstName;
-    params[":lastName"] = lastName;
-    params[":username"] = username;
-    params[":email"] = email;
-    params[":passwordHash"] = passwordHash;
-    params[":phone"] = phone;
-    params[":restaurantId"] = restaurantId;
-    params[":city"] = city;
-    params[":location"] = location;
+    params["firstName"] = firstName;
+    params["lastName"] = lastName;
+    params["username"] = username;
+    params["email"] = email;
+    params["passwordHash"] = passwordHash;
+    params["phone"] = phone;
+    params["restaurantId"] = restaurantId;
+    params["city"] = city;
+    params["location"] = location;
 
     QString query = "INSERT INTO restaurant_owners (first_name, last_name, username, email, password_hash, phone, restaurant_id, city, location) "
                    "VALUES (:firstName, :lastName, :username, :email, :passwordHash, :phone, :restaurantId, :city, :location)";
@@ -227,11 +235,11 @@ bool DatabaseManager::updateRestaurantOwner(const QString& ownerId, const QVaria
 {
     QStringList setClauses;
     QVariantMap params;
-    params[":id"] = ownerId;
+    params["id"] = ownerId;
 
     for (auto it = updates.begin(); it != updates.end(); ++it) {
         setClauses << QString("%1 = :%2").arg(it.key()).arg(it.key());
-        params[":" + it.key()] = it.value();
+        params[it.key()] = it.value();
     }
 
     QString query = QString("UPDATE restaurant_owners SET %1 WHERE id = :id")
@@ -243,7 +251,7 @@ bool DatabaseManager::updateRestaurantOwner(const QString& ownerId, const QVaria
 bool DatabaseManager::deleteRestaurantOwner(const QString& ownerId)
 {
     QVariantMap params;
-    params[":id"] = ownerId;
+    params["id"] = ownerId;
 
     QString query = "DELETE FROM restaurant_owners WHERE id = :id";
     return executeQuery(query, params);
@@ -252,7 +260,7 @@ bool DatabaseManager::deleteRestaurantOwner(const QString& ownerId)
 QString DatabaseManager::getRestaurantOwnerId(const QString& email)
 {
     QVariantMap params;
-    params[":email"] = email;
+    params["email"] = email;
 
     QString query = "SELECT id FROM restaurant_owners WHERE email = :email";
     QSqlQuery result = prepareQuery(query, params);
@@ -266,7 +274,7 @@ QString DatabaseManager::getRestaurantOwnerId(const QString& email)
 QString DatabaseManager::getRestaurantOwnerPasswordHash(const QString& ownerId)
 {
     QVariantMap params;
-    params[":id"] = ownerId;
+    params["id"] = ownerId;
 
     QString query = "SELECT password_hash FROM restaurant_owners WHERE id = :id";
     QSqlQuery result = prepareQuery(query, params);
@@ -280,7 +288,7 @@ QString DatabaseManager::getRestaurantOwnerPasswordHash(const QString& ownerId)
 QVariantMap DatabaseManager::getRestaurantOwnerProfile(const QString& ownerId)
 {
     QVariantMap params;
-    params[":id"] = ownerId;
+    params["id"] = ownerId;
 
     QString query = "SELECT name, last_name, email, phone, restaurant_id, city, location FROM restaurant_owners WHERE id = :id";
     QSqlQuery result = prepareQuery(query, params);
@@ -301,7 +309,7 @@ QVariantMap DatabaseManager::getRestaurantOwnerProfile(const QString& ownerId)
 QVariantMap DatabaseManager::getRestaurantOwnerByLoginId(const QString& loginId)
 {
     QVariantMap params;
-    params[":loginId"] = loginId;
+    params["loginId"] = loginId;
     QString query = "SELECT * FROM restaurant_owners WHERE email = :loginId OR phone = :loginId";
     QSqlQuery result = prepareQuery(query, params);
     QVariantMap user;
@@ -317,7 +325,7 @@ QVariantMap DatabaseManager::getRestaurantOwnerByLoginId(const QString& loginId)
 QString DatabaseManager::getRestaurantIdByOwner(const QString& ownerId)
 {
     QVariantMap params;
-    params[":id"] = ownerId;
+    params["id"] = ownerId;
 
     QString query = "SELECT restaurant_id FROM restaurant_owners WHERE id = :id";
     QSqlQuery result = prepareQuery(query, params);
@@ -331,10 +339,10 @@ QString DatabaseManager::getRestaurantIdByOwner(const QString& ownerId)
 bool DatabaseManager::createRestaurant(const QString& name, const QString& address, const QString& type, const QString& imageUrl)
 {
     QVariantMap params;
-    params[":name"] = name;
-    params[":address"] = address;
-    params[":type"] = type;
-    params[":imageUrl"] = imageUrl;
+    params["name"] = name;
+    params["address"] = address;
+    params["type"] = type;
+    params["imageUrl"] = imageUrl;
 
     QString query = "INSERT INTO restaurants (name, address, type, image_url) "
                    "VALUES (:name, :address, :type, :imageUrl)";
@@ -346,11 +354,11 @@ bool DatabaseManager::updateRestaurant(const QString& restaurantId, const QVaria
 {
     QStringList setClauses;
     QVariantMap params;
-    params[":id"] = restaurantId;
+    params["id"] = restaurantId;
 
     for (auto it = updates.begin(); it != updates.end(); ++it) {
         setClauses << QString("%1 = :%2").arg(it.key()).arg(it.key());
-        params[":" + it.key()] = it.value();
+        params[it.key()] = it.value();
     }
 
     QString query = QString("UPDATE restaurants SET %1 WHERE id = :id")
@@ -362,7 +370,7 @@ bool DatabaseManager::updateRestaurant(const QString& restaurantId, const QVaria
 bool DatabaseManager::deleteRestaurant(const QString& restaurantId)
 {
     QVariantMap params;
-    params[":id"] = restaurantId;
+    params["id"] = restaurantId;
 
     QString query = "DELETE FROM restaurants WHERE id = :id";
     return executeQuery(query, params);
@@ -371,7 +379,7 @@ bool DatabaseManager::deleteRestaurant(const QString& restaurantId)
 bool DatabaseManager::createMenu(const QString& restaurantId)
 {
     QVariantMap params;
-    params[":restaurantId"] = restaurantId;
+    params["restaurantId"] = restaurantId;
 
     QString query = "INSERT INTO menus (restaurant_id) VALUES (:restaurantId)";
     return executeQuery(query, params);
@@ -380,13 +388,13 @@ bool DatabaseManager::createMenu(const QString& restaurantId)
 bool DatabaseManager::addMenuItem(const QString& menuId, const QString& name, const QString& description, double price, const QString& ingredients, const QString& category, const QString& imageUrl)
 {
     QVariantMap params;
-    params[":menuId"] = menuId;
-    params[":name"] = name;
-    params[":description"] = description;
-    params[":price"] = price;
-    params[":ingredients"] = ingredients;
-    params[":category"] = category;
-    params[":imageUrl"] = imageUrl;
+    params["menuId"] = menuId;
+    params["name"] = name;
+    params["description"] = description;
+    params["price"] = price;
+    params["ingredients"] = ingredients;
+    params["category"] = category;
+    params["imageUrl"] = imageUrl;
 
     QString query = "INSERT INTO menu_items (menu_id, name, description, price, ingredients, category, image_url) "
                    "VALUES (:menuId, :name, :description, :price, :ingredients, :category, :imageUrl)";
@@ -398,12 +406,12 @@ bool DatabaseManager::updateMenuItem(const QString& menuId, const QString& itemI
 {
     QStringList setClauses;
     QVariantMap params;
-    params[":menuId"] = menuId;
-    params[":itemId"] = itemId;
+    params["menuId"] = menuId;
+    params["itemId"] = itemId;
 
     for (auto it = updates.begin(); it != updates.end(); ++it) {
         setClauses << QString("%1 = :%2").arg(it.key()).arg(it.key());
-        params[":" + it.key()] = it.value();
+        params[it.key()] = it.value();
     }
 
     QString query = QString("UPDATE menu_items SET %1 WHERE menu_id = :menuId AND id = :itemId")
@@ -415,8 +423,8 @@ bool DatabaseManager::updateMenuItem(const QString& menuId, const QString& itemI
 bool DatabaseManager::deleteMenuItem(const QString& menuId, const QString& itemId)
 {
     QVariantMap params;
-    params[":menuId"] = menuId;
-    params[":itemId"] = itemId;
+    params["menuId"] = menuId;
+    params["itemId"] = itemId;
 
     QString query = "DELETE FROM menu_items WHERE menu_id = :menuId AND id = :itemId";
     return executeQuery(query, params);
@@ -436,10 +444,10 @@ bool DatabaseManager::createOrder(const QString& customerId, const QString& rest
     try {
         // Create order
         QVariantMap orderParams;
-        orderParams[":customer_id"] = customerId;
-        orderParams[":restaurant_id"] = restaurantId;
-        orderParams[":status"] = "pending";
-        orderParams[":created_at"] = QDateTime::currentDateTime();
+        orderParams["customer_id"] = customerId;
+        orderParams["restaurant_id"] = restaurantId;
+        orderParams["status"] = "pending";
+        orderParams["created_at"] = QDateTime::currentDateTime();
 
         QSqlQuery query = prepareQuery(
             "INSERT INTO orders (customer_id, restaurant_id, status, created_at) "
@@ -458,10 +466,10 @@ bool DatabaseManager::createOrder(const QString& customerId, const QString& rest
         for (const QVariant& item : items) {
             QVariantMap itemMap = item.toMap();
             QVariantMap itemParams;
-            itemParams[":order_id"] = orderId;
-            itemParams[":menu_item_id"] = itemMap["menuItemId"];
-            itemParams[":quantity"] = itemMap["quantity"];
-            itemParams[":price"] = itemMap["price"];
+            itemParams["order_id"] = orderId;
+            itemParams["menu_item_id"] = itemMap["menuItemId"];
+            itemParams["quantity"] = itemMap["quantity"];
+            itemParams["price"] = itemMap["price"];
 
             QString itemQuery = "INSERT INTO order_items (order_id, menu_item_id, quantity, price) "
                               "VALUES (:order_id, :menu_item_id, :quantity, :price)";
@@ -487,8 +495,8 @@ bool DatabaseManager::createOrder(const QString& customerId, const QString& rest
 bool DatabaseManager::updateOrderStatus(const QString& orderId, const QString& status)
 {
     QVariantMap params;
-    params[":id"] = orderId;
-    params[":status"] = status;
+    params["id"] = orderId;
+    params["status"] = status;
 
     QString query = "UPDATE orders SET status = :status WHERE id = :id";
     return executeQuery(query, params);
@@ -497,7 +505,7 @@ bool DatabaseManager::updateOrderStatus(const QString& orderId, const QString& s
 bool DatabaseManager::deleteOrder(const QString& orderId)
 {
     QVariantMap params;
-    params[":id"] = orderId;
+    params["id"] = orderId;
 
     QString query = "DELETE FROM orders WHERE id = :id";
     return executeQuery(query, params);
@@ -518,8 +526,11 @@ QSqlQuery DatabaseManager::prepareQuery(const QString& query, const QVariantMap&
     QSqlQuery sqlQuery;
     sqlQuery.prepare(query);
 
+    qDebug() << "[prepareQuery] SQL:" << query;
+    qDebug() << "[prepareQuery] Parameters:";
     for (auto it = params.begin(); it != params.end(); ++it) {
         sqlQuery.bindValue(":" + it.key(), it.value());
+        qDebug() << "  " << (":" + it.key()) << "=" << it.value();
     }
 
     return sqlQuery;
@@ -551,7 +562,7 @@ bool DatabaseManager::rollbackTransaction()
 QJsonArray DatabaseManager::getCustomerOrderHistory(const QString& customerId)
 {
     QVariantMap params;
-    params[":customerId"] = customerId;
+    params["customerId"] = customerId;
 
     QString query = "SELECT o.*, r.name as restaurant_name FROM orders o "
                    "JOIN restaurants r ON o.restaurant_id = r.id "
@@ -578,7 +589,7 @@ QJsonArray DatabaseManager::getCustomerOrderHistory(const QString& customerId)
 QJsonArray DatabaseManager::getRestaurantsByOwner(const QString& ownerId)
 {
     QVariantMap params;
-    params[":ownerId"] = ownerId;
+    params["ownerId"] = ownerId;
 
     QString query = "SELECT r.* FROM restaurants r "
                    "JOIN restaurant_owners ro ON r.id = ro.restaurant_id "
@@ -624,7 +635,7 @@ QJsonArray DatabaseManager::getAllRestaurants()
 QJsonArray DatabaseManager::getOrderHistory(const QString& userId, const QString& userType)
 {
     QVariantMap params;
-    params[":userId"] = userId;
+    params["userId"] = userId;
 
     QString query;
     if (userType == "customer") {
@@ -670,7 +681,7 @@ QJsonArray DatabaseManager::getOrderHistory(const QString& userId, const QString
 QJsonArray DatabaseManager::getMenuItems(const QString& restaurantId)
 {
     QVariantMap params;
-    params[":restaurantId"] = restaurantId;
+    params["restaurantId"] = restaurantId;
 
     QString query = "SELECT mi.* FROM menu_items mi "
                    "JOIN menus m ON mi.menu_id = m.id "
@@ -700,10 +711,10 @@ QJsonArray DatabaseManager::getMenuItems(const QString& restaurantId)
 bool DatabaseManager::addOrderComment(const QString& orderId, const QString& customerId, const QString& comment)
 {
     QVariantMap params;
-    params[":orderId"] = orderId;
-    params[":customerId"] = customerId;
-    params[":comment"] = comment;
-    params[":createdAt"] = QDateTime::currentDateTime();
+    params["orderId"] = orderId;
+    params["customerId"] = customerId;
+    params["comment"] = comment;
+    params["createdAt"] = QDateTime::currentDateTime();
 
     QString query = "INSERT INTO order_feedback (order_id, customer_id, comment, created_at) "
                    "VALUES (:orderId, :customerId, :comment, :createdAt)";
@@ -713,7 +724,7 @@ bool DatabaseManager::addOrderComment(const QString& orderId, const QString& cus
 QJsonArray DatabaseManager::getOrderComments(const QString& orderId)
 {
     QVariantMap params;
-    params[":orderId"] = orderId;
+    params["orderId"] = orderId;
     QString query = "SELECT * FROM order_feedback WHERE order_id = :orderId ORDER BY created_at DESC";
     QSqlQuery result = prepareQuery(query, params);
     QJsonArray comments;
@@ -732,10 +743,10 @@ QJsonArray DatabaseManager::getOrderComments(const QString& orderId)
 bool DatabaseManager::addChatMessage(const QString& orderId, const QString& fromUserId, const QString& toUserId, const QString& content)
 {
     QVariantMap params;
-    params[":orderId"] = orderId;
-    params[":fromUserId"] = fromUserId;
-    params[":toUserId"] = toUserId;
-    params[":content"] = content;
+    params["orderId"] = orderId;
+    params["fromUserId"] = fromUserId;
+    params["toUserId"] = toUserId;
+    params["content"] = content;
     QString query = "INSERT INTO chat_messages (order_id, from_user_id, to_user_id, content) VALUES (:orderId, :fromUserId, :toUserId, :content)";
     return executeQuery(query, params);
 }
@@ -743,7 +754,7 @@ bool DatabaseManager::addChatMessage(const QString& orderId, const QString& from
 QJsonArray DatabaseManager::getChatHistory(const QString& orderId)
 {
     QVariantMap params;
-    params[":orderId"] = orderId;
+    params["orderId"] = orderId;
     QString query = "SELECT id, order_id, from_user_id, to_user_id, content, timestamp, is_read FROM chat_messages WHERE order_id = :orderId ORDER BY timestamp ASC";
     QSqlQuery result = prepareQuery(query, params);
     QJsonArray messages;
@@ -764,9 +775,9 @@ QJsonArray DatabaseManager::getChatHistory(const QString& orderId)
 bool DatabaseManager::addUserChatMessage(const QString& fromUserId, const QString& toUserId, const QString& content)
 {
     QVariantMap params;
-    params[":fromUserId"] = fromUserId;
-    params[":toUserId"] = toUserId;
-    params[":content"] = content;
+    params["fromUserId"] = fromUserId;
+    params["toUserId"] = toUserId;
+    params["content"] = content;
     QString query = "INSERT INTO user_chat_messages (from_user_id, to_user_id, content) VALUES (:fromUserId, :toUserId, :content)";
     return executeQuery(query, params);
 }
@@ -774,8 +785,8 @@ bool DatabaseManager::addUserChatMessage(const QString& fromUserId, const QStrin
 QJsonArray DatabaseManager::getUserChatHistory(const QString& userA, const QString& userB)
 {
     QVariantMap params;
-    params[":userA"] = userA;
-    params[":userB"] = userB;
+    params["userA"] = userA;
+    params["userB"] = userB;
     QString query = R"(
         SELECT id, from_user_id, to_user_id, content, timestamp, is_read
         FROM user_chat_messages
@@ -796,4 +807,64 @@ QJsonArray DatabaseManager::getUserChatHistory(const QString& userA, const QStri
         messages.append(msg);
     }
     return messages;
+}
+
+bool DatabaseManager::customerEmailExists(const QString& email) {
+    QVariantMap params;
+    params["email"] = email;
+    QString query = "SELECT 1 FROM customers WHERE email = :email LIMIT 1";
+    QSqlQuery result = prepareQuery(query, params);
+    return result.next();
+}
+
+bool DatabaseManager::customerPhoneExists(const QString& phone) {
+    QVariantMap params;
+    params["phone"] = phone;
+    QString query = "SELECT 1 FROM customers WHERE phone = :phone LIMIT 1";
+    QSqlQuery result = prepareQuery(query, params);
+    return result.next();
+}
+
+bool DatabaseManager::ownerEmailExists(const QString& email) {
+    QVariantMap params;
+    params["email"] = email;
+    QString query = "SELECT 1 FROM restaurant_owners WHERE email = :email LIMIT 1";
+    QSqlQuery result = prepareQuery(query, params);
+    return result.next();
+}
+
+bool DatabaseManager::ownerPhoneExists(const QString& phone) {
+    QVariantMap params;
+    params["phone"] = phone;
+    QString query = "SELECT 1 FROM restaurant_owners WHERE phone = :phone LIMIT 1";
+    QSqlQuery result = prepareQuery(query, params);
+    return result.next();
+}
+
+void DatabaseManager::debugPrintAllCustomerPhones() {
+    QSqlQuery query("SELECT id, username, phone FROM customers");
+    qDebug() << "--- All customer phones in DB ---";
+    while (query.next()) {
+        QString id = query.value(0).toString();
+        QString username = query.value(1).toString();
+        QString phone = query.value(2).toString();
+        qDebug() << "id:" << id << ", username:" << username << ", phone:" << phone << ", length:" << phone.length();
+    }
+    qDebug() << "--- End of customer phones ---";
+}
+
+void DatabaseManager::debugRawQuerySimSim() {
+    QSqlQuery query("SELECT * FROM customers WHERE username = 'sim sim'");
+    qDebug() << "--- Raw query for username = 'sim sim' ---";
+    if (query.next()) {
+        QSqlRecord rec = query.record();
+        QStringList fields;
+        for (int i = 0; i < rec.count(); ++i) {
+            fields << rec.fieldName(i) + ": '" + query.value(i).toString() + "'";
+        }
+        qDebug() << fields.join(", ");
+    } else {
+        qDebug() << "No user found for username = 'sim sim' (raw query)";
+    }
+    qDebug() << "--- End raw query ---";
 } 

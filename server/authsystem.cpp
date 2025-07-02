@@ -1,6 +1,8 @@
 #include "authsystem.h"
 #include <QDebug>
 #include <QRegularExpression>
+#include <QJsonObject>
+#include <QJsonArray>
 
 AuthSystem* AuthSystem::instance = nullptr;
 
@@ -25,6 +27,8 @@ AuthSystem::~AuthSystem()
 
 QString AuthSystem::login(const QString& loginId, const QString& password)
 {
+    qDebug() << "[login] loginId:" << loginId;
+    qDebug() << "[login] password:" << password;
     // Validate input
     if (loginId.isEmpty() || password.isEmpty()) {
         return QString();
@@ -48,6 +52,10 @@ QString AuthSystem::login(const QString& loginId, const QString& password)
         return QString();
     }
 
+    qDebug() << "[login] Input password:" << password;
+    qDebug() << "[login] Stored hash:" << storedHash;
+    qDebug() << "[login] Password valid:" << SecurityUtils::verifyPassword(password, storedHash);
+
     if (!SecurityUtils::verifyPassword(password, storedHash)) {
         qDebug() << "Invalid password for user:" << loginId;
         return QString();
@@ -70,8 +78,22 @@ QString AuthSystem::login(const QString& loginId, const QString& password)
 
 bool AuthSystem::registerUser(const QString& firstName, const QString& lastName, const QString& email, const QString& phone, const QString& password, const QString& userType, const QString& restaurantName, const QString& city, const QString& location)
 {
+    qDebug() << "[registerUser] Params:" << firstName << lastName << email << phone << password << userType << restaurantName << city << location;
     if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty() || userType.isEmpty()) {
+        qDebug() << "Missing required fields.";
         return false;
+    }
+    // Duplicate check
+    if (userType == "restaurant_owner") {
+        if (dbManager->ownerEmailExists(email) || dbManager->ownerPhoneExists(phone)) {
+            qDebug() << "Duplicate restaurant owner email or phone:" << email << phone;
+            return false;
+        }
+    } else {
+        if (dbManager->customerEmailExists(email) || dbManager->customerPhoneExists(phone)) {
+            qDebug() << "Duplicate customer email or phone:" << email << phone;
+            return false;
+        }
     }
     // Hash the password
     QString hashedPassword = SecurityUtils::hashPassword(password);
@@ -97,7 +119,8 @@ bool AuthSystem::registerUser(const QString& firstName, const QString& lastName,
             }
         }
     } else {
-        success = dbManager->createCustomer(firstName, lastName, username, email, hashedPassword, phone, city, location, "");
+        // Correct mapping: location is used for address
+        success = dbManager->createCustomer(firstName, lastName, username, email, hashedPassword, phone, city, location);
     }
     if (!success) {
         qDebug() << "Failed to create user:" << username;

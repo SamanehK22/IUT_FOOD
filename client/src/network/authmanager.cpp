@@ -40,9 +40,9 @@ void AuthManager::login(const QString &loginId, const QString &password)
     m_networkManager->login(loginId, password);
 }
 
-void AuthManager::registerUser(const QString &firstName, const QString &lastName, const QString &email, const QString &phone, const QString &password, const QString &userType)
+void AuthManager::registerUser(const QString &firstName, const QString &lastName, const QString &email, const QString &phone, const QString &password, const QString &userType, const QString &restaurantName, const QString &city, const QString &location)
 {
-    m_networkManager->registerUser(firstName, lastName, email, phone, password, userType);
+    m_networkManager->registerUser(firstName, lastName, email, phone, password, userType, restaurantName, city, location);
 }
 
 void AuthManager::logout()
