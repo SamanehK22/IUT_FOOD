@@ -49,9 +49,10 @@ public:
     bool ownerPhoneExists(const QString& phone);
 
     // Restaurant Management
-    bool createRestaurant(const QString& name, const QString& address, const QString& type, const QString& imageUrl = "");
+    bool createRestaurant(const QString& name, const QString& address, const QString& city, const QString& location, const QString& type, const QString& ownerId, const QString& imageUrl = "", const QString& status = "pending");
     bool updateRestaurant(const QString& restaurantId, const QVariantMap& updates);
     bool deleteRestaurant(const QString& restaurantId);
+    QVariantMap getRestaurantById(const QString& restaurantId);
     QJsonArray getRestaurantsByOwner(const QString& ownerId);
     QJsonArray getAllRestaurants();
 
@@ -94,6 +95,8 @@ public:
     void debugPrintAllCustomerPhones();
 
     void debugRawQuerySimSim();
+
+    QString getRestaurantOwnerIdByRestaurant(const QString& restaurantId);
 
 private:
     explicit DatabaseManager(QObject *parent = nullptr);

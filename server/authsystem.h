@@ -24,7 +24,8 @@ public:
     
     // Authentication methods
     QString login(const QString& loginId, const QString& password);
-    bool registerUser(const QString& firstName, const QString& lastName, const QString& email, const QString& phone, const QString& password, const QString& userType, const QString& restaurantName = "", const QString& city = "", const QString& location = "");
+    bool registerCustomer(const QString& firstName, const QString& lastName, const QString& email, const QString& phone, const QString& password, const QString& city, const QString& location);
+    bool registerRestaurantOwner(const QString& firstName, const QString& lastName, const QString& email, const QString& phone, const QString& password, const QString& restaurantName, const QString& city, const QString& location, const QString& type);
     bool logout(const QString& token);
     
     // Session management
@@ -38,6 +39,9 @@ public:
     bool updateProfile(const QString& token, const QVariantMap& updates);
     bool changePassword(const QString& token, const QString& oldPassword, const QString& newPassword);
     bool deleteAccount(const QString& token);
+
+    bool handleRegisterCustomer(const QJsonObject& data);
+    bool handleRegisterRestaurantOwner(const QJsonObject& data);
 
 private:
     explicit AuthSystem(QObject *parent = nullptr);

@@ -54,7 +54,7 @@ QLineEdit:focus {
 }</string>
    </property>
    <property name="echoMode">
-    <enum>QLineEdit::Normal</enum>
+    <enum>QLineEdit::EchoMode::Normal</enum>
    </property>
    <property name="placeholderText">
     <string>Example@gmail.com</string>
@@ -108,7 +108,7 @@ QLineEdit:focus {
 }</string>
    </property>
    <property name="echoMode">
-    <enum>QLineEdit::Normal</enum>
+    <enum>QLineEdit::EchoMode::Normal</enum>
    </property>
    <property name="placeholderText">
     <string>Name </string>
@@ -144,7 +144,7 @@ QLineEdit:focus {
     <rect>
      <x>530</x>
      <y>280</y>
-     <width>221</width>
+     <width>121</width>
      <height>41</height>
     </rect>
    </property>
@@ -162,7 +162,7 @@ QLineEdit:focus {
 }</string>
    </property>
    <property name="echoMode">
-    <enum>QLineEdit::Normal</enum>
+    <enum>QLineEdit::EchoMode::Normal</enum>
    </property>
    <property name="placeholderText">
     <string>e.g., Garden Hill</string>
@@ -220,7 +220,7 @@ QLineEdit:focus {
 }</string>
    </property>
    <property name="echoMode">
-    <enum>QLineEdit::Normal</enum>
+    <enum>QLineEdit::EchoMode::Normal</enum>
    </property>
    <property name="placeholderText">
     <string>+98 913 256 324 45</string>
@@ -436,7 +436,7 @@ QLineEdit:focus {
 }</string>
    </property>
    <property name="echoMode">
-    <enum>QLineEdit::Normal</enum>
+    <enum>QLineEdit::EchoMode::Normal</enum>
    </property>
    <property name="placeholderText">
     <string>e.g., Shahid Beheshti Alley, Vali-Asr Street </string>
@@ -490,7 +490,7 @@ QLineEdit:focus {
 }</string>
    </property>
    <property name="echoMode">
-    <enum>QLineEdit::Password</enum>
+    <enum>QLineEdit::EchoMode::Password</enum>
    </property>
    <property name="placeholderText">
     <string>Password</string>
@@ -524,9 +524,9 @@ QLineEdit:focus {
   <widget class="QLabel" name="FullName_label_2">
    <property name="geometry">
     <rect>
-     <x>530</x>
+     <x>520</x>
      <y>250</y>
-     <width>141</width>
+     <width>151</width>
      <height>31</height>
     </rect>
    </property>
@@ -569,7 +569,7 @@ QLineEdit:focus {
 }</string>
    </property>
    <property name="echoMode">
-    <enum>QLineEdit::Normal</enum>
+    <enum>QLineEdit::EchoMode::Normal</enum>
    </property>
    <property name="placeholderText">
     <string>Last Name</string>
@@ -627,6 +627,108 @@ QPushButton#back_pushButton:hover {
    <property name="icon">
     <iconset resource="Source.qrc">
      <normaloff>:/ImageFolder/Back.png</normaloff>:/ImageFolder/Back.png</iconset>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="type_comboBox">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>280</y>
+     <width>92</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>20</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QComboBox {
+    border: 2px solid #d8d8d8;
+    border-radius: 10px;
+    padding: 6px 10px;
+    background-color: #ffffff;
+    font: 14px &quot;Segoe UI&quot;, &quot;Vazirmatn&quot;, sans-serif;
+    color: #333;
+    min-width: 68px;
+}
+
+QComboBox:hover {
+    border: 2px solid #6c63ff;
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 30px;
+    border-left: 1px solid #cccccc;
+    background-color: #f0f0f0;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+QComboBox::down-arrow {
+    image: url(:/icons/down_arrow.png); /* یا آیکن دلخواه خودت */
+    width: 12px;
+    height: 12px;
+}
+
+QComboBox QAbstractItemView {
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    background-color: #ffffff;
+    selection-background-color: #e6e6ff;
+    selection-color: #000000;
+    padding: 4px;
+}
+</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>Fast Food</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Iranian Food</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Sea Food</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Vegeterian Food</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>670</x>
+     <y>250</y>
+     <width>61</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+    color: #333333;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    background: transparent;
+    padding: 2px;
+    font-family: &quot;Segoe UI&quot;, &quot;Arial&quot;, sans-serif;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Type *</string>
    </property>
   </widget>
  </widget>

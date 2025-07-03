@@ -21,8 +21,9 @@ public:
 
     // Authentication
     void login(const QString &loginId, const QString &password);
-    void registerUser(const QString &firstName, const QString &lastName, const QString &email, const QString &phone, const QString &password, const QString &userType, const QString &restaurantName = "", const QString &city = "", const QString &location = "");
     void logout();
+    void registerCustomer(const QString &firstName, const QString &lastName, const QString &email, const QString &phone, const QString &password, const QString &city, const QString &location);
+    void registerRestaurantOwner(const QString &firstName, const QString &lastName, const QString &email, const QString &phone, const QString &password, const QString &restaurantName, const QString &city, const QString &location, const QString &restaurantType);
 
     // Restaurant operations
     void getRestaurants();
@@ -64,6 +65,8 @@ public:
 
     void requestPasswordReset(const QString &firstName, const QString &lastName, const QString &email, const QString &phone);
     void changePassword(const QString &email, const QString &newPassword);
+
+    void sendTcpRequest(const QJsonObject &request);
 
 signals:
     void connected();
@@ -111,7 +114,6 @@ private:
 
     void handleTcpResponse(const QJsonObject &response);
     void handleWebSocketMessage(const QString &message);
-    void sendTcpRequest(const QJsonObject &request);
     void authenticateWebSocket();
     void setupConnections();
     void reconnect();

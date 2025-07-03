@@ -31,6 +31,7 @@ void signup_coustomer::setupConnections()
 
 void signup_coustomer::on_Signup_pushButton_clicked()
 {
+    qDebug() << "SIGNUP BUTTON CLICKED!";
     QString firstName = ui->FullName_lineEdit->text().trimmed();
     QString lastName = ui->FullName_lineEdit_2->text().trimmed();
     QString phone = ui->Password_lineEdit_3->text().trimmed();
@@ -39,23 +40,34 @@ void signup_coustomer::on_Signup_pushButton_clicked()
     QString city = ui->City_comboBox->currentText();
     QString location = ui->Password_lineEdit_2->text().trimmed();
 
-    qDebug() << "[Customer Signup] firstName:" << firstName << ", lastName:" << lastName << ", email:" << email << ", phone:" << phone << ", password:" << password << ", city:" << city << ", location:" << location;
+    qDebug() << "[Customer Signup] Clicked. Values:";
+    qDebug() << "  firstName:" << firstName;
+    qDebug() << "  lastName:" << lastName;
+    qDebug() << "  email:" << email;
+    qDebug() << "  phone:" << phone;
+    qDebug() << "  password:" << password;
+    qDebug() << "  city:" << city;
+    qDebug() << "  location:" << location;
 
     if (firstName.isEmpty() || lastName.isEmpty() || phone.isEmpty() || email.isEmpty() || password.isEmpty() || city.isEmpty() || location.isEmpty()) {
+        qDebug() << "[Customer Signup] Validation failed: missing fields.";
         QMessageBox::warning(this, "Signup Error", "Please fill in all fields.");
         return;
     }
+    qDebug() << "[Customer Signup] Validation passed.";
 
     // Check if server is connected
     NetworkManager *network = NetworkManager::getInstance();
     if (!network->isConnected()) {
+        qDebug() << "[Customer Signup] Network not connected.";
         QMessageBox::critical(this, "Connection Error", "Cannot connect to server. Please make sure the server is running and try again.");
         return;
     }
+    qDebug() << "[Customer Signup] Network connected. Calling registerCustomer...";
 
     AuthManager *auth = AuthManager::getInstance();
-    // For customers, restaurantName is empty
-    auth->registerUser(firstName, lastName, email, phone, password, "customer", "", city, location);
+    auth->registerCustomer(firstName, lastName, email, phone, password, city, location);
+    qDebug() << "[Customer Signup] registerCustomer called.";
 }
 
 void signup_coustomer::onRegisterSuccess()

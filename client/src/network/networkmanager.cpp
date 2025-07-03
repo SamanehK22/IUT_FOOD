@@ -100,19 +100,33 @@ void NetworkManager::login(const QString &loginId, const QString &password)
     sendTcpRequest(request);
 }
 
-void NetworkManager::registerUser(const QString &firstName, const QString &lastName, const QString &email, const QString &phone, const QString &password, const QString &userType, const QString &restaurantName, const QString &city, const QString &location)
-{
+void NetworkManager::registerCustomer(const QString &firstName, const QString &lastName, const QString &email, const QString &phone, const QString &password, const QString &city, const QString &location) {
     QJsonObject request;
     request["type"] = "register";
+    request["userType"] = "customer";
     request["firstName"] = firstName;
     request["lastName"] = lastName;
     request["email"] = email;
     request["phone"] = phone;
     request["password"] = password;
-    request["userType"] = userType;
-    if (!city.isEmpty()) request["city"] = city;
-    if (!location.isEmpty()) request["location"] = location;
-    if (userType == "restaurant_owner" && !restaurantName.isEmpty()) request["restaurantName"] = restaurantName;
+    request["city"] = city;
+    request["location"] = location;
+    sendTcpRequest(request);
+}
+
+void NetworkManager::registerRestaurantOwner(const QString &firstName, const QString &lastName, const QString &email, const QString &phone, const QString &password, const QString &restaurantName, const QString &city, const QString &location, const QString &restaurantType) {
+    QJsonObject request;
+    request["type"] = "register";
+    request["userType"] = "restaurant_owner";
+    request["firstName"] = firstName;
+    request["lastName"] = lastName;
+    request["email"] = email;
+    request["phone"] = phone;
+    request["password"] = password;
+    request["restaurantName"] = restaurantName;
+    request["city"] = city;
+    request["location"] = location;
+    request["restaurantType"] = restaurantType;
     sendTcpRequest(request);
 }
 

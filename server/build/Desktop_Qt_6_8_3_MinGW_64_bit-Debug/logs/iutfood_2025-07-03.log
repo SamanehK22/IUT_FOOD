@@ -1,0 +1,84 @@
+[2025-07-03 01:50:17.579] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 01:50:17.580] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 02:47:59.522] [INFO] [DatabaseManager] Customer created successfully: pary@gmail.com
+[2025-07-03 02:48:03.048] [ERROR] [DatabaseManager] Failed to create customer: pary@gmail.com
+[2025-07-03 02:49:13.916] [INFO] [DatabaseManager] Restaurant owner created successfully: mahan@gmail.com
+[2025-07-03 02:49:33.138] [ERROR] [DatabaseManager] Failed to create restaurant owner: mahan@gmail.com
+[2025-07-03 03:14:55.533] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 03:14:55.534] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 03:15:01.843] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 03:15:01.843] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 03:16:21.687] [ERROR] [DatabaseManager] Failed to create restaurant owner: sahar@gmail.com
+[2025-07-03 03:16:34.779] [INFO] [DatabaseManager] Restaurant owner created successfully: sahar@gmail.com
+[2025-07-03 03:16:37.959] [ERROR] [DatabaseManager] Failed to create restaurant owner: sahar@gmail.com
+[2025-07-03 03:23:20.272] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 03:23:20.272] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 03:23:25.707] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 03:23:25.707] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 03:28:02.708] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 03:28:02.709] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 03:37:09.933] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 03:37:09.934] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 03:42:40.906] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 03:42:40.907] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 03:44:03.619] [ERROR] [DatabaseManager] Failed to create restaurant owner: mina@gmail.com
+[2025-07-03 03:44:22.883] [INFO] [DatabaseManager] Restaurant owner created successfully: mina@gmail.com
+[2025-07-03 03:44:27.215] [ERROR] [DatabaseManager] Failed to create restaurant owner: mina@gmail.com
+[2025-07-03 03:51:21.971] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 03:51:21.972] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 03:54:18.424] [INFO] [DatabaseManager] Restaurant owner created successfully: pary@gmail.com
+[2025-07-03 03:58:05.118] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 03:58:05.119] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 09:22:26.829] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 09:22:26.830] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 09:23:35.333] [INFO] [DatabaseManager] Restaurant owner created successfully: mahboob@gmail.com
+[2025-07-03 09:27:54.901] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 09:27:54.903] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 09:31:44.023] [ERROR] [DatabaseManager] Failed to create restaurant owner: ali@gmail.com
+[2025-07-03 09:32:14.387] [ERROR] [DatabaseManager] Failed to create restaurant owner: ali@gmail.com
+[2025-07-03 09:32:36.224] [ERROR] [DatabaseManager] Failed to create restaurant owner: alireza@gmail.com
+[2025-07-03 09:33:21.701] [INFO] [DatabaseManager] Restaurant owner created successfully: alireza@gmail.com
+[2025-07-03 09:33:29.203] [ERROR] [DatabaseManager] Failed to create restaurant owner: alireza@gmail.com
+[2025-07-03 09:48:43.477] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 09:48:43.478] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 09:51:12.849] [INFO] [DatabaseManager] Restaurant owner created successfully: parastooo@gmail.com
+[2025-07-03 10:53:33.051] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 10:53:33.051] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 10:53:39.020] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 10:53:39.021] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 11:01:13.108] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 11:01:13.108] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 11:14:16.908] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 11:14:16.909] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 11:22:11.522] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 11:22:11.523] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 11:57:47.709] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 11:57:47.710] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 12:26:06.468] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 12:26:06.469] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 12:35:52.247] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 12:35:52.247] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 12:52:39.288] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 12:52:39.289] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 13:04:47.322] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 13:04:47.323] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 13:08:03.472] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 13:08:03.473] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 13:15:40.581] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 13:15:40.582] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 13:23:04.958] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 13:23:04.959] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 13:33:48.828] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 13:33:48.830] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 13:40:51.630] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 13:40:51.631] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 13:51:41.221] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 13:51:41.222] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 13:52:31.437] [ERROR] [DatabaseManager] Failed to create customer: kian@gmial.com
+[2025-07-03 13:53:08.822] [ERROR] [DatabaseManager] Failed to create customer: kian@gmial.com
+[2025-07-03 13:53:09.872] [ERROR] [DatabaseManager] Failed to create customer: kian@gmial.com
+[2025-07-03 13:54:08.767] [ERROR] [DatabaseManager] Failed to create customer: kian@gmial.com
+[2025-07-03 13:54:27.019] [INFO] [DatabaseManager] Attempting to connect to database: @/C:/Users/Virus-Co/IUT_FOOD/database/database_clean.sqlite
+[2025-07-03 13:54:27.019] [INFO] [DatabaseManager] Database connected successfully
+[2025-07-03 13:55:12.208] [INFO] [DatabaseManager] Customer created successfully: siavash@gmail.com
+[2025-07-03 14:11:15.319] [ERROR] [DatabaseManager] Failed to create customer: siavash@gmail.com

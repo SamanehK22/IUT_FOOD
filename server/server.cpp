@@ -108,6 +108,7 @@ void Server::handleDisconnection()
 void Server::processRequest(QTcpSocket* client, const QJsonObject& request)
 {
     QString type = request["type"].toString();
+    qDebug() << "[Server] processRequest type:" << type << "request:" << request;
     QJsonObject response;
 
     if (type == "login") {
@@ -124,16 +125,28 @@ void Server::processRequest(QTcpSocket* client, const QJsonObject& request)
         }
     }
     else if (type == "register") {
-        QString firstName = request["firstName"].toString();
-        QString lastName = request["lastName"].toString();
+        QString firstName = request["first_name"].toString();
+        QString lastName = request["last_name"].toString();
         QString email = request["email"].toString();
         QString phone = request["phone"].toString();
         QString password = request["password"].toString();
-        QString userType = request["userType"].toString();
-        QString restaurantName = request.contains("restaurantName") ? request["restaurantName"].toString() : "";
+        QString userType = request["user_type"].toString();
+        QString restaurantName = request.contains("restaurant_name") ? request["restaurant_name"].toString() : "";
         QString city = request.contains("city") ? request["city"].toString() : "";
         QString location = request.contains("location") ? request["location"].toString() : "";
-        if (m_authSystem->registerUser(firstName, lastName, email, phone, password, userType, restaurantName, city, location)) {
+        QString restaurantType = request.contains("restaurant_type") ? request["restaurant_type"].toString() : "";
+        bool regSuccess = false;
+        if (userType == "customer") {
+            regSuccess = m_authSystem->registerCustomer(firstName, lastName, email, phone, password, city, location);
+        } else if (userType == "restaurant_owner") {
+            regSuccess = m_authSystem->registerRestaurantOwner(firstName, lastName, email, phone, password, restaurantName, city, location, restaurantType);
+        } else {
+            response["status"] = "error";
+            response["message"] = "Invalid user type";
+            sendResponse(client, response);
+            return;
+        }
+        if (regSuccess) {
             response["status"] = "success";
             response["message"] = "Registration successful";
         } else {

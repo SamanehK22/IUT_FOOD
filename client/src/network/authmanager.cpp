@@ -40,9 +40,36 @@ void AuthManager::login(const QString &loginId, const QString &password)
     m_networkManager->login(loginId, password);
 }
 
-void AuthManager::registerUser(const QString &firstName, const QString &lastName, const QString &email, const QString &phone, const QString &password, const QString &userType, const QString &restaurantName, const QString &city, const QString &location)
+void AuthManager::registerCustomer(const QString& firstName, const QString& lastName, const QString& email, const QString& phone, const QString& password, const QString& city, const QString& location)
 {
-    m_networkManager->registerUser(firstName, lastName, email, phone, password, userType, restaurantName, city, location);
+    QJsonObject request;
+    request["type"] = "register";
+    request["user_type"] = "customer";
+    request["first_name"] = firstName;
+    request["last_name"] = lastName;
+    request["email"] = email;
+    request["phone"] = phone;
+    request["password"] = password;
+    request["city"] = city;
+    request["location"] = location;
+    m_networkManager->sendTcpRequest(request);
+}
+
+void AuthManager::registerRestaurantOwner(const QString& firstName, const QString& lastName, const QString& email, const QString& phone, const QString& password, const QString& restaurantName, const QString& city, const QString& location, const QString& type)
+{
+    QJsonObject request;
+    request["type"] = "register";
+    request["user_type"] = "restaurant_owner";
+    request["first_name"] = firstName;
+    request["last_name"] = lastName;
+    request["email"] = email;
+    request["phone"] = phone;
+    request["password"] = password;
+    request["restaurant_name"] = restaurantName;
+    request["city"] = city;
+    request["location"] = location;
+    request["restaurant_type"] = type;
+    m_networkManager->sendTcpRequest(request);
 }
 
 void AuthManager::logout()

@@ -1,9 +1,11 @@
 #include "signup_restaurant.h"
 #include "ui_signup_restaurant.h"
 #include "admin_signup.h"
+#include "homerestaurantowner.h"
 #include <QMessageBox>
 #include "../src/network/authmanager.h"
 #include "../src/network/networkmanager.h"
+#include <QDebug>
 
 signup_restaurant::signup_restaurant(QWidget *parent) :
     QWidget(parent),
@@ -30,6 +32,7 @@ void signup_restaurant::setupConnections()
 
 void signup_restaurant::on_Signup_pushButton_clicked()
 {
+    qDebug() << "SIGNUP BUTTON CLICKED!";
     QString firstName = ui->FullName_lineEdit->text().trimmed();
     QString lastName = ui->FullName_lineEdit_3->text().trimmed();
     QString phone = ui->Password_lineEdit_3->text().trimmed();
@@ -38,21 +41,38 @@ void signup_restaurant::on_Signup_pushButton_clicked()
     QString restaurantName = ui->FullName_lineEdit_2->text().trimmed();
     QString city = ui->City_comboBox->currentText();
     QString location = ui->Password_lineEdit_2->text().trimmed();
+    QString type = ui->type_comboBox->currentText();
+
+    qDebug() << "[Restaurant Signup] Clicked. Values:";
+    qDebug() << "  firstName:" << firstName;
+    qDebug() << "  lastName:" << lastName;
+    qDebug() << "  email:" << email;
+    qDebug() << "  phone:" << phone;
+    qDebug() << "  password:" << password;
+    qDebug() << "  restaurantName:" << restaurantName;
+    qDebug() << "  city:" << city;
+    qDebug() << "  location:" << location;
+    qDebug() << "  type:" << type;
 
     if (firstName.isEmpty() || lastName.isEmpty() || phone.isEmpty() || email.isEmpty() || password.isEmpty() ||
-        restaurantName.isEmpty() || city.isEmpty() || location.isEmpty()) {
+        restaurantName.isEmpty() || city.isEmpty() || location.isEmpty() || type.isEmpty()) {
+        qDebug() << "[Restaurant Signup] Validation failed: missing fields.";
         QMessageBox::warning(this, "Signup Error", "Please fill in all fields.");
         return;
     }
+    qDebug() << "[Restaurant Signup] Validation passed.";
 
     NetworkManager *network = NetworkManager::getInstance();
     if (!network->isConnected()) {
+        qDebug() << "[Restaurant Signup] Network not connected.";
         QMessageBox::critical(this, "Connection Error", "Cannot connect to server. Please make sure the server is running and try again.");
         return;
     }
+    qDebug() << "[Restaurant Signup] Network connected. Calling registerRestaurantOwner...";
 
     AuthManager *auth = AuthManager::getInstance();
-    auth->registerUser(firstName, lastName, email, phone, password, "restaurant_owner", restaurantName, city, location);
+    auth->registerRestaurantOwner(firstName, lastName, email, phone, password, restaurantName, city, location, type);
+    qDebug() << "[Restaurant Signup] registerRestaurantOwner called.";
 }
 
 void signup_restaurant::onRegisterSuccess()

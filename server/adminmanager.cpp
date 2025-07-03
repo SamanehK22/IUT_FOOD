@@ -40,6 +40,13 @@ bool AdminManager::approveRestaurant(const QString& restaurantId)
     updates["approved_at"] = QDateTime::currentDateTime().toString(Qt::ISODate);
 
     if (m_dbManager->updateRestaurant(restaurantId, updates)) {
+        // Also set owner status to active
+        QVariantMap ownerUpdates;
+        QString ownerId = m_dbManager->getRestaurantOwnerIdByRestaurant(restaurantId);
+        if (!ownerId.isEmpty()) {
+            ownerUpdates["status"] = "active";
+            m_dbManager->updateRestaurantOwner(ownerId, ownerUpdates);
+        }
         logAdminAction("system", "restaurant_approved", restaurantId);
         return true;
     }
@@ -54,6 +61,13 @@ bool AdminManager::rejectRestaurant(const QString& restaurantId, const QString& 
     updates["rejected_at"] = QDateTime::currentDateTime().toString(Qt::ISODate);
 
     if (m_dbManager->updateRestaurant(restaurantId, updates)) {
+        // Also set owner status to rejected
+        QVariantMap ownerUpdates;
+        QString ownerId = m_dbManager->getRestaurantOwnerIdByRestaurant(restaurantId);
+        if (!ownerId.isEmpty()) {
+            ownerUpdates["status"] = "rejected";
+            m_dbManager->updateRestaurantOwner(ownerId, ownerUpdates);
+        }
         logAdminAction("system", "restaurant_rejected", restaurantId + ": " + reason);
         return true;
     }

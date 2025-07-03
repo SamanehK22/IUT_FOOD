@@ -58,7 +58,6 @@
    <property name="font">
     <font>
      <pointsize>-1</pointsize>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -163,7 +162,7 @@ QPushButton:pressed {
 }</string>
    </property>
    <property name="frameShape">
-    <enum>QFrame::NoFrame</enum>
+    <enum>QFrame::Shape::NoFrame</enum>
    </property>
    <property name="text">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;Login or Sign Up&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -241,7 +240,7 @@ QLineEdit:focus {
 }</string>
    </property>
    <property name="echoMode">
-    <enum>QLineEdit::Password</enum>
+    <enum>QLineEdit::EchoMode::Password</enum>
    </property>
    <property name="placeholderText">
     <string>Password</string>
@@ -453,35 +452,8 @@ QPushButton:hover {
     </item>
    </layout>
   </widget>
-  <widget class="QPushButton" name="mina">
-   <property name="geometry">
-    <rect>
-     <x>620</x>
-     <y>190</y>
-     <width>93</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>PushButton</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="mahtab">
-   <property name="geometry">
-    <rect>
-     <x>610</x>
-     <y>330</y>
-     <width>93</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>PushButton</string>
-   </property>
-  </widget>
  </widget>
  <resources>
   <include location="Source.qrc"/>
  </resources>
- <connections/>
 </ui>

@@ -15,7 +15,8 @@ class AuthManager : public QObject
 public:
     static AuthManager* getInstance();
     void login(const QString &loginId, const QString &password);
-    void registerUser(const QString &firstName, const QString &lastName, const QString &email, const QString &phone, const QString &password, const QString &userType, const QString &restaurantName = "", const QString &city = "", const QString &location = "");
+    void registerCustomer(const QString& firstName, const QString& lastName, const QString& email, const QString& phone, const QString& password, const QString& city, const QString& location);
+    void registerRestaurantOwner(const QString& firstName, const QString& lastName, const QString& email, const QString& phone, const QString& password, const QString& restaurantName, const QString& city, const QString& location, const QString& type);
     void logout();
     User* currentUser() const;
     bool isLoggedIn() const;

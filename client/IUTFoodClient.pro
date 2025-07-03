@@ -34,7 +34,10 @@ SOURCES += \
     Client_UI/homeadmin.cpp \
     Client_UI/main.cpp \
     Client_UI/menu.cpp \
+    Client_UI/menuitemmanagerwidget.cpp \
+    Client_UI/managemenuwindow.cpp \
     Client_UI/orderhistoryitem.cpp \
+    Client_UI/orderitemwidget.cpp \
     Client_UI/profile.cpp \
     Client_UI/profileadmin.cpp \
     Client_UI/reset_pass.cpp \
@@ -45,7 +48,11 @@ SOURCES += \
     Client_UI/signup_coustomer.cpp \
     Client_UI/signup_restaurant.cpp \
     Client_UI/useritemwidget.cpp \
-    Client_UI/usermanagementwindow.cpp
+    Client_UI/usermanagementwindow.cpp \
+    Client_UI/orderstatuswidget.cpp \
+    Client_UI/homerestaurantowner.cpp \
+    Client_UI/profilerestaurantowner.cpp \
+    Client_UI/receivedorderswindow.cpp
 
 HEADERS += \
     src/models/user.h \
@@ -72,8 +79,13 @@ HEADERS += \
     Client_UI/forgot_pass.h \
     Client_UI/history.h \
     Client_UI/homeadmin.h \
+    Client_UI/homerestaurantowner.h \
     Client_UI/menu.h \
+    Client_UI/managemenuwindow.h \
+    Client_UI/menuitemmanagerwidget.h \
     Client_UI/orderhistoryitem.h \
+    Client_UI/orderitemwidget.h \
+    Client_UI/orderstatuswidget.h \
     Client_UI/profile.h \
     Client_UI/profileadmin.h \
     Client_UI/reset_pass.h \
@@ -84,7 +96,9 @@ HEADERS += \
     Client_UI/signup_coustomer.h \
     Client_UI/signup_restaurant.h \
     Client_UI/useritemwidget.h \
-    Client_UI/usermanagementwindow.h
+    Client_UI/usermanagementwindow.h \
+    Client_UI/profilerestaurantowner.h \
+    Client_UI/receivedorderswindow.h
 
 FORMS += \
     Client_UI/admin_signup.ui \
@@ -92,8 +106,10 @@ FORMS += \
     Client_UI/customersetpass.ui \
     Client_UI/forgot_pass.ui \
     Client_UI/homeadmin.ui \
+    Client_UI/homerestaurantowner.ui \
     Client_UI/profile.ui \
     Client_UI/profileadmin.ui \
+    Client_UI/profilerestaurantowner.ui \
     Client_UI/reset_pass.ui \
     Client_UI/signup_coustomer.ui \
     Client_UI/signup_restaurant.ui

@@ -218,9 +218,10 @@ bool DatabaseManager::createRestaurantOwner(const QString& firstName, const QStr
     params["restaurantId"] = restaurantId;
     params["city"] = city;
     params["location"] = location;
+    params["status"] = "pending";
 
-    QString query = "INSERT INTO restaurant_owners (first_name, last_name, username, email, password_hash, phone, restaurant_id, city, location) "
-                   "VALUES (:firstName, :lastName, :username, :email, :passwordHash, :phone, :restaurantId, :city, :location)";
+    QString query = "INSERT INTO restaurant_owners (first_name, last_name, username, email, password_hash, phone, restaurant_id, city, location, status) "
+                   "VALUES (:firstName, :lastName, :username, :email, :passwordHash, :phone, :restaurantId, :city, :location, :status)";
 
     bool success = executeQuery(query, params);
     if (success) {
@@ -310,7 +311,7 @@ QVariantMap DatabaseManager::getRestaurantOwnerByLoginId(const QString& loginId)
 {
     QVariantMap params;
     params["loginId"] = loginId;
-    QString query = "SELECT * FROM restaurant_owners WHERE email = :loginId OR phone = :loginId";
+    QString query = "SELECT * FROM restaurant_owners WHERE email = :loginId OR CAST(phone AS TEXT) = :loginId OR username = :loginId";
     QSqlQuery result = prepareQuery(query, params);
     QVariantMap user;
     if (result.next()) {
@@ -336,16 +337,20 @@ QString DatabaseManager::getRestaurantIdByOwner(const QString& ownerId)
     return QString();
 }
 
-bool DatabaseManager::createRestaurant(const QString& name, const QString& address, const QString& type, const QString& imageUrl)
+bool DatabaseManager::createRestaurant(const QString& name, const QString& address, const QString& city, const QString& location, const QString& type, const QString& ownerId, const QString& imageUrl, const QString& status)
 {
     QVariantMap params;
     params["name"] = name;
     params["address"] = address;
+    params["city"] = city;
+    params["location"] = location;
     params["type"] = type;
+    params["ownerId"] = ownerId;
     params["imageUrl"] = imageUrl;
+    params["status"] = status;
 
-    QString query = "INSERT INTO restaurants (name, address, type, image_url) "
-                   "VALUES (:name, :address, :type, :imageUrl)";
+    QString query = "INSERT INTO restaurants (name, address, city, location, type, owner_id, image_url, status) "
+                   "VALUES (:name, :address, :city, :location, :type, :ownerId, :imageUrl, :status)";
 
     return executeQuery(query, params);
 }
@@ -374,6 +379,25 @@ bool DatabaseManager::deleteRestaurant(const QString& restaurantId)
 
     QString query = "DELETE FROM restaurants WHERE id = :id";
     return executeQuery(query, params);
+}
+
+QVariantMap DatabaseManager::getRestaurantById(const QString& restaurantId)
+{
+    QVariantMap params;
+    params["id"] = restaurantId;
+
+    QString query = "SELECT * FROM restaurants WHERE id = :id";
+    QSqlQuery result = prepareQuery(query, params);
+    QVariantMap restaurant;
+
+    if (result.next()) {
+        QSqlRecord rec = result.record();
+        for (int i = 0; i < rec.count(); ++i) {
+            restaurant[rec.fieldName(i)] = result.value(i);
+        }
+    }
+
+    return restaurant;
 }
 
 bool DatabaseManager::createMenu(const QString& restaurantId)
@@ -591,23 +615,22 @@ QJsonArray DatabaseManager::getRestaurantsByOwner(const QString& ownerId)
     QVariantMap params;
     params["ownerId"] = ownerId;
 
-    QString query = "SELECT r.* FROM restaurants r "
-                   "JOIN restaurant_owners ro ON r.id = ro.restaurant_id "
-                   "WHERE ro.id = :ownerId";
+    QString query = "SELECT * FROM restaurants WHERE owner_id = :ownerId";
 
     QSqlQuery result = prepareQuery(query, params);
     QJsonArray restaurants;
 
+    qDebug() << "[getRestaurantsByOwner] ownerId:" << ownerId;
     while (result.next()) {
+        QSqlRecord rec = result.record();
         QJsonObject restaurant;
-        restaurant["id"] = result.value("id").toString();
-        restaurant["name"] = result.value("name").toString();
-        restaurant["address"] = result.value("address").toString();
-        restaurant["type"] = result.value("type").toString();
-        restaurant["image_url"] = result.value("image_url").toString();
+        for (int i = 0; i < rec.count(); ++i) {
+            restaurant[rec.fieldName(i)] = result.value(i).toString();
+        }
+        qDebug() << "[getRestaurantsByOwner] Found restaurant id:" << restaurant["id"];
         restaurants.append(restaurant);
     }
-
+    qDebug() << "[getRestaurantsByOwner] Total found:" << restaurants.size();
     return restaurants;
 }
 
@@ -820,7 +843,7 @@ bool DatabaseManager::customerEmailExists(const QString& email) {
 bool DatabaseManager::customerPhoneExists(const QString& phone) {
     QVariantMap params;
     params["phone"] = phone;
-    QString query = "SELECT 1 FROM customers WHERE phone = :phone LIMIT 1";
+    QString query = "SELECT 1 FROM customers WHERE CAST(phone AS TEXT) = :phone LIMIT 1";
     QSqlQuery result = prepareQuery(query, params);
     return result.next();
 }
@@ -836,7 +859,7 @@ bool DatabaseManager::ownerEmailExists(const QString& email) {
 bool DatabaseManager::ownerPhoneExists(const QString& phone) {
     QVariantMap params;
     params["phone"] = phone;
-    QString query = "SELECT 1 FROM restaurant_owners WHERE phone = :phone LIMIT 1";
+    QString query = "SELECT 1 FROM restaurant_owners WHERE CAST(phone AS TEXT) = :phone LIMIT 1";
     QSqlQuery result = prepareQuery(query, params);
     return result.next();
 }
@@ -867,4 +890,16 @@ void DatabaseManager::debugRawQuerySimSim() {
         qDebug() << "No user found for username = 'sim sim' (raw query)";
     }
     qDebug() << "--- End raw query ---";
+}
+
+QString DatabaseManager::getRestaurantOwnerIdByRestaurant(const QString& restaurantId)
+{
+    QVariantMap params;
+    params["id"] = restaurantId;
+    QString query = "SELECT owner_id FROM restaurants WHERE id = :id";
+    QSqlQuery result = prepareQuery(query, params);
+    if (result.next()) {
+        return result.value(0).toString();
+    }
+    return QString();
 } 
