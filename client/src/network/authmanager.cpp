@@ -16,6 +16,7 @@ AuthManager::AuthManager(QObject *parent)
     , m_networkManager(NetworkManager::getInstance())
     , m_currentUser(nullptr)
 {
+    qDebug() << "[AuthManager] Constructor this:" << this << ", m_networkManager:" << m_networkManager;
     // Connect to NetworkManager signals
     connect(m_networkManager, &NetworkManager::loginSuccess,
             this, &AuthManager::handleLoginSuccess);
@@ -94,14 +95,17 @@ bool AuthManager::isLoggedIn() const
     return m_currentUser != nullptr;
 }
 
-void AuthManager::handleLoginSuccess(const QJsonObject &userData)
+void AuthManager::handleLoginSuccess(const QJsonObject &response)
 {
+    qDebug() << "[AuthManager] handleLoginSuccess called, this:" << this;
+    QJsonObject userObj = response["user"].toObject();
     if (m_currentUser) {
         delete m_currentUser;
     }
-    m_currentUser = new User(userData, this);
+    m_currentUser = new User(userObj, this);
     emit currentUserChanged();
     emit loginStateChanged();
+    qDebug() << "[AuthManager] Emitting loginSuccess for userType:" << m_currentUser->userType();
     emit loginSuccess();
 }
 

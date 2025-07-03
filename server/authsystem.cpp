@@ -3,13 +3,18 @@
 #include <QRegularExpression>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QSqlQuery>
 
 AuthSystem* AuthSystem::instance = nullptr;
 
 AuthSystem* AuthSystem::getInstance()
 {
+    qDebug() << "[AuthSystem::getInstance] Called. Current instance:" << instance;
     if (instance == nullptr) {
+        qDebug() << "[AuthSystem::getInstance] Created new instance.";
         instance = new AuthSystem();
+    } else {
+        qDebug() << "[AuthSystem::getInstance] Reusing existing instance.";
     }
     return instance;
 }
@@ -18,6 +23,7 @@ AuthSystem::AuthSystem(QObject *parent)
     : QObject(parent)
     , dbManager(DatabaseManager::getInstance())
 {
+    qDebug() << "[AuthSystem::Constructor] Called. This:" << this;
 }
 
 AuthSystem::~AuthSystem()
@@ -39,7 +45,15 @@ QString AuthSystem::login(const QString& loginId, const QString& password)
     QString userType = "customer";
     if (user.isEmpty()) {
         user = dbManager->getRestaurantOwnerByLoginId(loginId);
-        userType = "restaurant_owner";
+        if (!user.isEmpty()) {
+            userType = "restaurant_owner";
+        }
+    }
+    if (user.isEmpty()) {
+        user = dbManager->getAdminByLoginId(loginId);
+        if (!user.isEmpty()) {
+            userType = "admin";
+        }
     }
     if (user.isEmpty()) {
         qDebug() << "User not found:" << loginId;
@@ -63,7 +77,10 @@ QString AuthSystem::login(const QString& loginId, const QString& password)
 
     // Check restaurant approval status for restaurant owners
     if (userType == "restaurant_owner") {
+        qDebug() << "[AuthSystem::login] restaurant_id QVariant type:" << user["restaurant_id"].typeName();
+        qDebug() << "[AuthSystem::login] restaurant_id value:" << user["restaurant_id"];
         QString restaurantId = user["restaurant_id"].toString();
+        qDebug() << "[AuthSystem::login] restaurantId string:" << restaurantId;
         if (!restaurantId.isEmpty()) {
             QVariantMap restaurant = dbManager->getRestaurantById(restaurantId);
             if (restaurant.isEmpty()) {
@@ -71,7 +88,10 @@ QString AuthSystem::login(const QString& loginId, const QString& password)
                 return QString();
             }
             QString restaurantStatus = restaurant["status"].toString();
-            if (restaurantStatus != "approved") {
+            if (restaurantStatus == "pending") {
+                qDebug() << "Restaurant pending approval for owner:" << loginId;
+                return "PENDING_APPROVAL";
+            } else if (restaurantStatus != "approved") {
                 qDebug() << "Restaurant not approved for owner:" << loginId << "Status:" << restaurantStatus;
                 return QString();
             }
@@ -83,6 +103,7 @@ QString AuthSystem::login(const QString& loginId, const QString& password)
 
     // Generate session token
     QString token = SecurityUtils::generateSessionToken();
+    qDebug() << "[login] Generated token:" << token;
 
     // Create session
     Session session;
@@ -91,6 +112,8 @@ QString AuthSystem::login(const QString& loginId, const QString& password)
     session.token = token;
     session.lastActivity = QDateTime::currentDateTime();
     activeSessions[token] = session;
+    qDebug() << "[login] Stored session for token:" << token;
+    qDebug() << "[login] activeSessions keys after store:" << activeSessions.keys();
 
     qDebug() << "User logged in successfully:" << loginId;
     return token;
@@ -115,34 +138,48 @@ bool AuthSystem::registerCustomer(const QString& firstName, const QString& lastN
 }
 
 bool AuthSystem::registerRestaurantOwner(const QString& firstName, const QString& lastName, const QString& email, const QString& phone, const QString& password, const QString& restaurantName, const QString& city, const QString& location, const QString& type) {
+    qDebug() << "[Server] registerRestaurantOwner called with:" << firstName << lastName << email << phone << password << restaurantName << city << location << type;
     if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty() || restaurantName.isEmpty() || city.isEmpty() || location.isEmpty() || type.isEmpty()) {
-        qDebug() << "Missing required fields for restaurant owner registration.";
+        qDebug() << "[Server] registerRestaurantOwner: Missing required fields.";
         return false;
     }
     if (dbManager->ownerEmailExists(email) || dbManager->ownerPhoneExists(phone)) {
-        qDebug() << "Duplicate restaurant owner email or phone:" << email << phone;
+        qDebug() << "[Server] registerRestaurantOwner: Duplicate restaurant owner email or phone:" << email << phone;
         return false;
     }
     QString hashedPassword = SecurityUtils::hashPassword(password);
     QString username = firstName + " " + lastName;
-    if (!dbManager->createRestaurantOwner(firstName, lastName, username, email, hashedPassword, phone, "", city, location)) {
-        return false;
-    }
-    QString ownerId = dbManager->getRestaurantOwnerId(email);
+    qDebug() << "[Server] registerRestaurantOwner: Calling dbManager->createRestaurantOwner...";
+    QString ownerId = dbManager->createRestaurantOwner(firstName, lastName, username, email, hashedPassword, phone, "", city, location);
+    qDebug() << "[Server] dbManager->createRestaurantOwner returned ownerId:" << ownerId;
     if (ownerId.isEmpty()) {
+        qDebug() << "[Server] Failed to create restaurant owner or get ID";
         return false;
     }
-    if (!dbManager->createRestaurant(restaurantName, location, city, location, type, ownerId, "", "pending")) {
+    // Fix parameter order: name, address, city, location, type, ownerId, imageUrl, status
+    qDebug() << "[Server] registerRestaurantOwner: Calling dbManager->createRestaurant with params:" << restaurantName << restaurantName << city << location << type << ownerId << "" << "pending";
+    bool restResult = dbManager->createRestaurant(restaurantName, restaurantName, city, location, type, ownerId, "", "pending");
+    qDebug() << "[Server] dbManager->createRestaurant returned:" << restResult;
+    if (!restResult) {
         return false;
     }
-    QJsonArray ownerRestaurants = dbManager->getRestaurantsByOwner(ownerId);
-    if (ownerRestaurants.isEmpty()) {
-        return false;
+    // Get the last inserted restaurant ID directly
+    QSqlQuery lastIdQuery("SELECT last_insert_rowid()");
+    QString restaurantId;
+    if (lastIdQuery.next()) {
+        restaurantId = lastIdQuery.value(0).toString();
+        qDebug() << "[registerRestaurantOwner] last_insert_rowid for restaurant:" << restaurantId;
     }
-    QString restaurantId = ownerRestaurants.last().toObject()["id"].toString();
-    QVariantMap updates;
-    updates["restaurant_id"] = restaurantId;
-    return dbManager->updateRestaurantOwner(ownerId, updates);
+    if (!restaurantId.isEmpty()) {
+        qDebug() << "[registerRestaurantOwner] Updating owner with restaurant_id:" << restaurantId;
+        QVariantMap updates;
+        updates["restaurant_id"] = restaurantId;
+        bool updateResult = dbManager->updateRestaurantOwner(ownerId, updates);
+        qDebug() << "[Server] dbManager->updateRestaurantOwner returned:" << updateResult;
+    }
+    dbManager->debugPrintAllRestaurantOwners();
+    dbManager->debugPrintAllRestaurants();
+    return restResult;
 }
 
 bool AuthSystem::logout(const QString& token)
@@ -197,10 +234,12 @@ bool AuthSystem::refreshSession(const QString& token)
 
 Session* AuthSystem::getSession(const QString& token)
 {
-    if (!validateSession(token)) {
-        return nullptr;
+    qDebug() << "[getSession] Looking for token:" << token;
+    qDebug() << "[getSession] activeSessions keys:" << activeSessions.keys();
+    if (activeSessions.contains(token)) {
+        return &activeSessions[token];
     }
-    return &activeSessions[token];
+    return nullptr;
 }
 
 QString AuthSystem::getUserIdFromToken(const QString& token)
@@ -379,12 +418,9 @@ bool AuthSystem::handleRegisterRestaurantOwner(const QJsonObject& data)
     QString hashedPassword = SecurityUtils::hashPassword(password);
     QString username = firstName + " " + lastName;
 
-    if (!dbManager->createRestaurantOwner(firstName, lastName, username, email, hashedPassword, phone, "", city, location)) {
-        return false;
-    }
-
-    QString ownerId = dbManager->getRestaurantOwnerId(email);
+    QString ownerId = dbManager->createRestaurantOwner(firstName, lastName, username, email, hashedPassword, phone, "", city, location);
     if (ownerId.isEmpty()) {
+        // error handling
         return false;
     }
 
@@ -402,4 +438,46 @@ bool AuthSystem::handleRegisterRestaurantOwner(const QJsonObject& data)
     updates["restaurant_id"] = restaurantId;
 
     return dbManager->updateRestaurantOwner(ownerId, updates);
+}
+
+QVariantMap AuthSystem::getUserProfile(const QString& token) {
+    qDebug() << "[getUserProfile] token:" << token;
+    Session* session = getSession(token);
+    if (!session) {
+        qDebug() << "[getUserProfile] No session found for token!";
+        return QVariantMap();
+    }
+    qDebug() << "[getUserProfile] userType:" << session->userType << "userId:" << session->userId;
+    if (session->userType == "customer") {
+        QVariantMap profile = dbManager->getCustomerProfile(session->userId);
+        profile["userType"] = "customer";
+        profile["id"] = session->userId;
+        return profile;
+    } else if (session->userType == "restaurant_owner") {
+        QVariantMap profile = dbManager->getRestaurantOwnerProfile(session->userId);
+        profile["userType"] = "restaurant_owner";
+        profile["id"] = session->userId;
+        return profile;
+    } else if (session->userType == "admin") {
+        QVariantMap profile;
+        profile["userType"] = "admin";
+        profile["id"] = session->userId;
+        return profile;
+    }
+    return QVariantMap();
+}
+
+bool AuthSystem::registerAdmin(const QString& firstName, const QString& lastName, const QString& username, const QString& email, const QString& password, const QString& phone) {
+    if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty() || phone.isEmpty()) {
+        qDebug() << "[Server] registerAdmin: Missing required fields.";
+        return false;
+    }
+    if (dbManager->adminEmailExists(email) || dbManager->adminPhoneExists(phone)) {
+        qDebug() << "[Server] registerAdmin: Duplicate admin email or phone:" << email << phone;
+        return false;
+    }
+    QString hashedPassword = SecurityUtils::hashPassword(password);
+    bool result = dbManager->createAdmin(firstName, lastName, username, email, hashedPassword, phone);
+    qDebug() << "[Server] dbManager->createAdmin returned:" << result;
+    return result;
 } 

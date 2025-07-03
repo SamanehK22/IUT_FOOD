@@ -30,4 +30,4 @@ int main(int argc, char *argv[])
     qDebug() << "IUT Food Server is running on port 8080";
 
     return a.exec();
-} 
+}

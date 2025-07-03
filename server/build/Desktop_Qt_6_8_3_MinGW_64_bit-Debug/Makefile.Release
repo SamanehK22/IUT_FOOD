@@ -687,6 +687,9 @@ release/moc_authsystem.cpp: ../../authsystem.h \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/qvarlengtharray.h \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/q23utility.h \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/q20utility.h \
+		C:/Qt/6.8.3/mingw_64/include/QtCore/QVariantMap \
+		C:/Qt/6.8.3/mingw_64/include/QtCore/qvariantmap.h \
+		C:/Qt/6.8.3/mingw_64/include/QtCore/QVariant \
 		../../databasemanager.h \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/QSqlDatabase \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/qsqldatabase.h \
@@ -698,9 +701,6 @@ release/moc_authsystem.cpp: ../../authsystem.h \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/qsqlquery.h \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/QSqlError \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/qsqlerror.h \
-		C:/Qt/6.8.3/mingw_64/include/QtCore/QVariantMap \
-		C:/Qt/6.8.3/mingw_64/include/QtCore/qvariantmap.h \
-		C:/Qt/6.8.3/mingw_64/include/QtCore/QVariant \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/QVariantList \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/qvariantlist.h \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/QList \
@@ -1637,6 +1637,8 @@ release/moc_websocketserver.cpp: ../../websocketserver.h \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/qjsonarray.h \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/QDateTime \
 		../../authsystem.h \
+		C:/Qt/6.8.3/mingw_64/include/QtCore/QVariantMap \
+		C:/Qt/6.8.3/mingw_64/include/QtCore/qvariantmap.h \
 		../../databasemanager.h \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/QSqlDatabase \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/qsqldatabase.h \
@@ -1648,8 +1650,6 @@ release/moc_websocketserver.cpp: ../../websocketserver.h \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/qsqlquery.h \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/QSqlError \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/qsqlerror.h \
-		C:/Qt/6.8.3/mingw_64/include/QtCore/QVariantMap \
-		C:/Qt/6.8.3/mingw_64/include/QtCore/qvariantmap.h \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/QVariantList \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/qvariantlist.h \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/QList \
@@ -3468,6 +3468,9 @@ release/authsystem.o: ../../authsystem.cpp ../../authsystem.h \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/qvarlengtharray.h \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/q23utility.h \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/q20utility.h \
+		C:/Qt/6.8.3/mingw_64/include/QtCore/QVariantMap \
+		C:/Qt/6.8.3/mingw_64/include/QtCore/qvariantmap.h \
+		C:/Qt/6.8.3/mingw_64/include/QtCore/QVariant \
 		../../databasemanager.h \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/QSqlDatabase \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/qsqldatabase.h \
@@ -3479,9 +3482,6 @@ release/authsystem.o: ../../authsystem.cpp ../../authsystem.h \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/qsqlquery.h \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/QSqlError \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/qsqlerror.h \
-		C:/Qt/6.8.3/mingw_64/include/QtCore/QVariantMap \
-		C:/Qt/6.8.3/mingw_64/include/QtCore/qvariantmap.h \
-		C:/Qt/6.8.3/mingw_64/include/QtCore/QVariant \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/QVariantList \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/qvariantlist.h \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/QList \
@@ -4555,6 +4555,8 @@ release/websocketserver.o: ../../websocketserver.cpp ../../websocketserver.h \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/qjsonarray.h \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/QDateTime \
 		../../authsystem.h \
+		C:/Qt/6.8.3/mingw_64/include/QtCore/QVariantMap \
+		C:/Qt/6.8.3/mingw_64/include/QtCore/qvariantmap.h \
 		../../databasemanager.h \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/QSqlDatabase \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/qsqldatabase.h \
@@ -4566,8 +4568,6 @@ release/websocketserver.o: ../../websocketserver.cpp ../../websocketserver.h \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/qsqlquery.h \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/QSqlError \
 		C:/Qt/6.8.3/mingw_64/include/QtSql/qsqlerror.h \
-		C:/Qt/6.8.3/mingw_64/include/QtCore/QVariantMap \
-		C:/Qt/6.8.3/mingw_64/include/QtCore/qvariantmap.h \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/QVariantList \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/qvariantlist.h \
 		C:/Qt/6.8.3/mingw_64/include/QtCore/QList \

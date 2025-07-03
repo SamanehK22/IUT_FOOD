@@ -36,8 +36,8 @@ public:
     bool customerPhoneExists(const QString& phone);
 
     // Restaurant Owner Management
-    bool createRestaurantOwner(const QString& firstName, const QString& lastName, const QString& username, const QString& email,
-                             const QString& passwordHash, const QString& phone, const QString& restaurantId, const QString& city, const QString& location);
+    QString createRestaurantOwner(const QString& firstName, const QString& lastName, const QString& username, const QString& email,
+                                 const QString& passwordHash, const QString& phone, const QString& restaurantId, const QString& city, const QString& location);
     bool updateRestaurantOwner(const QString& ownerId, const QVariantMap& updates);
     bool deleteRestaurantOwner(const QString& ownerId);
     QString getRestaurantOwnerId(const QString& email);
@@ -93,10 +93,21 @@ public:
     bool rollbackTransaction();
 
     void debugPrintAllCustomerPhones();
+    void debugPrintAllRestaurantOwners();
+    void debugPrintAllRestaurants();
 
     void debugRawQuerySimSim();
 
     QString getRestaurantOwnerIdByRestaurant(const QString& restaurantId);
+
+    // Admin Management
+    bool createAdmin(const QString& firstName, const QString& lastName, const QString& username, const QString& email, const QString& passwordHash, const QString& phone);
+    QVariantMap getAdminByLoginId(const QString& loginId);
+    bool adminEmailExists(const QString& email);
+    bool adminPhoneExists(const QString& phone);
+    QVariantMap getAdminProfile(const QString& adminId);
+    bool updateAdmin(const QString& adminId, const QVariantMap& updates);
+    bool deleteAdmin(const QString& adminId);
 
 private:
     explicit DatabaseManager(QObject *parent = nullptr);

@@ -115,13 +115,21 @@ void Server::processRequest(QTcpSocket* client, const QJsonObject& request)
         QString loginId = request["loginId"].toString();
         QString password = request["password"].toString();
         QString token = m_authSystem->login(loginId, password);
-        if (!token.isEmpty()) {
+        if (token == "PENDING_APPROVAL") {
+            response["status"] = "error";
+            response["message"] = "Your restaurant is pending admin approval. Please wait for approval before logging in.";
+            response["type"] = "login";
+        } else if (!token.isEmpty()) {
             response["status"] = "success";
             response["token"] = token;
+            QVariantMap userData = m_authSystem->getUserProfile(token);
+            response["user"] = QJsonObject::fromVariantMap(userData);
+            response["type"] = "login";
             m_clients[client] = m_authSystem->getUserIdFromToken(token);
         } else {
             response["status"] = "error";
             response["message"] = "Invalid credentials";
+            response["type"] = "login";
         }
     }
     else if (type == "register") {

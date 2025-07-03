@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS admins;
+CREATE TABLE admins (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    username TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    email TEXT UNIQUE NOT NULL,
+    phone TEXT UNIQUE NOT NULL
+); 

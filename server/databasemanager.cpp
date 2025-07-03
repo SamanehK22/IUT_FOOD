@@ -199,9 +199,9 @@ QVariantMap DatabaseManager::getCustomerByLoginId(const QString& loginId)
     return user;
 }
 
-bool DatabaseManager::createRestaurantOwner(const QString& firstName, const QString& lastName, const QString& username, const QString& email,
-                                          const QString& passwordHash, const QString& phone, const QString& restaurantId,
-                                          const QString& city, const QString& location)
+QString DatabaseManager::createRestaurantOwner(const QString& firstName, const QString& lastName, const QString& username, const QString& email,
+                                               const QString& passwordHash, const QString& phone, const QString& restaurantId,
+                                               const QString& city, const QString& location)
 {
     Logger::getInstance()->debug(QString("Creating restaurant owner: %1 %2 (%3)")
         .arg(firstName)
@@ -226,10 +226,14 @@ bool DatabaseManager::createRestaurantOwner(const QString& firstName, const QStr
     bool success = executeQuery(query, params);
     if (success) {
         Logger::getInstance()->info(QString("Restaurant owner created successfully: %1").arg(email), "DatabaseManager");
+        QSqlQuery lastIdQuery("SELECT last_insert_rowid()");
+        if (lastIdQuery.next()) {
+            return lastIdQuery.value(0).toString();
+        }
     } else {
         Logger::getInstance()->error(QString("Failed to create restaurant owner: %1").arg(email), "DatabaseManager");
     }
-    return success;
+    return QString();
 }
 
 bool DatabaseManager::updateRestaurantOwner(const QString& ownerId, const QVariantMap& updates)
@@ -245,6 +249,9 @@ bool DatabaseManager::updateRestaurantOwner(const QString& ownerId, const QVaria
 
     QString query = QString("UPDATE restaurant_owners SET %1 WHERE id = :id")
                    .arg(setClauses.join(", "));
+
+    qDebug() << "[updateRestaurantOwner] Query:" << query;
+    qDebug() << "[updateRestaurantOwner] Params:" << params;
 
     return executeQuery(query, params);
 }
@@ -309,16 +316,32 @@ QVariantMap DatabaseManager::getRestaurantOwnerProfile(const QString& ownerId)
 
 QVariantMap DatabaseManager::getRestaurantOwnerByLoginId(const QString& loginId)
 {
+    qDebug() << "[getRestaurantOwnerByLoginId] loginId:" << loginId;
     QVariantMap params;
     params["loginId"] = loginId;
     QString query = "SELECT * FROM restaurant_owners WHERE email = :loginId OR CAST(phone AS TEXT) = :loginId OR username = :loginId";
-    QSqlQuery result = prepareQuery(query, params);
+    qDebug() << "[getRestaurantOwnerByLoginId] Query:" << query;
+    qDebug() << "[getRestaurantOwnerByLoginId] Params:" << params;
+    QSqlQuery q(db);
+    q.prepare(query);
+    q.bindValue(":loginId", loginId);
+    if (!q.exec()) {
+        qDebug() << "[getRestaurantOwnerByLoginId] Query failed:" << q.lastError();
+        return QVariantMap();
+    }
     QVariantMap user;
-    if (result.next()) {
-        QSqlRecord rec = result.record();
+    if (q.next()) {
+        qDebug() << "[getRestaurantOwnerByLoginId] Row:";
+        QSqlRecord rec = q.record();
         for (int i = 0; i < rec.count(); ++i) {
-            user[rec.fieldName(i)] = result.value(i);
+            QString field = rec.fieldName(i);
+            QVariant value = q.value(i);
+            qDebug() << "   " << field << ": '" << value.toString() << "' (length:" << value.toString().length() << ")";
+            user[field] = value;
         }
+        qDebug() << "[getRestaurantOwnerByLoginId] Found user:" << user;
+    } else {
+        qDebug() << "[getRestaurantOwnerByLoginId] No user found for:" << loginId;
     }
     return user;
 }
@@ -384,17 +407,31 @@ bool DatabaseManager::deleteRestaurant(const QString& restaurantId)
 QVariantMap DatabaseManager::getRestaurantById(const QString& restaurantId)
 {
     QVariantMap params;
-    params["id"] = restaurantId;
+    qDebug() << "[getRestaurantById] restaurantId param:" << restaurantId;
+    params["id"] = restaurantId.toInt(); // Bind as integer to match DB
 
     QString query = "SELECT * FROM restaurants WHERE id = :id";
+    qDebug() << "[getRestaurantById] Query:" << query;
+    qDebug() << "[getRestaurantById] Params:" << params;
     QSqlQuery result = prepareQuery(query, params);
+    if (!result.isActive()) {
+        qDebug() << "[getRestaurantById] Query not active!";
+        qDebug() << "[getRestaurantById] Last error:" << result.lastError().text();
+        return {};
+    }
     QVariantMap restaurant;
 
     if (result.next()) {
         QSqlRecord rec = result.record();
+        qDebug() << "[getRestaurantById] Found result!";
         for (int i = 0; i < rec.count(); ++i) {
-            restaurant[rec.fieldName(i)] = result.value(i);
+            QString field = rec.fieldName(i);
+            QVariant value = result.value(i);
+            qDebug() << field << ":" << value;
+            restaurant[field] = value;
         }
+    } else {
+        qDebug() << "[getRestaurantById] No restaurant found for id:" << restaurantId;
     }
 
     return restaurant;
@@ -557,6 +594,7 @@ QSqlQuery DatabaseManager::prepareQuery(const QString& query, const QVariantMap&
         qDebug() << "  " << (":" + it.key()) << "=" << it.value();
     }
 
+    sqlQuery.exec(); // Ensure the query is executed
     return sqlQuery;
 }
 
@@ -902,4 +940,113 @@ QString DatabaseManager::getRestaurantOwnerIdByRestaurant(const QString& restaur
         return result.value(0).toString();
     }
     return QString();
+}
+
+void DatabaseManager::debugPrintAllRestaurantOwners() {
+    QSqlQuery query("SELECT id, first_name, last_name, email, phone, restaurant_id, city, location, status FROM restaurant_owners");
+    qDebug() << "--- All restaurant owners in DB ---";
+    while (query.next()) {
+        qDebug() << "id:" << query.value(0).toString()
+                 << ", name:" << query.value(1).toString() << query.value(2).toString()
+                 << ", email:" << query.value(3).toString()
+                 << ", phone:" << query.value(4).toString()
+                 << ", restaurant_id:" << query.value(5).toString()
+                 << ", city:" << query.value(6).toString()
+                 << ", location:" << query.value(7).toString()
+                 << ", status:" << query.value(8).toString();
+    }
+    qDebug() << "--- End of restaurant owners ---";
+}
+
+void DatabaseManager::debugPrintAllRestaurants() {
+    QSqlQuery query("SELECT id, name, address, city, location, type, owner_id, status FROM restaurants");
+    qDebug() << "--- All restaurants in DB ---";
+    while (query.next()) {
+        qDebug() << "id:" << query.value(0).toString()
+                 << ", name:" << query.value(1).toString()
+                 << ", address:" << query.value(2).toString()
+                 << ", city:" << query.value(3).toString()
+                 << ", location:" << query.value(4).toString()
+                 << ", type:" << query.value(5).toString()
+                 << ", owner_id:" << query.value(6).toString()
+                 << ", status:" << query.value(7).toString();
+    }
+    qDebug() << "--- End of restaurants ---";
+}
+
+bool DatabaseManager::createAdmin(const QString& firstName, const QString& lastName, const QString& username, const QString& email, const QString& passwordHash, const QString& phone) {
+    QVariantMap params;
+    params["firstName"] = firstName;
+    params["lastName"] = lastName;
+    params["username"] = username;
+    params["email"] = email;
+    params["passwordHash"] = passwordHash;
+    params["phone"] = phone;
+    QString query = "INSERT INTO admins (first_name, last_name, username, email, password_hash, phone) VALUES (:firstName, :lastName, :username, :email, :passwordHash, :phone)";
+    return executeQuery(query, params);
+}
+
+QVariantMap DatabaseManager::getAdminByLoginId(const QString& loginId) {
+    QVariantMap params;
+    params["loginId"] = loginId;
+    QString query = "SELECT * FROM admins WHERE email = :loginId OR phone = :loginId OR username = :loginId";
+    QSqlQuery result = prepareQuery(query, params);
+    QVariantMap admin;
+    if (result.next()) {
+        QSqlRecord rec = result.record();
+        for (int i = 0; i < rec.count(); ++i) {
+            admin[rec.fieldName(i)] = result.value(i);
+        }
+    }
+    return admin;
+}
+
+bool DatabaseManager::adminEmailExists(const QString& email) {
+    QVariantMap params;
+    params["email"] = email;
+    QString query = "SELECT id FROM admins WHERE email = :email";
+    QSqlQuery result = prepareQuery(query, params);
+    return result.next();
+}
+
+bool DatabaseManager::adminPhoneExists(const QString& phone) {
+    QVariantMap params;
+    params["phone"] = phone;
+    QString query = "SELECT id FROM admins WHERE phone = :phone";
+    QSqlQuery result = prepareQuery(query, params);
+    return result.next();
+}
+
+QVariantMap DatabaseManager::getAdminProfile(const QString& adminId) {
+    QVariantMap params;
+    params["id"] = adminId;
+    QString query = "SELECT first_name, last_name, username, email, phone, created_at FROM admins WHERE id = :id";
+    QSqlQuery result = prepareQuery(query, params);
+    QVariantMap profile;
+    if (result.next()) {
+        QSqlRecord rec = result.record();
+        for (int i = 0; i < rec.count(); ++i) {
+            profile[rec.fieldName(i)] = result.value(i);
+        }
+    }
+    return profile;
+}
+
+bool DatabaseManager::updateAdmin(const QString& adminId, const QVariantMap& updates) {
+    QStringList setClauses;
+    QVariantMap params;
+    params["id"] = adminId;
+    for (auto it = updates.begin(); it != updates.end(); ++it) {
+        setClauses << QString("%1 = :%2").arg(it.key()).arg(it.key());
+        params[it.key()] = it.value();
+    }
+    QString query = QString("UPDATE admins SET %1 WHERE id = :id").arg(setClauses.join(", "));
+    return executeQuery(query, params);
+}
+
+bool DatabaseManager::deleteAdmin(const QString& adminId) {
+    QVariantMap params;
+    params["id"] = adminId;
+    QString query = "DELETE FROM admins WHERE id = :id";
+    return executeQuery(query, params);
 } 

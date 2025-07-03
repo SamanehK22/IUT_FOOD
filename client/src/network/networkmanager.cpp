@@ -97,6 +97,7 @@ void NetworkManager::login(const QString &loginId, const QString &password)
     request["type"] = "login";
     request["loginId"] = loginId;
     request["password"] = password;
+    qDebug() << "[NetworkManager] Sending login request:" << request;
     sendTcpRequest(request);
 }
 
@@ -346,6 +347,7 @@ void NetworkManager::getUserChatHistory(const QString& userA, const QString& use
 
 void NetworkManager::handleTcpResponse(const QJsonObject &response)
 {
+    qDebug() << "[NetworkManager] Received response:" << response;
     QString type = response["type"].toString();
     QString status = response["status"].toString();
 
@@ -357,6 +359,7 @@ void NetworkManager::handleTcpResponse(const QJsonObject &response)
     if (type == "login") {
         if (status == "success") {
             m_token = response["token"].toString();
+            qDebug() << "[NetworkManager] Login success, emitting loginSuccess";
             emit loginSuccess(response);
         } else {
             emit loginFailed(response["message"].toString());

@@ -6,6 +6,9 @@
 #include "signup_restaurant.h"
 #include "restaurantlistwindow.h"
 
+class HomeAdmin; // Forward declaration added
+class homerestaurantowner; // Forward declaration
+
 namespace Ui {
 class Admin_Signup;
 }
@@ -34,6 +37,9 @@ private slots:
 
 private:
     Ui::Admin_Signup *ui;
+    HomeAdmin *adminHome = nullptr;
+    RestaurantListWindow *restaurantList = nullptr;
+    homerestaurantowner *restaurantOwnerHome = nullptr;
 };
 
 #endif // ADMIN_SIGNUP_H
